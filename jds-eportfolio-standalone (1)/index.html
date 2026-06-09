@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joseph Samadi | Software Engineer E-Portfolio</title>
+  <meta name="description" content="Animated software engineering e-portfolio for Joseph Samadi." />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-card">
+      <span class="loader-mark logo-text">JD<span>.</span>S</span>
+      <p>Loading JD.S</p>
+    </div>
+  </div>
+
+  <header class="site-header" id="top">
+    <a href="#home" class="brand" aria-label="JD.S home">
+      <span class="brand-mark">C</span>
+      <span>JD.S</span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="orb orb-one"></div>
+      <div class="orb orb-two"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-content reveal">
+        <p class="eyebrow">Software Engineer E-Portfolio</p>
+        <h1>Joseph Samadi</h1>
+        <p class="hero-lead">I build polished, responsive web applications with clean user interfaces, practical features, and reliable technical foundations.</p>
+        <div class="hero-actions">
+          <a class="btn primary magnetic" href="#projects">View Projects</a>
+          <a class="btn ghost magnetic" href="#contact">Contact Me</a>
+        </div>
+      </div>
+      <div class="hero-panel reveal tilt-card" data-tilt>
+        <div class="window-bar"><span></span><span></span><span></span></div>
+        <pre><code>const portfolio = {
+  role: "Software Engineer",
+  focus: ["React", "JavaScript", "Python"],
+  goal: "build things people can use"
+};</code></pre>
+        <div class="pulse-row"><span></span><span></span><span></span></div>
+      </div>
+      <a class="scroll-cue" href="#about" aria-label="Scroll to about"><span></span></a>
+    </section>
+
+    <section class="section split" id="about">
+      <div class="section-label reveal">About</div>
+      <div class="section-copy reveal">
+        <h2>Clean portfolio, clear proof of work.</h2>
+        <p>I am a software engineer focused on building clean, responsive, user-friendly applications. This e-portfolio highlights my projects, technical skills, and practical experience in frontend development, backend logic, and product-focused delivery.</p>
+      </div>
+      <div class="stats reveal">
+        <article><strong>Frontend</strong><span>HTML / CSS / JS / React</span></article>
+        <article><strong>Backend</strong><span>Python / FastAPI / APIs</span></article>
+        <article><strong>Delivery</strong><span>Responsive / accessible / polished</span></article>
+      </div>
+    </section>
+
+    <section class="section experience" id="experience">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Experience</p>
+        <h2>Experience that connects code with real users.</h2>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item reveal">
+          <span class="dot"></span>
+          <div>
+            <h3>Software Engineer — Heaven Estate Agent</h3>
+            <p class="muted">Website updates, responsive fixes, SEO improvements, security updates, and support moving away from a slow legacy booking process.</p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="dot"></span>
+          <div>
+            <h3>Client Website Builds — Freelance</h3>
+            <p class="muted">Built responsive client websites with clear page structure, smooth navigation, service sections, contact routes, and mobile-friendly layouts.</p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="dot"></span>
+          <div>
+            <h3>Customer-Facing Experience</h3>
+            <p class="muted">Restaurant and delivery roles strengthened my communication, reliability, time management, and attention to user/customer needs.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section projects" id="projects">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Featured Projects</p>
+        <h2>Clickable project cards with working detail pages and demos.</h2>
+      </div>
+      <div class="project-grid">
+        <article class="project-card reveal tilt-card" data-tilt>
+          <div class="project-top"><span>01</span><span>Python · FastAPI · WebSockets</span></div>
+          <h3>Modular Multiplayer Poker Platform</h3>
+          <p>A coursework-scale poker engine with variants, AI players, lobby rooms, browser UI, and variance-reduced testing demos.</p>
+          <div class="tags"><span>FastAPI</span><span>AI Agents</span><span>Testing</span></div>
+          <a class="card-link" href="projects/poker-platform.html">Details</a>
+        </article>
+        <article class="project-card reveal tilt-card" data-tilt>
+          <div class="project-top"><span>02</span><span>React · TypeScript</span></div>
+          <h3>AI Video Story Generator</h3>
+          <p>A web app concept that turns user input into story parts, generation steps, progress UI, and a completed video preview.</p>
+          <div class="tags"><span>React</span><span>UX</span><span>API Flow</span></div>
+          <a class="card-link" href="projects/ai-video-generator.html">Details</a>
+        </article>
+        <article class="project-card reveal tilt-card" data-tilt>
+          <div class="project-top"><span>03</span><span>HTML · CSS · JavaScript</span></div>
+          <h3>Client Website Builds</h3>
+          <p>Responsive client sites focused on strong first impressions, smooth navigation, services, reviews, and enquiry conversion.</p>
+          <div class="tags"><span>Responsive</span><span>SEO</span><span>Client Work</span></div>
+          <a class="card-link" href="projects/client-websites.html">Details</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section skills" id="skills">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Skills</p>
+        <h2>Built for polished interfaces and functional delivery.</h2>
+      </div>
+      <div class="skill-marquee" aria-label="Technology skills">
+        <div class="track">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>React</span><span>TypeScript</span><span>Python</span><span>FastAPI</span><span>WebSockets</span><span>Responsive Design</span><span>SEO</span>
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>React</span><span>TypeScript</span><span>Python</span><span>FastAPI</span><span>WebSockets</span><span>Responsive Design</span><span>SEO</span>
+        </div>
+      </div>
+      <div class="skill-cards">
+        <article class="reveal"><h3>Interface Design</h3><p>Clean sections, readable hierarchy, smooth transitions, and responsive layouts.</p></article>
+        <article class="reveal"><h3>App Logic</h3><p>Stateful UI, reusable functions, form handling, modals, nav states, and data flows.</p></article>
+        <article class="reveal"><h3>Backend Awareness</h3><p>API structure, WebSocket-style updates, room state, and validation-driven design.</p></article>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="contact-card reveal">
+        <p class="eyebrow">Contact</p>
+        <h2>Let’s connect.</h2>
+        <p>Available for software engineering, frontend development, and junior developer opportunities.</p>
+        <div class="contact-actions">
+          <a class="btn primary magnetic" href="mailto:Josephsamadi2419@gmail.com">Email Me</a>
+          <a class="btn ghost magnetic" href="#home">Back to Top</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Joseph Samadi. Animated e-portfolio with connected navigation and project pages.</p>
+  </footer>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
