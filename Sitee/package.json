@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "vite --host 0.0.0.0",
+    "build": "echo 'Static site ready'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

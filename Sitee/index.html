@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joseph Samadi | Portfolio</title>
+  <meta name="description" content="Joseph Samadi software engineering e-portfolio featuring projects, skills, and experience." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=7" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=7" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=7" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=7" />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-card">
+      <span class="loader-logo">JD<span>.</span>S</span>
+      <div class="loader-track"><i></i></div>
+      <p>Loading portfolio...</p>
+    </div>
+  </div>
+
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <div class="top-marquee" aria-label="Portfolio status">
+    <div class="marquee-track">
+      <span>Available for software engineering roles</span>
+      <span>Full-stack projects</span>
+      <span>Python • FastAPI • React • JavaScript</span>
+      <span>Based between Canada and the UK</span>
+      <span>Available for software engineering roles</span>
+      <span>Full-stack projects</span>
+      <span>Python • FastAPI • React • JavaScript</span>
+      <span>Based between Canada and the UK</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Joseph Samadi homepage">
+      <span class="brand-logo">JD<span>.</span>S</span>
+      <span class="brand-name">Joseph Samadi</span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="#work">My Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a class="nav-cta" href="#contact">Hire Me ☕</a>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero section-grid">
+      <div class="hero-copy reveal">
+        <p class="sticker">Hi, my name is Joseph</p>
+        <h1># I Build<br><span>Reliable Web Apps.</span></h1>
+        <p class="lead">I am a software engineer and web developer focused on clean interfaces, practical full-stack systems, and projects that show real problem-solving.</p>
+        <div class="button-row">
+          <a class="btn primary" href="#work">View Projects</a>
+          <a class="btn secondary" href="#contact">Get In Touch</a>
+        </div>
+      </div>
+      <div class="hero-art reveal delay-1" aria-label="Decorative retro portfolio illustration">
+        <div class="portrait-card tilt-card">
+          <div class="window-bar"><span></span><span></span><span></span></div>
+          <div class="avatar-block">
+            <div class="avatar-face">JD<span>.</span>S</div>
+            <div class="spark spark-one">✦</div>
+            <div class="spark spark-two">✧</div>
+          </div>
+          <div class="mini-code">
+            <p><b>const</b> role = "Software Engineer";</p>
+            <p><b>build</b>(projects, skills, impact);</p>
+          </div>
+        </div>
+        <div class="shape sun">☻</div>
+        <div class="shape star">✹</div>
+        <div class="shape bolt">⌁</div>
+      </div>
+    </section>
+
+    <section class="section services" id="skills">
+      <div class="section-kicker reveal">##### Passion led me here</div>
+      <div class="split-heading reveal">
+        <h2>What I bring</h2>
+        <p>Technical skills for building, debugging, deploying, and improving modern web applications.</p>
+      </div>
+      <div class="service-grid">
+        <article class="retro-card reveal">
+          <div class="icon">⌘</div>
+          <h3>Full-Stack Development</h3>
+          <p>Building connected frontend and backend experiences with clean project structure and practical features.</p>
+        </article>
+        <article class="retro-card reveal delay-1">
+          <div class="icon">◈</div>
+          <h3>Backend APIs</h3>
+          <p>Python, FastAPI, WebSockets, Postgres, authentication flow thinking, and modular architecture.</p>
+        </article>
+        <article class="retro-card reveal delay-2">
+          <div class="icon">✦</div>
+          <h3>Frontend Interfaces</h3>
+          <p>Responsive HTML, CSS, JavaScript, React-style components, animation, and polished interaction details.</p>
+        </article>
+      </div>
+      <div class="skill-cloud reveal">
+        <span>Python</span><span>JavaScript</span><span>React</span><span>FastAPI</span><span>WebSockets</span><span>Postgres</span><span>HTML</span><span>CSS</span><span>Tailwind</span><span>GitHub</span><span>Vercel</span><span>Responsive Design</span>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="about-image reveal">
+        <div class="photo-placeholder tilt-card">
+          <span>JS</span>
+          <p>Software Engineer</p>
+        </div>
+      </div>
+      <div class="about-copy reveal delay-1">
+        <p class="sticker small">About Me</p>
+        <h2>I like turning messy ideas into working software.</h2>
+        <p>I am Joseph Samadi, a software engineer with hands-on experience improving websites, modernizing systems, and building project-based applications. My portfolio focuses on technical growth, clean presentation, and showing employers what I can actually build.</p>
+        <p>I care about interfaces that feel smooth, code that is understandable, and projects that are easy to explain in interviews.</p>
+      </div>
+    </section>
+
+    <section class="section timeline" id="experience">
+      <div class="section-kicker reveal">###### Experience</div>
+      <h2 class="reveal">The work behind the portfolio</h2>
+      <div class="timeline-list">
+        <article class="timeline-item reveal">
+          <span class="year">2025</span>
+          <div>
+            <h3>Software Engineer — Heaven Estate Agent</h3>
+            <p>Maintained and improved the company website through frontend updates, responsive design fixes, content changes, security/SEO improvements, and modernization support for a legacy booking system.</p>
+          </div>
+        </article>
+        <article class="timeline-item reveal experience-sooner">
+          <span class="year">2025</span>
+          <div>
+            <h3>Client Website Builds — Freelance</h3>
+            <p>Built and delivered responsive websites using HTML, CSS, JavaScript, and React-style development for real client needs.</p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="year">2024</span>
+          <div>
+            <h3>Customer-Facing Roles</h3>
+            <p>Developed communication, reliability, and client-service skills through restaurant and delivery work that supports my professional approach today.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section projects" id="work">
+      <div class="split-heading reveal">
+        <div>
+          <p class="sticker small">Featured Projects</p>
+          <h2>Recent work</h2>
+        </div>
+        <p>A selection of technical projects, from full-stack platforms to responsive web applications.</p>
+      </div>
+      <div class="project-stack">
+        <article class="project-card reveal tilt-card">
+          <div class="project-media poker-media">
+            <span>A♠</span><span>K♥</span><span>Q♦</span>
+          </div>
+          <div class="project-body">
+            <p class="tag">Full-Stack Platform</p>
+            <h3>Modular Multiplayer Poker Platform</h3>
+            <p>A Python/FastAPI poker platform separating the table engine, variants, human/AI players, lobby, WebSocket updates, and variance demos.</p>
+            <div class="tags"><span>Python</span><span>FastAPI</span><span>WebSockets</span><span>Postgres</span></div>
+            <a class="btn mini" href="./project/poker-platform/">View Now</a>
+          </div>
+        </article>
+        <article class="project-card reveal delay-1 tilt-card">
+          <div class="project-media grid-media"><span>COMING SOON</span></div>
+          <div class="project-body">
+            <p class="tag">Software Engineering</p>
+            <h3>Project Coming Soon</h3>
+            <p>A future project will be added here to showcase more technical range and problem-solving ability.</p>
+            <div class="tags"><span>TBD</span><span>Build</span><span>Deploy</span></div>
+            <a class="btn mini" href="./project/coming-soon-1/">View Now</a>
+          </div>
+        </article>
+        <article class="project-card reveal delay-2 tilt-card">
+          <div class="project-media grid-media alt"><span>COMING SOON</span></div>
+          <div class="project-body">
+            <p class="tag">Web Application</p>
+            <h3>Project Coming Soon</h3>
+            <p>Another project card ready to be replaced with a case study, live demo, GitHub link, and technical breakdown.</p>
+            <div class="tags"><span>TBD</span><span>UI</span><span>Backend</span></div>
+            <a class="btn mini" href="./project/coming-soon-2/">View Now</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="contact-panel reveal">
+        <p class="sticker small">Tell me about the role</p>
+        <h2>Looking for a software engineer?</h2>
+        <p>I am open to opportunities where I can build, learn quickly, and contribute to real software projects.</p>
+        <a class="email-link" href="mailto:Josephsamadi2419@gmail.com">Josephsamadi2419@gmail.com</a>
+        <div class="button-row centered">
+          <a class="btn primary" href="mailto:Josephsamadi2419@gmail.com">Email Me</a>
+          <a class="btn secondary" href="#home">Back To Top</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="brand-logo">JD<span>.</span>S</span>
+    <p>© <span id="year"></span> Joseph Samadi. Portfolio.</p>
+  </footer>
+
+  <script src="./assets/script.js"></script>
+</body>
+</html>
