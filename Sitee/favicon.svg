@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <title>JD.S</title>
-  <style>
-    text { font-family: Inter, Arial, Helvetica, sans-serif; font-weight: 900; }
-  </style>
-  <text x="22" y="322" font-size="230" letter-spacing="-18" fill="#fff" stroke="#020617" stroke-opacity=".45" stroke-width="7" paint-order="stroke fill">JD</text>
-  <circle cx="302" cy="292" r="24" fill="#5356ff"/>
-  <text x="334" y="322" font-size="230" letter-spacing="-18" fill="#fff" stroke="#020617" stroke-opacity=".45" stroke-width="7" paint-order="stroke fill">S</text>
-</svg>
