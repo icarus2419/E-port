@@ -1,0 +1,12 @@
+{
+  "name": "joseph-portfolio-poker-vercel",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static portfolio with Vercel API routes for playable multiplayer poker.",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
