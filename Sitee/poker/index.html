@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playable Poker Platform | Joseph Doyle-Samadi</title>
+  <meta name="poker-api-base" content="" />
+  <meta name="poker-ws-base" content="" />
+  <meta name="poker-transport" content="polling" />
+  <link rel="stylesheet" href="../assets/poker-transition.css" />
+  <style>
+    :root { --bg:#0c1414; --panel:#152122; --felt:radial-gradient(circle at center,#1e6d4a 0%,#145438 55%,#0d3727 100%); --gold:#d8b66a; --text:#eef5f1; --muted:#a7bbb0; --accent:#64d39b; --danger:#ea7d7d; --shadow:0 18px 40px rgba(0,0,0,.35); font-family:Inter,system-ui,Arial,sans-serif; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:linear-gradient(180deg,#0a1212,#0e1818 35%,#111f1f); color:var(--text); }
+    .portfolio-back { position:fixed; left:14px; top:14px; z-index:1000; text-decoration:none; background:rgba(12,20,20,.84); border:1px solid rgba(216,182,106,.32); color:#fff8dd; padding:9px 12px; border-radius:999px; font-weight:800; box-shadow:0 10px 30px rgba(0,0,0,.25); backdrop-filter:blur(10px); }
+    .portfolio-back:hover { background:rgba(27,44,42,.96); }
+    .app { display:grid; grid-template-columns:320px 1fr 320px; grid-template-areas:"lobby table controls" "variance variance variance"; gap:18px; padding:18px; min-height:100vh; }
+    .lobby-panel { grid-area:lobby; }
+    .panel { background:rgba(18,29,30,.94); border:1px solid rgba(216,182,106,.16); border-radius:18px; box-shadow:var(--shadow); padding:16px; }
+    h1,h2,h3,p { margin:0; }
+    .title { font-size:1.3rem; margin-bottom:6px; }
+    .sub { color:var(--muted); font-size:.95rem; margin-bottom:12px; }
+    .row { display:flex; gap:8px; }
+    input,select,button { border-radius:4px; border:1px solid #555; background:#333; color:var(--text); padding:8px 12px; font:inherit; }
+    button { cursor:pointer; background:#444; }
+    button:hover { background:#555; }
+    button.primary { background:#2a7a4f; }
+    button.primary:hover { background:#35956a; }
+    button.warn { background:#884040; }
+    button.warn:hover { background:#a05050; }
+    button:disabled { opacity:.4; cursor:not-allowed; }
+    .stack { display:grid; gap:10px; }
+    .room-list { display:grid; gap:10px; margin-top:10px; }
+    .room-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:12px; }
+    .room-card strong { display:block; margin-bottom:4px; }
+    .room-meta { font-size:.88rem; color:var(--muted); margin-bottom:8px; }
+    .center { grid-area:table; display:grid; grid-template-rows:auto 1fr; gap:14px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; padding:14px 18px; background:rgba(18,29,30,.94); border:1px solid rgba(216,182,106,.16); border-radius:18px; box-shadow:var(--shadow); }
+    .topbar .room { font-size:1.1rem; font-weight:700; }
+    .topbar .meta { color:var(--muted); font-size:.9rem; }
+    .table-wrap { position:relative; background:rgba(10,17,17,.35); border-radius:30px; padding:18px; border:1px solid rgba(216,182,106,.16); box-shadow:var(--shadow); }
+    .table { position:relative; min-height:620px; border-radius:280px; background:var(--felt); border:12px solid #5a4322; outline:2px solid rgba(216,182,106,.32); overflow:hidden; }
+    .table-center { position:absolute; inset:50% auto auto 50%; transform:translate(-50%,-50%); width:380px; text-align:center; }
+    .street { font-size:1.1rem; font-weight:700; margin-bottom:8px; color:#f7f0db; }
+    .pot { font-size:1.4rem; font-weight:800; color:var(--gold); margin-bottom:14px; }
+    .cards { display:flex; justify-content:center; gap:10px; margin-bottom:10px; }
+    .card-wrap { perspective:400px; width:54px; height:74px; }
+    .card { width:54px; height:74px; border-radius:10px; background:#fbfbfb; color:#101010; display:grid; place-items:center; font-weight:800; box-shadow:0 8px 18px rgba(0,0,0,.28); }
+    @keyframes flipIn { 0%{transform:rotateY(90deg);opacity:0} 100%{transform:rotateY(0);opacity:1} }
+    .player { position:absolute; width:152px; min-height:90px; background:rgba(15,24,25,.88); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:10px; text-align:center; }
+    .player.active { outline:2px solid var(--accent); }
+    .player .name { font-weight:700; margin-bottom:4px; }
+    .player .info { color:var(--muted); font-size:.85rem; margin-bottom:6px; }
+    .player .mini-cards { display:flex; justify-content:center; gap:6px; }
+    .mini-wrap { perspective:400px; width:34px; height:46px; }
+    .mini { width:34px; height:46px; border-radius:8px; background:#f4f4f4; color:#111; display:grid; place-items:center; font-size:.8rem; font-weight:800; }
+    .seat-empty { display:grid; gap:8px; align-content:center; min-height:90px; }
+    .seat-empty button { font-size:.85rem; }
+    .pos-0{bottom:12px;left:50%;transform:translateX(-50%)} .pos-1{bottom:92px;right:64px} .pos-2{top:136px;right:64px}
+    .pos-3{top:22px;left:50%;transform:translateX(-50%)} .pos-4{top:136px;left:64px} .pos-5{bottom:92px;left:64px}
+    .pos-6{bottom:210px;left:18px} .pos-7{bottom:210px;right:18px} .pos-8{top:250px;left:50%;transform:translateX(-50%)}
+    .actionbar { background:rgba(18,29,30,.94); border:1px solid rgba(216,182,106,.16); border-radius:18px; box-shadow:var(--shadow); padding:14px; display:grid; gap:12px; }
+    .action-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .hint { color:var(--muted); font-size:.9rem; }
+    .side h2 { margin-bottom:12px; }
+    .side { grid-area:controls; align-self:start; }
+    .control-group { display:grid; gap:10px; margin-bottom:16px; }
+    .side .row { flex-wrap:wrap; align-items:stretch; }
+    .side button, .side input, .side select { min-width:0; min-height:3rem; }
+    .control-group .row > * { flex:1 1 calc(50% - 4px); }
+    .control-group .row:first-child > * { flex-basis:calc(50% - 4px); }
+    #seatJoinSelect, #playerName, #joinSeatBtn, #aiKindSelect { flex-basis:calc(50% - 4px); }
+    #addAiBtn { flex-basis:100%; }
+    #betAmount { flex-basis:calc(50% - 4px); max-width:none !important; }
+    .sound-group { display:grid; gap:10px; margin-bottom:16px; }
+    .sound-row { display:grid; grid-template-columns:auto 1fr; gap:8px; align-items:center; }
+    .sound-row button { min-height:3rem; }
+    .sound-volume { display:grid; gap:4px; color:var(--muted); font-size:.85rem; }
+    .sound-volume input { width:100%; min-height:1.2rem; padding:0; accent-color:var(--accent); }
+    .storage-notice { margin:0 0 12px; padding:10px 12px; border-radius:12px; background:rgba(234,125,125,.12); border:1px solid rgba(234,125,125,.35); color:#ffd6d6; font-size:.86rem; line-height:1.35; }
+    .storage-notice.ok { background:rgba(100,211,155,.11); border-color:rgba(100,211,155,.3); color:#d7ffe9; }
+    .log { display:grid; gap:8px; max-height:360px; overflow:auto; }
+    .log-item { background:rgba(255,255,255,.04); border-radius:12px; padding:10px; }
+    .showdown { display:grid; gap:8px; margin-top:10px; }
+    .pill { display:inline-block; padding:5px 8px; border-radius:999px; background:rgba(100,211,155,.12); color:#cbf4df; font-size:.82rem; }
+    .muted { color:var(--muted); }
+    .variance-panel { grid-area:variance; }
+    .variance-grid { display:grid; grid-template-columns:minmax(260px,360px) 1fr; gap:12px; align-items:start; }
+    @media (max-width:1320px) { .app{grid-template-columns:1fr; grid-template-areas:"lobby" "table" "controls" "variance"} .table{min-height:560px} }
+    @media (max-width:760px) { .variance-grid{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <a class="portfolio-back" href="../index.html#projects" data-poker-transition="to-portfolio">← Back to Portfolio</a>
+  <audio id="musicTrack" src="./audio/8bit-bossa.mp3" loop preload="auto" playsinline aria-hidden="true"></audio>
+  <!-- name gate: must enter username before seeing anything -->
+  <div id="nameGate" style="position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999">
+    <div style="text-align:center">
+      <label class="muted" style="font-size:1rem;display:block;margin-bottom:8px">Username</label>
+      <input id="gateNameInput" placeholder="Enter username" style="font-size:1.1rem;padding:10px 16px;width:220px;text-align:center" />
+      <br><button class="primary" id="gateBtn" style="margin-top:10px;padding:8px 28px" disabled>Go</button>
+    </div>
+  </div>
+  <div class="app" style="display:none" id="appMain">
+    <aside class="panel lobby-panel">
+      <h1 class="title">Lobby</h1>
+      <p class="sub">Create a game, join a match, and seat players. This portfolio version uses Vercel API routes with polling for multiplayer.</p>
+      <div id="storageNotice" class="storage-notice" hidden></div>
+      <div class="stack">
+        <input id="roomName" placeholder="Room name" value="Evening Table" />
+        <div class="row">
+          <select id="roomVariant"><option value="holdem">No-limit Hold'em</option><option value="highcard">High-card only (toy)</option></select>
+          <select id="roomSeats"><option>2</option><option>3</option><option>4</option><option selected>6</option><option>9</option></select>
+        </div>
+        <button class="primary" id="createRoomBtn">Create Room</button>
+        <button id="refreshRoomsBtn">Refresh Rooms</button>
+      </div>
+      <div class="room-list" id="roomList"></div>
+    </aside>
+    <main class="center">
+      <div class="topbar">
+        <div><div class="room" id="roomTitle">Main Table</div><div class="meta" id="roomMeta">Choose a room to begin</div></div>
+        <button id="copyRoomLinkBtn" type="button" title="Copy an invite link for this table">Copy room link</button>
+      </div>
+      <div class="table-wrap"><div class="table" id="table">
+        <div class="table-center">
+          <div class="street" id="streetLabel">Waiting for players</div>
+          <div class="pot" id="potLabel">Pot: 0</div>
+          <div class="cards" id="communityCards"></div>
+          <div class="hint">Button is marked with D. Current actor is highlighted.</div>
+        </div>
+      </div></div>
+    </main>
+    <aside class="panel side">
+      <h2>Sound</h2>
+      <div class="sound-group">
+        <div class="sound-row">
+          <button id="muteBtn" type="button" aria-pressed="false">Mute</button>
+          <label class="sound-volume" for="volumeRange">
+            <span>Volume</span>
+            <input id="volumeRange" type="range" min="0" max="1" step="0.01" value="0.35" />
+          </label>
+        </div>
+      </div>
+      <h2>Actions</h2>
+      <div class="control-group">
+        <div class="row"><button id="resetBtn">Reset Stacks</button><button class="warn" id="leaveSeatBtn">Leave My Seat</button></div>
+        <div class="row">
+          <select id="seatJoinSelect"></select>
+          <input id="playerName" placeholder="Your name" />
+          <button class="primary" id="joinSeatBtn">Take Seat</button>
+          <select id="aiKindSelect"><option value="ai_easy">Easy Bot</option><option value="ai_medium">Medium Bot</option><option value="ai_hard">Hard Bot</option></select>
+          <button id="addAiBtn">Add AI to Selected Seat</button>
+        </div>
+        <div class="row">
+          <button class="primary" id="startHandBtn">Start Hand</button>
+          <button id="nextHandBtn">Next Hand</button>
+          <button id="foldBtn">Fold</button><button id="checkBtn">Check</button><button id="callBtn">Call</button>
+          <input id="betAmount" type="number" min="1" value="10" style="max-width:120px" />
+          <button id="betBtn">Bet / Raise</button><button id="allInBtn">All-in</button>
+        </div>
+        <div class="hint" id="hintText">Join a room and take a seat to play.</div>
+      </div>
+      <h2>Log</h2><div class="log" id="log"></div>
+      <h2 style="margin-top:16px">Showdown</h2><div class="showdown" id="showdown"></div>
+    </aside>
+    <section class="panel variance-panel">
+      <h2>Variance Demo</h2>
+      <p class="muted" style="margin-bottom:8px;font-size:.85rem">Compare two AI agents over many hands using variance reduction (CRN + seat averaging).</p>
+      <div class="variance-grid">
+        <div class="stack" style="gap:6px">
+          <select id="vrVariant"><option value="holdem">No-limit Hold'em</option><option value="highcard">High-card only (toy)</option></select>
+          <div class="row">
+            <select id="vrAgentA"><option value="ai_hard">Hard</option><option value="ai_medium">Medium</option><option value="ai_easy">Easy</option></select>
+            <span class="muted" style="align-self:center">vs</span>
+            <select id="vrAgentB"><option value="ai_easy">Easy</option><option value="ai_medium" selected>Medium</option><option value="ai_hard">Hard</option></select>
+          </div>
+          <div class="row">
+            <label class="muted" style="align-self:center;font-size:.85rem">Hands:</label>
+            <input id="vrHands" type="number" min="10" max="500" value="100" style="max-width:80px" />
+            <button class="primary" id="varianceBtn">Run</button>
+          </div>
+        </div>
+        <div id="varianceBox"></div>
+      </div>
+    </section>
+  </div>
+<script>
+const CONFIG = {
+  apiBase: (window.POKER_API_BASE || document.querySelector('meta[name="poker-api-base"]')?.content || '').replace(/\/$/, ''),
+  wsBase: (window.POKER_WS_BASE || document.querySelector('meta[name="poker-ws-base"]')?.content || '').replace(/\/$/, ''),
+  transport: (window.POKER_TRANSPORT || document.querySelector('meta[name="poker-transport"]')?.content || 'auto').toLowerCase(),
+};
+const POLL_MS = 1100;
+const LOBBY_POLL_MS = 3000;
+function apiPath(path) {
+  return CONFIG.apiBase ? `${CONFIG.apiBase}${path}` : path;
+}
+function wsBase() {
+  let base = CONFIG.wsBase;
+  if (!base && /^https?:\/\//i.test(CONFIG.apiBase)) base = CONFIG.apiBase.replace(/^http/i, 'ws');
+  if (base) {
+    if (/^https?:\/\//i.test(base)) return base.replace(/^http/i, 'ws');
+    if (/^wss?:\/\//i.test(base)) return base;
+    if (base.startsWith('/')) {
+      const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+      return `${proto}//${location.host}${base}`;
+    }
+    return base;
+  }
+  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${proto}//${location.host}`;
+}
+function wsPath(path) {
+  return `${wsBase()}${path}`;
+}
+function makeClientId() {
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+  return `client-${Math.random().toString(16).slice(2)}-${Date.now()}`;
+}
+function initialRoomId() {
+  const fromUrl = new URLSearchParams(location.search).get('room');
+  return (fromUrl || localStorage.getItem('poker.roomId') || 'MAIN01').toUpperCase();
+}
+function roomInviteUrl() {
+  const url = new URL(location.href);
+  url.searchParams.set('room', S.roomId || 'MAIN01');
+  url.hash = '';
+  return url.toString();
+}
+function syncRoomUrl() {
+  if (!S?.roomId) return;
+  const url = new URL(location.href);
+  if (url.searchParams.get('room') === S.roomId) return;
+  url.searchParams.set('room', S.roomId);
+  history.replaceState(null, '', url);
+}
+const S = {
+  roomId: initialRoomId(),
+  token: localStorage.getItem('poker.token') || '',
+  clientId: localStorage.getItem('poker.clientId') || makeClientId(),
+  tokensByRoom: JSON.parse(localStorage.getItem('poker.tokensByRoom') || '{}'),
+  selectedSeat: 0, prevCommunity: [], prevHoles: {}, lastPot: null,
+  lastTurnKey: '', lastSoundRoom: '', hasRenderedState: false, lastChipSoundAt: 0,
+  creatorTokens: JSON.parse(localStorage.getItem('poker.creatorTokens') || '{}'),
+  ws: null, wsTimer: null, lobbyWs: null, lobbyTimer: null, pollTimer: null, lobbyPollTimer: null,
+};
+const $ = id => document.getElementById(id);
+if (S.tokensByRoom[S.roomId]) S.token = S.tokensByRoom[S.roomId];
+else if (S.token && S.roomId) S.tokensByRoom[S.roomId] = S.token;
+function tokenForRoom(roomId) { return S.tokensByRoom[String(roomId || '').toUpperCase()] || ''; }
+function rememberRoomToken(roomId, token) {
+  const id = String(roomId || '').toUpperCase();
+  if (!id) return;
+  if (token) S.tokensByRoom[id] = token;
+  else delete S.tokensByRoom[id];
+}
+function switchRoom(roomId) {
+  S.roomId = String(roomId || 'MAIN01').toUpperCase();
+  S.token = tokenForRoom(S.roomId);
+  S.hasRenderedState = false;
+  save();
+  connectWs();
+}
+
+const SUIT = {c:'♣️',d:'♦️',s:'♠️',h:'♥️'};
+const AUDIO_STORAGE = { muted:'poker.audioMuted', volume:'poker.audioVolume' };
+const AUDIO_PATHS = {
+  music:'./audio/8bit-bossa.mp3',
+  ui:'./audio/select_003.ogg',
+  toggle:'./audio/switch_002.ogg',
+  deal:'./audio/card-slide-3.ogg',
+  place:'./audio/card-place-2.ogg',
+  shuffle:'./audio/card-shuffle.ogg',
+  fold:'./audio/card-shove-2.ogg',
+  bet:'./audio/chip-lay-3.ogg',
+  allIn:'./audio/chips-stack-3.ogg',
+  turn:'./audio/confirmation_003.ogg',
+  error:'./audio/error_004.ogg',
+};
+const AUDIO_LEVELS = {
+  ui:.34, toggle:.42, deal:.48, place:.5, shuffle:.58, fold:.52,
+  bet:.62, allIn:.75, turn:.62, error:.55,
+};
+const SPECIFIC_SOUND_BUTTONS = new Set([
+  'createRoomBtn', 'joinSeatBtn', 'addAiBtn', 'startHandBtn', 'nextHandBtn',
+  'resetBtn', 'leaveSeatBtn', 'foldBtn', 'checkBtn', 'callBtn', 'betBtn',
+  'allInBtn', 'varianceBtn', 'muteBtn',
+]);
+const audioState = {
+  muted: localStorage.getItem(AUDIO_STORAGE.muted) === '1',
+  volume: Math.max(0, Math.min(1, Number(localStorage.getItem(AUDIO_STORAGE.volume) || 0.35))),
+  music: null,
+  unlocked: false,
+  autostartAttempted: false,
+};
+
+async function api(path, opts={}) {
+  const r = await fetch(apiPath(path), {headers:{'Content-Type':'application/json'}, ...opts});
+  if (!r.ok) {
+    const text = await r.text();
+    let message = text;
+    try { message = JSON.parse(text).detail || text; } catch(_) {}
+    throw new Error(message);
+  }
+  return (r.headers.get('content-type')||'').includes('json') ? r.json() : r.text();
+}
+function save() {
+  syncRoomUrl();
+  localStorage.setItem('poker.roomId', S.roomId||'');
+  if (S.roomId) rememberRoomToken(S.roomId, S.token || '');
+  localStorage.setItem('poker.token', S.token||'');
+  localStorage.setItem('poker.tokensByRoom', JSON.stringify(S.tokensByRoom));
+  localStorage.setItem('poker.clientId', S.clientId);
+  localStorage.setItem('poker.creatorTokens', JSON.stringify(S.creatorTokens));
+}
+
+function musicAudio() {
+  if (!audioState.music) {
+    audioState.music = $('musicTrack') || new Audio(AUDIO_PATHS.music);
+    audioState.music.loop = true;
+    audioState.music.preload = 'auto';
+    audioState.music.setAttribute('playsinline', '');
+  }
+  return audioState.music;
+}
+
+function updateAudioControls() {
+  const muteBtn = $('muteBtn');
+  const volumeRange = $('volumeRange');
+  if (volumeRange) volumeRange.value = String(audioState.volume);
+  if (muteBtn) {
+    muteBtn.textContent = audioState.muted ? 'Unmute' : (audioState.unlocked ? 'Mute' : 'Start Music');
+    muteBtn.setAttribute('aria-pressed', String(audioState.muted));
+  }
+  if (audioState.music) {
+    audioState.music.muted = audioState.muted;
+    audioState.music.volume = audioState.muted ? 0 : audioState.volume;
+  }
+}
+
+function startMusic() {
+  if (audioState.muted) return Promise.resolve(false);
+  const music = musicAudio();
+  music.muted = false;
+  music.volume = audioState.volume;
+  try { music.load?.(); } catch (_) {}
+  const attempt = music.play();
+  if (!attempt?.then) { updateAudioControls(); return Promise.resolve(true); }
+  return attempt.then(() => {
+    audioState.unlocked = true;
+    updateAudioControls();
+    return true;
+  }).catch(() => {
+    updateAudioControls();
+    return false;
+  });
+}
+
+function primeMutedMusic(music) {
+  music.muted = true;
+  music.volume = 0;
+  const mutedAttempt = music.play();
+  if (!mutedAttempt?.then) return;
+  mutedAttempt.catch(() => {
+    music.pause();
+    updateAudioControls();
+  });
+}
+
+function tryAutostartMusic() {
+  if (audioState.autostartAttempted) return;
+  audioState.autostartAttempted = true;
+  // Browsers often block deployed autoplay. Try once, then the first real click
+  // or the Start Music button will reliably start the track.
+  if (!audioState.muted) startMusic();
+}
+
+function unlockAudio() {
+  audioState.unlocked = true;
+  if (!audioState.muted) startMusic();
+  updateAudioControls();
+}
+
+function setMuted(muted) {
+  audioState.muted = muted;
+  localStorage.setItem(AUDIO_STORAGE.muted, muted ? '1' : '0');
+  updateAudioControls();
+  if (muted) audioState.music?.pause();
+  else startMusic();
+}
+
+function setVolume(value) {
+  audioState.volume = Math.max(0, Math.min(1, Number(value)));
+  if (audioState.volume <= 0) audioState.muted = true;
+  else if (localStorage.getItem(AUDIO_STORAGE.muted) === '1') audioState.muted = false;
+  localStorage.setItem(AUDIO_STORAGE.volume, String(audioState.volume));
+  localStorage.setItem(AUDIO_STORAGE.muted, audioState.muted ? '1' : '0');
+  updateAudioControls();
+  if (!audioState.muted) startMusic();
+}
+
+function playSound(name, volumeScale=1, delay=0) {
+  if (audioState.muted || !AUDIO_PATHS[name]) return;
+  const run = () => {
+    const clip = new Audio(AUDIO_PATHS[name]);
+    clip.volume = Math.max(0, Math.min(1, audioState.volume * (AUDIO_LEVELS[name] || .5) * volumeScale));
+    clip.play().catch(() => {});
+  };
+  if (delay) window.setTimeout(run, delay);
+  else run();
+}
+
+function playActionSound(action) {
+  if (action === 'fold') playSound('fold');
+  else if (action === 'all_in') { S.lastChipSoundAt = performance.now(); playSound('allIn'); }
+  else if (action === 'call' || action === 'bet' || action === 'raise') { S.lastChipSoundAt = performance.now(); playSound('bet'); }
+  else playSound('ui', .7);
+}
+
+function setupAudioControls() {
+  updateAudioControls();
+  tryAutostartMusic();
+  $('muteBtn')?.addEventListener('click', () => {
+    if (!audioState.unlocked && !audioState.muted) {
+      unlockAudio();
+      playSound('toggle');
+      return;
+    }
+    unlockAudio();
+    const nextMuted = !audioState.muted;
+    setMuted(nextMuted);
+    if (!nextMuted) playSound('toggle');
+  });
+  $('volumeRange')?.addEventListener('input', (e) => {
+    unlockAudio();
+    setVolume(e.target.value);
+  });
+  ['pointerdown', 'click', 'touchstart', 'keydown'].forEach(type => {
+    document.addEventListener(type, (event) => {
+      if (event.target?.closest?.('#muteBtn')) return;
+      unlockAudio();
+    }, { once:true, capture:true });
+  });
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest?.('button');
+    if (!el || el.disabled || el.id === 'muteBtn') return;
+    if (SPECIFIC_SOUND_BUTTONS.has(el.id) || el.closest('.seat-empty') || el.classList.contains('del-btn')) return;
+    playSound('ui', .45);
+  });
+  document.addEventListener('change', (e) => {
+    if (e.target.matches?.('select')) playSound('ui', .38);
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && audioState.unlocked && !audioState.muted) startMusic();
+  });
+}
+
+function clearPolling() {
+  if (S.pollTimer) { clearInterval(S.pollTimer); S.pollTimer = null; }
+}
+
+function clearLobbyPolling() {
+  if (S.lobbyPollTimer) { clearInterval(S.lobbyPollTimer); S.lobbyPollTimer = null; }
+}
+
+async function refreshState(showError=true) {
+  try {
+    const p = await api(`/api/state?room_id=${encodeURIComponent(S.roomId)}&token=${encodeURIComponent(S.token)}`);
+    render(p);
+  } catch(e) {
+    if (/room id not found|room doesn't exist|doesn't exist/i.test(e.message || '')) {
+      S.roomId = 'MAIN01';
+      S.token = '';
+      save();
+      await loadRooms();
+      return refreshState(showError);
+    }
+    if (showError) {
+      $('hintText').textContent = 'State refresh failed: ' + e.message;
+      playSound('error');
+    }
+  }
+}
+
+function startPolling(message='Connected (polling).') {
+  if (S.ws) { try { S.ws.close(); } catch(_) {} S.ws = null; }
+  if (S.wsTimer) { clearTimeout(S.wsTimer); S.wsTimer = null; }
+  if (!S.pollTimer) S.pollTimer = setInterval(() => refreshState(false), POLL_MS);
+  refreshState();
+  $('hintText').textContent = message;
+}
+
+function startLobbyPolling() {
+  if (S.lobbyWs) { try { S.lobbyWs.close(); } catch(_) {} S.lobbyWs = null; }
+  if (S.lobbyTimer) { clearTimeout(S.lobbyTimer); S.lobbyTimer = null; }
+  if (!S.lobbyPollTimer) S.lobbyPollTimer = setInterval(loadRooms, LOBBY_POLL_MS);
+  loadRooms();
+}
+
+async function refreshAfterChange({rooms=false}={}) {
+  if (S.pollTimer || !S.ws || S.ws.readyState !== WebSocket.OPEN) await refreshState();
+  if (rooms || S.lobbyPollTimer || !S.lobbyWs || S.lobbyWs.readyState !== WebSocket.OPEN) await loadRooms();
+}
+
+function connectWs() {
+  if (CONFIG.transport === 'polling') {
+    startPolling('Connected (Vercel polling mode).');
+    return;
+  }
+  clearPolling();
+  if (S.ws) try { S.ws.close(); } catch(_) {}
+  if (S.wsTimer) { clearTimeout(S.wsTimer); S.wsTimer = null; }
+  let url = wsPath(`/ws/room/${encodeURIComponent(S.roomId)}`);
+  if (S.token) url += `?token=${encodeURIComponent(S.token)}`;
+  let sock;
+  let opened = false;
+  try {
+    sock = new WebSocket(url);
+  } catch(_) {
+    startPolling('Connected (polling fallback).');
+    return;
+  }
+  S.ws = sock;
+  sock.onopen = () => { opened = true; $('hintText').textContent = 'Connected (real-time).'; };
+  sock.onmessage = e => {
+    let msg; try { msg = JSON.parse(e.data); } catch(_) { return; }
+    if (msg.type==='welcome'||msg.type==='room_state') { render(msg.payload); loadRooms(); }
+    else if (msg.type==='room_closed') { S.roomId='MAIN01'; S.token=''; save(); connectWs(); }
+    else if (msg.type==='error') { $('hintText').textContent='Server: '+(msg.payload?.detail||'error'); playSound('error'); }
+  };
+  sock.onclose = () => {
+    if (CONFIG.transport === 'websocket' || opened) S.wsTimer = setTimeout(connectWs, 2000);
+    else startPolling('Connected (polling fallback for serverless hosting).');
+  };
+  sock.onerror = () => { try { sock.close(); } catch(_) {} };
+}
+function connectLobbyWs() {
+  if (CONFIG.transport === 'polling') {
+    startLobbyPolling();
+    return;
+  }
+  clearLobbyPolling();
+  if (S.lobbyWs) try { S.lobbyWs.close(); } catch(_) {}
+  if (S.lobbyTimer) { clearTimeout(S.lobbyTimer); S.lobbyTimer = null; }
+  const url = wsPath('/ws/lobby');
+  let sock;
+  let opened = false;
+  try {
+    sock = new WebSocket(url);
+  } catch(_) {
+    startLobbyPolling();
+    return;
+  }
+  S.lobbyWs = sock;
+  sock.onopen = () => { opened = true; };
+  sock.onmessage = e => {
+    let msg; try { msg = JSON.parse(e.data); } catch(_) { return; }
+    if (msg.type === 'rooms_updated') loadRooms();
+  };
+  sock.onclose = () => {
+    if (CONFIG.transport === 'websocket' || opened) S.lobbyTimer = setTimeout(connectLobbyWs, 2000);
+    else startLobbyPolling();
+  };
+  sock.onerror = () => { try { sock.close(); } catch(_) {} };
+}
+function sendWsToken() {
+  if (S.ws && S.ws.readyState===WebSocket.OPEN && S.token)
+    S.ws.send(JSON.stringify({type:'set_token', token:S.token}));
+  else refreshState();
+}
+
+function pretty(code) {
+  if (!code||typeof code!=='string') return '';
+  const suit = code.slice(-1).toLowerCase(), rank = code.slice(0,-1);
+  return rank + (SUIT[suit]||'');
+}
+function cardEl(code, i, anim) {
+  const d = (i||0)*0.1, s = anim ? `animation:flipIn .45s ease-out ${d}s both;` : '';
+  return `<div class="card-wrap"><div class="card" style="${s}">${pretty(code)}</div></div>`;
+}
+function miniEl(code, i, anim) {
+  const d = (i||0)*0.1, s = anim ? `animation:flipIn .45s ease-out ${d}s both;` : '';
+  return `<div class="mini-wrap"><div class="mini" style="${s}">${pretty(code)}</div></div>`;
+}
+
+async function copyRoomLink(roomId = S.roomId) {
+  const previousRoom = S.roomId;
+  S.roomId = roomId || previousRoom || 'MAIN01';
+  const url = roomInviteUrl();
+  S.roomId = previousRoom;
+  try {
+    await navigator.clipboard.writeText(url);
+    $('hintText').textContent = `Copied invite link for room ${roomId || previousRoom || 'MAIN01'}.`;
+    playSound('ui', .45);
+  } catch (_) {
+    window.prompt('Copy this poker room link:', url);
+  }
+}
+
+
+function showStorageNotice(message, ok=false) {
+  const box = $('storageNotice');
+  if (!box) return;
+  box.hidden = false;
+  box.classList.toggle('ok', Boolean(ok));
+  box.textContent = message;
+}
+
+async function checkBackendStorage() {
+  try {
+    const h = await api('/api/health');
+    if (h.storage === 'redis') {
+      showStorageNotice('Multiplayer storage connected. Tables will persist while you and friends switch tabs.', true);
+    } else {
+      showStorageNotice('Temporary server storage detected. Add UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Vercel or private tables can disappear between requests.');
+    }
+  } catch (e) {
+    showStorageNotice('Could not check multiplayer storage: ' + e.message);
+  }
+}
+
+async function loadRooms() {
+  const data = await api('/api/rooms');
+  $('roomList').innerHTML = '';
+  data.rooms.forEach(room => {
+    const div = document.createElement('div'); div.className = 'room-card';
+    const canDel = !room.is_default && S.creatorTokens[room.room_id];
+    div.innerHTML = `<strong>${room.name}</strong><div class="room-meta">${room.room_id} · ${room.variant_display} · ${room.occupied_seats}/${room.max_seats} seated</div>
+      <div class="row"><button class="join-btn">Join Room</button><button class="copy-room-btn" type="button">Copy Link</button>${canDel?'<button class="warn del-btn">Delete</button>':''}</div>`;
+    div.querySelector('.join-btn').onclick = () => { switchRoom(room.room_id); };
+    div.querySelector('.copy-room-btn').onclick = async () => { await copyRoomLink(room.room_id); };
+    if (canDel) div.querySelector('.del-btn').onclick = () => deleteRoom(room.room_id);
+    $('roomList').appendChild(div);
+  });
+}
+
+function render(p) {
+  $('roomTitle').textContent = `${p.room.name} (${p.room.room_id})`;
+  $('roomMeta').textContent = `${p.variant_display} · ${p.room.occupied_seats}/${p.room.max_seats} seated · ${p.status_message}`;
+  if (S.token && !p.viewer_token_valid) {
+    rememberRoomToken(p.room.room_id, '');
+    S.token = '';
+    save();
+  }
+  const roomChanged = S.lastSoundRoom !== p.room.room_id;
+  const firstRender = !S.hasRenderedState || roomChanged;
+  if (roomChanged) {
+    S.prevCommunity = [];
+    S.prevHoles = {};
+    S.lastPot = null;
+    S.lastTurnKey = '';
+    S.lastSoundRoom = p.room.room_id;
+  }
+  const sel = $('seatJoinSelect'); sel.innerHTML = '';
+  for (let i=0; i<p.max_seats; i++) { const o=document.createElement('option'); o.value=i; o.textContent=`Seat ${i+1}`; sel.appendChild(o); }
+  sel.value = String(S.selectedSeat);
+  $('potLabel').textContent = `Pot: ${p.pot}`;
+  $('streetLabel').textContent = p.street;
+  const prev = S.prevCommunity, nw = p.community_cards;
+  const newCommunityCount = firstRender ? 0 : nw.filter((c,i) => c && prev[i] !== c).length;
+  $('communityCards').innerHTML = nw.map((c,i) => cardEl(c,i,i>=prev.length||prev[i]!==c)).join('') || '<span class="pill">No board cards yet</span>';
+  S.prevCommunity = [...nw];
+  $('log').innerHTML = p.log.map(x => `<div class="log-item"><strong>${x.actor}</strong><div class="muted">${x.message}</div></div>`).join('');
+  $('showdown').innerHTML = p.showdown.length
+    ? p.showdown.map(x => `<div class="log-item"><strong>${x.player_name}</strong><div class="muted">wins ${x.amount}${x.hand?' with '+x.hand:''}</div></div>`).join('')
+    : '<div class="muted">No showdown yet</div>';
+  const tbl = $('table');
+  tbl.querySelectorAll('.player').forEach(n => n.remove());
+  let newHoleCount = 0;
+  p.seats.forEach((seat,i) => {
+    const box = document.createElement('div');
+    box.className = `player pos-${i%9} ${p.current_actor_index===i?'active':''}`;
+    if (!seat) {
+      const sit = S.token ? '' : `<button onclick="quickJoin(${i})">Sit Here</button>`;
+      box.innerHTML = `<div class="seat-empty"><div class="muted">Seat ${i+1}</div>${sit}<button onclick="quickAddAi(${i})">Add Bot</button></div>`;
+    } else {
+      const btn = p.button_index===i ? '<span class="pill">D</span>' : '';
+      box.innerHTML = `<div class="name">${seat.player_name} ${btn}</div><div class="info">${seat.ai_level} · stack ${seat.chip_stack}</div>
+        <div class="info">${seat.last_action||''}</div>
+        <div class="mini-cards">${seat.hole_cards.map((c,j)=>{const k=i+'-'+j,isNew=S.prevHoles[k]!==c;if(!firstRender&&isNew&&c&&c!=='??')newHoleCount+=1;S.prevHoles[k]=c;return miniEl(c,j,isNew);}).join('')}</div>
+        ${seat.hand_label?`<div class="pill" style="margin-top:4px;font-size:.75rem">${seat.hand_label}</div>`:''}`;
+    }
+    tbl.appendChild(box);
+  });
+  if (newCommunityCount || newHoleCount) {
+    playSound(newCommunityCount ? 'deal' : 'place', Math.min(1, .55 + (newCommunityCount + newHoleCount) * .08));
+  }
+  const chipSoundIsLocal = performance.now() - S.lastChipSoundAt < 700;
+  if (!firstRender && typeof S.lastPot === 'number' && p.hand_in_progress && p.pot > S.lastPot && !chipSoundIsLocal) {
+    playSound('bet', .65);
+  }
+  S.lastPot = p.pot;
+  const legal = p.legal_actions.map(a => a.action);
+  $('foldBtn').disabled = !legal.includes('fold');
+  $('checkBtn').disabled = !legal.includes('check');
+  $('callBtn').disabled = !legal.includes('call');
+  $('betBtn').disabled = !(legal.includes('bet')||legal.includes('raise'));
+  $('allInBtn').disabled = !legal.includes('all_in');
+  $('nextHandBtn').disabled = !p.hand_complete;
+  $('joinSeatBtn').disabled = p.viewer_token_valid;
+  $('hintText').textContent = p.viewer_token_valid
+    ? `You are seat ${p.viewer_seat+1}. Legal actions: ${legal.join(', ')||'none'}.`
+    : 'Join a seat as a human player to act from this browser.';
+  const isMyTurn = p.viewer_token_valid && p.current_actor_index === p.viewer_seat && legal.length > 0;
+  const turnKey = `${p.room.room_id}:${p.hand_id}:${p.current_actor_index}:${p.current_bet_to_call}:${p.street}`;
+  if (!firstRender && isMyTurn && S.lastTurnKey !== turnKey) {
+    S.lastTurnKey = turnKey;
+    playSound('turn');
+  }
+  if (!isMyTurn) S.lastTurnKey = '';
+  S.hasRenderedState = true;
+}
+
+window.quickJoin = async i => { S.selectedSeat=i; $('seatJoinSelect').value=String(i); await joinSeat(); };
+window.quickAddAi = async i => { S.selectedSeat=i; $('seatJoinSelect').value=String(i); await addAi(); };
+
+async function createRoom() {
+  try {
+    const p = await api('/api/rooms/create', {method:'POST', body:JSON.stringify({name:$('roomName').value,variant:$('roomVariant').value,max_seats:Number($('roomSeats').value)})});
+    S.roomId=p.room_id; S.token=''; rememberRoomToken(p.room_id, '');
+    if (p.creator_token) S.creatorTokens[p.room_id]=p.creator_token;
+    if (p.warning) showStorageNotice(p.warning, false);
+    save(); await loadRooms(); connectWs(); playSound('place');
+  } catch(e) { $('hintText').textContent='Create failed: '+e.message; playSound('error'); }
+}
+async function deleteRoom(room_id) {
+  const ct=S.creatorTokens[room_id];
+  if (!ct) { $('hintText').textContent='You are not the creator of that room.'; playSound('error'); return; }
+  try { await api('/api/rooms/close',{method:'POST',body:JSON.stringify({room_id:room_id,creator_token:ct})}); delete S.creatorTokens[room_id];
+    rememberRoomToken(room_id, '');
+    if (S.roomId===room_id){S.roomId='MAIN01';S.token=tokenForRoom('MAIN01');} save(); await loadRooms(); connectWs(); playSound('fold');
+  } catch(e) { $('hintText').textContent='Delete failed: '+e.message; playSound('error'); }
+}
+async function joinSeat() {
+  if (S.token) { $('hintText').textContent='Already seated. Leave first.'; playSound('error'); return; }
+  try {
+    const p = await api('/api/join',{method:'POST',body:JSON.stringify({room_id:S.roomId,seat_index:Number($('seatJoinSelect').value),name:$('playerName').value||'Player',ai_level:'human',client_id:S.clientId})});
+    S.token=p.token; rememberRoomToken(S.roomId, S.token); save(); sendWsToken(); await refreshAfterChange({rooms:true}); playSound('place');
+  } catch(e) { $('hintText').textContent='Join failed: '+e.message; playSound('error'); }
+}
+async function addAi() {
+  try { await api('/api/add_ai',{method:'POST',body:JSON.stringify({room_id:S.roomId,seat_index:Number($('seatJoinSelect').value),ai_level:$('aiKindSelect').value})}); await refreshAfterChange({rooms:true}); playSound('place'); }
+  catch(e) { $('hintText').textContent='Add AI failed: '+e.message; playSound('error'); }
+}
+async function startHand() {
+  try { await api('/api/start_hand',{method:'POST',body:JSON.stringify({room_id:S.roomId})}); playSound('shuffle'); playSound('deal', .75, 180); await refreshAfterChange(); }
+  catch(e) { $('hintText').textContent='Start hand failed: '+e.message; playSound('error'); }
+}
+async function nextHand() {
+  try { await api('/api/next_hand',{method:'POST',body:JSON.stringify({room_id:S.roomId})}); playSound('shuffle'); playSound('deal', .75, 180); await refreshAfterChange(); }
+  catch(e) { $('hintText').textContent='Next hand failed: '+e.message; playSound('error'); }
+}
+async function sendAction(a) {
+  try {
+    const body={room_id:S.roomId,token:S.token,action:a};
+    if (a==='bet'||a==='raise') body.amount=Number($('betAmount').value||'0');
+    await api('/api/action',{method:'POST',body:JSON.stringify(body)}); playActionSound(a); await refreshAfterChange();
+  } catch(e) { $('hintText').textContent='Action failed: '+e.message; playSound('error'); }
+}
+async function betOrRaise() {
+  try {
+    const p=await api(`/api/state?room_id=${encodeURIComponent(S.roomId)}&token=${encodeURIComponent(S.token)}`);
+    await sendAction(p.legal_actions.some(a=>a.action==='raise')?'raise':'bet');
+  } catch(e) { $('hintText').textContent='Bet failed: '+e.message; playSound('error'); }
+}
+async function leaveSeat() {
+  if (!S.token) return;
+  try {
+    await api('/api/leave',{method:'POST',body:JSON.stringify({room_id:S.roomId,token:S.token})});
+    rememberRoomToken(S.roomId, ''); S.token=''; save(); connectWs(); await refreshAfterChange({rooms:true}); playSound('fold');
+  } catch(e) { $('hintText').textContent='Leave failed: '+e.message; playSound('error'); }
+}
+async function varianceDemo() {
+  const btn=$('varianceBtn'), box=$('varianceBox');
+  btn.disabled=true; btn.textContent='Running...';
+  box.innerHTML='<div class="muted">Simulating hands...</div>';
+  try {
+    const a=$('vrAgentA').value, b=$('vrAgentB').value, h=Number($('vrHands').value)||100, v=$('vrVariant').value;
+    const q = new URLSearchParams({agent_a:a, agent_b:b, hands:String(h), variant:v});
+    const p=await api(`/api/variance/demo?${q.toString()}`);
+    const names={ai_easy:'Easy bot',ai_medium:'Medium bot',ai_hard:'Hard bot'};
+    const nameA=names[p.agent_a]||p.agent_a, nameB=names[p.agent_b]||p.agent_b;
+    function statBlock(d, label) {
+      const e=d.mean_edge, se=d.stderr, lo=e-1.96*se, hi=e+1.96*se;
+      const color=e>0?'#64d39b':'#ea7d7d';
+      return `<div style="margin-bottom:6px"><div style="font-weight:700;font-size:.85rem;margin-bottom:4px">${label}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;font-size:.83rem">
+          <span class="muted">${nameA}'s average edge</span><span style="text-align:right;color:${color};font-weight:700">${e>0?'+':''}${e.toFixed(2)}</span>
+          <span class="muted">Estimate uncertainty</span><span style="text-align:right">${se.toFixed(3)}</span>
+          <span class="muted">Likely true range (95%)</span><span style="text-align:right">[${lo.toFixed(1)}, ${hi.toFixed(1)}]</span>
+        </div></div>`;
+    }
+    const factor = p.variance_reduction_factor;
+    const improved = Number.isFinite(factor) && factor > 1;
+    const factorLine = improved
+      ? `<strong style="color:#64d39b">${factor}×</strong> lower uncertainty with variance reduction`
+      : `No lower uncertainty for this selected run`;
+    const detailLine = improved
+      ? `Same ${p.hands} hands — seat-swap method gives a ${factor}× tighter estimate`
+      : `Try a different matchup or more hands if you want a clearer reduction signal`;
+    box.innerHTML=`
+      <div class="log-item">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <strong>${nameA}</strong><span class="muted">vs</span><strong>${nameB}</strong>
+        </div>
+        ${statBlock(p.naive, '① Normal comparison')}
+        ${statBlock(p.reduced, '② Same-seed + seat-swap comparison')}
+        <div style="background:rgba(100,211,155,.1);border:1px solid rgba(100,211,155,.25);border-radius:8px;padding:8px;margin-top:4px">
+          <div style="font-size:.85rem">${factorLine}</div>
+          <div class="muted" style="font-size:.8rem;margin-top:2px">${detailLine}</div>
+        </div>
+      </div>`;
+    playSound('turn', .45);
+  } catch(e) { box.innerHTML=`<div class="muted">Error: ${e.message}</div>`; playSound('error'); }
+  btn.disabled=false; btn.textContent='Run';
+}
+
+setupAudioControls();
+// name gate: enable button only when input non-empty
+$('gateNameInput').oninput = () => { $('gateBtn').disabled = !$('gateNameInput').value.trim(); };
+$('gateNameInput').onkeydown = e => { if (e.key==='Enter' && !$('gateBtn').disabled) $('gateBtn').click(); };
+$('gateBtn').onclick = () => {
+  unlockAudio();
+  const name = $('gateNameInput').value.trim();
+  if (!name) return;
+  localStorage.setItem('poker.username', name);
+  $('playerName').value = name;
+  $('nameGate').style.display = 'none';
+  $('appMain').style.display = '';
+  checkBackendStorage();
+  loadRooms().then(()=>connectWs());
+  connectLobbyWs();
+};
+// auto-skip gate if name already saved
+(function() {
+  const saved = localStorage.getItem('poker.username');
+  if (saved) {
+    $('playerName').value = saved;
+    $('nameGate').style.display = 'none';
+    $('appMain').style.display = '';
+    checkBackendStorage();
+    loadRooms().then(()=>connectWs());
+    connectLobbyWs();
+  }
+})();
+$('createRoomBtn').onclick=createRoom; $('refreshRoomsBtn').onclick=loadRooms; $('copyRoomLinkBtn').onclick=()=>copyRoomLink();
+$('joinSeatBtn').onclick=joinSeat; $('addAiBtn').onclick=addAi;
+$('startHandBtn').onclick=startHand; $('nextHandBtn').onclick=nextHand;
+$('resetBtn').onclick=async()=>{ try { await api('/api/reset',{method:'POST',body:JSON.stringify({room_id:S.roomId})}); await refreshAfterChange(); playSound('allIn', .45); } catch(e) { $('hintText').textContent='Reset failed: '+e.message; playSound('error'); } };
+$('leaveSeatBtn').onclick=leaveSeat;
+$('foldBtn').onclick=()=>sendAction('fold'); $('checkBtn').onclick=()=>sendAction('check');
+$('callBtn').onclick=()=>sendAction('call'); $('betBtn').onclick=betOrRaise;
+$('allInBtn').onclick=()=>sendAction('all_in'); $('varianceBtn').onclick=varianceDemo;
+$('seatJoinSelect').onchange=()=>{S.selectedSeat=Number($('seatJoinSelect').value);};
+</script>
+<script src="../assets/poker-transition.js"></script>
+</body>
+</html>
