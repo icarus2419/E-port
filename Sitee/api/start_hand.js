@@ -1,0 +1,2 @@
+const { route } = require('./_poker');
+module.exports = (req, res) => route(req, res, 'start_hand');
