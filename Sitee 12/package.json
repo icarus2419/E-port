@@ -1,0 +1,13 @@
+{
+  "name": "sitee",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sitee portfolio with embedded playable multiplayer poker platform and one Vercel API function.",
+  "scripts": {
+    "preview": "python3 -m http.server 3000",
+    "check:api": "node ./tests/poker-api-smoke.js"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
