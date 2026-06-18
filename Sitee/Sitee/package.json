@@ -1,0 +1,16 @@
+{
+  "name": "sitee",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sitee portfolio with embedded playable multiplayer poker platform, Hobby-safe single API function, Redis-ready multiplayer locking, and poker transitions.",
+  "scripts": {
+    "preview": "python3 -m http.server 3000",
+    "check:api": "node ./tests/poker-api-smoke.js",
+    "check:multiplayer": "node ./tests/multiplayer-deep-audit.js && node ./tests/multiplayer-race-audit.js",
+    "check:presence": "node ./tests/presence-timeout-audit.js",
+    "check:all": "node ./tests/poker-api-smoke.js && node ./tests/multiplayer-deep-audit.js && node ./tests/multiplayer-race-audit.js && node ./tests/presence-timeout-audit.js"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
