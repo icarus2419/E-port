@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Joseph Doyle-Samadi — Full-Stack Software Engineer. Interactive 3D ePortfolio with projects, skills, and experience." />
+    <title>Joseph Doyle-Samadi | Full-Stack Software Engineer</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%238c42ff'/%3E%3Ctext x='50' y='62' font-size='48' text-anchor='middle' fill='white' font-family='Arial'%3EJS%3C/text%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="./assets/index-ElutUUTF.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/three-OCrUbH6T.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-CE3fQxkk.css">
+  </head>
+  <body class="intro-mode">
+    <div id="loading-screen" class="loader-hidden">
+      <div class="loader-card">
+        <h1>Loading</h1>
+        <p>Building the scene…</p>
+        <div class="loader-track"><div id="loader-bar"></div></div>
+      </div>
+    </div>
+
+    <!-- Cinematic iris overlay: a full-screen black layer with a circular
+         transparent hole (driven by --iris-x/y/radius from main.js) that opens
+         and follows the car as the intro reveals the world. -->
+    <div id="iris-overlay" aria-hidden="true"></div>
+
+    <canvas id="game-canvas" aria-label="Interactive 3D portfolio canvas"></canvas>
+    <div id="vignette" aria-hidden="true"></div>
+
+    <button id="start-overlay" type="button" aria-label="Start the 3D portfolio experience">
+      <span class="start-text">CLICK TO<br />START</span>
+    </button>
+
+    <header id="top-ui">
+      <div class="profile-card" aria-label="Portfolio owner">
+        <div class="avatar-wrap">
+          <div class="avatar">JD</div>
+          <span class="status-dot" title="Open to opportunities"></span>
+        </div>
+        <div>
+          <strong>Joseph Doyle-Samadi</strong>
+          <span>Full-Stack Software Engineer</span>
+        </div>
+      </div>
+      <nav class="top-actions" aria-label="Quick menu">
+        <button id="help-button" class="icon-button" type="button" aria-label="Open menu" aria-expanded="false">
+          <svg class="ico ico-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
+            <line class="ico-bar ico-bar-top" x1="4" y1="7" x2="20" y2="7"/>
+            <line class="ico-bar ico-bar-mid" x1="4" y1="12" x2="20" y2="12"/>
+            <line class="ico-bar ico-bar-bot" x1="4" y1="17" x2="20" y2="17"/>
+          </svg>
+          <span class="sr-only">Menu</span>
+        </button>
+        <button id="map-button" class="icon-button" type="button" aria-label="Toggle map" aria-expanded="false">
+          <svg class="ico ico-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 4.6 3.4 6.8V19.4L9 17.2 15 19.4 20.6 17.2V4.6L15 6.8 9 4.6Z"/>
+            <line x1="9" y1="4.6" x2="9" y2="17.2"/>
+            <line x1="15" y1="6.8" x2="15" y2="19.4"/>
+          </svg>
+          <span class="sr-only">Map</span>
+        </button>
+        <button id="mute-button" class="icon-button" type="button" aria-label="Mute sound" aria-pressed="false">
+          <svg class="ico ico-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path class="ico-spk" d="M12 5.2 8 9.2H4V14.8H8L12 18.8Z"/>
+            <path class="ico-wave ico-wave-1" d="M15.4 9.4A3.6 3.6 0 0 1 15.4 14.6"/>
+            <path class="ico-wave ico-wave-2" d="M17.8 6.8A7.2 7.2 0 0 1 17.8 17.2"/>
+            <line class="ico-slash" x1="4" y1="4" x2="20" y2="20"/>
+          </svg>
+          <span class="sr-only">Mute sound</span>
+        </button>
+      </nav>
+    </header>
+
+    <section id="hud">
+      <div class="hud-card">
+        <p class="hud-kicker">Current location</p>
+        <h2 id="nearest-title">Home Base</h2>
+        <p id="nearest-text">Your central hub. Explore the stations to learn more about my work and journey.</p>
+        <div id="prompt"><span class="prompt-text">Drive to any glowing area to explore</span></div>
+      </div>
+    </section>
+
+    <aside id="minimap-wrap" aria-label="World map" role="dialog">
+      <button class="panel-close" data-close-map type="button" aria-label="Close map"><span aria-hidden="true"></span></button>
+      <p class="menu-kicker">Portfolio Hub</p>
+      <h2 class="map-heading">World Map</h2>
+      <p class="menu-lead map-lead">Choose a station. Drive teleports the car there; Open shows the section.</p>
+      <div class="map-layout">
+        <div class="map-canvas-frame"><canvas id="minimap" width="460" height="460" aria-label="Map of the portfolio world"></canvas></div>
+        <div id="map-legend" class="map-legend" role="list" aria-label="Stations"></div>
+      </div>
+    </aside>
+
+    <div id="sign-hint" aria-hidden="true"></div>
+    <div id="statue-prompt" aria-hidden="true"><kbd class="statue-prompt-key">E</kbd><span class="statue-prompt-label"></span></div>
+
+    <div id="controls-help" class="panel clean-menu hidden" aria-label="Main menu">
+      <button class="panel-close" data-close-help type="button" aria-label="Close menu"><span aria-hidden="true"></span></button>
+      <p class="menu-kicker">Portfolio Hub</p>
+      <h2>Menu</h2>
+      <p class="menu-lead">Open a section directly, or drive to the matching station in the world.</p>
+
+      <div class="menu-section">
+        <p class="menu-section-title">Sections</p>
+        <div class="menu-zone-grid" id="menu-zone-grid"></div>
+      </div>
+
+      <div class="menu-section">
+        <p class="menu-section-title">World settings</p>
+        <div class="menu-settings-list">
+          <button id="weather-cycle" type="button"><span class="setting-name">Weather</span><span class="setting-value" id="weather-value">Night</span></button>
+          <button id="performance-toggle" type="button"><span class="setting-name">Performance</span><span class="setting-value" id="performance-value">Auto</span></button>
+          <button id="sound-toggle" type="button"><span class="setting-name">Sound</span><span class="setting-value" id="sound-value">On</span></button>
+        </div>
+      </div>
+
+      <div class="menu-section menu-controls-list">
+        <p class="menu-section-title">Controls</p>
+        <div><b>WASD / ARROWS</b><span>Move</span></div>
+        <div><b>SHIFT</b><span>Boost</span></div>
+        <div><b>SPACE</b><span>Hop</span></div>
+        <div><b>E / ENTER</b><span>Read statue</span></div>
+        <div><b>M</b><span>Map</span></div>
+        <div><b>T</b><span>Weather</span></div>
+        <div><b>P</b><span>Performance</span></div>
+        <div><b>R</b><span>Reset</span></div>
+      </div>
+
+      <div class="menu-section">
+        <p class="menu-section-title">Reach me</p>
+        <div class="menu-links" id="menu-links"></div>
+      </div>
+    </div>
+
+    <div id="modal-backdrop" class="hidden"></div>
+    <article id="portfolio-modal" class="modal hidden" aria-modal="true" role="dialog">
+      <button id="modal-close" type="button" aria-label="Close portfolio panel">×</button>
+      <div id="modal-content"></div>
+    </article>
+
+    <div id="mobile-controls" aria-label="Mobile driving controls">
+      <div class="mobile-joystick" data-joystick role="application" aria-label="Steer and drive">
+        <div class="joystick-ring" aria-hidden="true">
+          <div class="joystick-thumb"></div>
+        </div>
+      </div>
+      <div class="mobile-actions">
+        <button data-control="boost" type="button">BOOST</button>
+        <button data-control="interact" type="button">E</button>
+        <button data-control="jump" type="button">HOP</button>
+        <button data-control="respawn" type="button">R</button>
+      </div>
+    </div>
+
+    <noscript>This portfolio needs JavaScript/WebGL enabled.</noscript>
+    <script>
+      window.setTimeout(function () {
+        if (!window.__JOSEPH_PORTFOLIO_STARTED) {
+          var ls = document.querySelector('#loading-screen');
+          if (ls) ls.classList.remove('loader-hidden');
+          var badge = document.querySelector('.loader-badge');
+          var title = document.querySelector('.loader-card h1');
+          var text = document.querySelector('.loader-card p');
+          if (badge) badge.textContent = 'NOT STARTED';
+          if (title) title.textContent = 'Could not load the 3D app';
+          if (text) text.innerHTML = 'The page scripts did not start. Check your connection and refresh. If you are running the source locally, run <b>npm install</b> then <b>npm run dev</b> (opening the file directly blocks module loading).';
+        }
+      }, 3000);
+    </script>
+  </body>
+</html>
