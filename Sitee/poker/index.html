@@ -164,6 +164,7 @@
     .turn-timer[hidden] { display:none !important; }
     .turn-timer.is-mine { border-color:rgba(100,211,155,.65); color:#d8ffe9; background:rgba(15,46,33,.94); box-shadow:0 6px 18px rgba(0,0,0,.4), 0 0 16px rgba(100,211,155,.22); }
     .turn-timer.is-low { border-color:rgba(234,125,125,.7); color:#ffd1d1; background:rgba(46,18,18,.94); animation:timerPulse .8s ease-in-out infinite alternate; }
+    body.poker-table-mode .turn-timer { display:none !important; }
     @keyframes timerPulse { from { transform:scale(1); } to { transform:scale(1.035); } }
     .call-match-banner { margin:0 auto 9px; width:min(100%,320px); padding:9px 12px; border-radius:14px; border:1px solid rgba(216,182,106,.48); background:rgba(216,182,106,.16); color:#fff7d8; font-weight:950; line-height:1.18; text-align:center; box-shadow:0 0 20px rgba(216,182,106,.13); }
     .call-match-banner[hidden] { display:none !important; }
@@ -189,15 +190,33 @@
     .topbar-actions button { min-height:38px; white-space:nowrap; }
     .table-wrap { position:relative; background:rgba(10,17,17,.35); border-radius:30px; padding:18px; border:1px solid rgba(216,182,106,.16); box-shadow:var(--shadow); }
     .table { position:relative; min-height:620px; border-radius:280px; background:var(--felt); border:12px solid #5a4322; outline:2px solid rgba(216,182,106,.32); overflow:hidden; }
-    .table-center { position:absolute; inset:50% auto auto 50%; transform:translate(-50%,-50%); width:380px; text-align:center; }
+    .table-dealer { position:absolute; top:10px; left:50%; transform:translateX(-50%); z-index:8; display:grid; justify-items:center; gap:2px; pointer-events:none; filter:drop-shadow(0 10px 20px rgba(0,0,0,.3)); }
+    .dealer-face { position:relative; width:44px; height:44px; border-radius:50%; border:3px solid rgba(200,230,255,.72); background:radial-gradient(circle at 50% 38%,#d8f0ff 0 11%,#455d78 12% 18%,#1a2a42 19% 100%); box-shadow:0 0 0 5px rgba(58,89,132,.58), inset 0 -8px 14px rgba(0,0,0,.25); }
+    .dealer-face::before { content:''; position:absolute; left:13px; top:20px; width:5px; height:5px; border-radius:50%; background:#f2e989; box-shadow:13px 0 0 #f2e989; }
+    .dealer-face::after { content:''; position:absolute; left:19px; top:28px; width:8px; height:4px; border-bottom:2px solid rgba(234,255,247,.72); border-radius:0 0 10px 10px; }
+    .dealer-label { padding:2px 9px 3px; border-radius:999px; background:rgba(8,19,25,.86); border:1px solid rgba(200,230,255,.32); color:#e9f8ff; font-size:.62rem; font-weight:950; letter-spacing:.08em; text-transform:uppercase; }
+    .table-center { position:absolute; inset:50% auto auto 50%; transform:translate(-50%,-50%); width:380px; text-align:center; z-index:5; }
     .street { font-size:1.1rem; font-weight:700; margin-bottom:8px; color:#f7f0db; }
     .pot { font-size:1.4rem; font-weight:800; color:var(--gold); margin-bottom:14px; }
     .cards { display:flex; justify-content:center; gap:10px; margin-bottom:10px; }
     .card-wrap { perspective:400px; width:54px; height:74px; }
     .card { width:54px; height:74px; border-radius:10px; background:#fbfbfb; color:#101010; display:grid; place-items:center; font-weight:800; box-shadow:0 8px 18px rgba(0,0,0,.28); }
     @keyframes flipIn { 0%{transform:rotateY(90deg);opacity:0} 100%{transform:rotateY(0);opacity:1} }
-    .player { position:absolute; width:152px; min-height:90px; background:rgba(15,24,25,.88); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:10px; text-align:center; }
-    .player.active { outline:2px solid var(--accent); }
+    .player { position:absolute; width:152px; min-height:90px; background:rgba(15,24,25,.88); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:10px; text-align:center; z-index:6; }
+    .player.active { border-color:rgba(100,211,155,.56); box-shadow:0 0 0 1px rgba(100,211,155,.22), 0 0 20px rgba(100,211,155,.14); }
+    .seat-head { display:block; min-width:0; }
+    .seat-copy { display:grid; gap:1px; min-width:0; }
+    .player.has-avatar .seat-head { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; justify-content:center; gap:7px; margin-bottom:4px; text-align:left; }
+    .player.has-avatar .name { margin-bottom:0; text-align:left; -webkit-line-clamp:1; }
+    .player.has-avatar .chip-line,
+    .player.has-avatar .last-action { justify-content:flex-start; text-align:left; }
+    .seat-avatar { width:34px; height:34px; border-radius:50%; overflow:hidden; border:2px solid rgba(230,255,238,.84); background:#1b2b35; box-shadow:0 0 0 3px rgba(100,211,155,.22), 0 8px 16px rgba(0,0,0,.34); flex:none; }
+    .seat-avatar svg { display:block; width:100%; height:100%; }
+    .seat-turn-indicator { --turn-angle:360deg; position:absolute; top:-15px; right:-15px; width:34px; height:34px; border-radius:50%; z-index:12; background:conic-gradient(#66df9a var(--turn-angle), rgba(100,211,155,.18) 0); border:2px solid rgba(7,20,16,.72); box-shadow:0 0 0 2px rgba(100,211,155,.28), 0 8px 18px rgba(0,0,0,.38), 0 0 20px rgba(100,211,155,.22); }
+    .seat-turn-indicator::before { content:''; position:absolute; inset:6px; border-radius:inherit; background:rgba(8,19,18,.96); border:1px solid rgba(197,255,220,.22); }
+    .seat-turn-indicator::after { content:''; position:absolute; inset:12px; border-radius:inherit; background:#66df9a; box-shadow:0 0 10px rgba(100,211,155,.82); }
+    .seat-turn-indicator.is-low { background:conic-gradient(#ffe06c var(--turn-angle), rgba(216,182,106,.18) 0); box-shadow:0 0 0 2px rgba(216,182,106,.24), 0 8px 18px rgba(0,0,0,.38), 0 0 18px rgba(216,182,106,.22); }
+    .seat-turn-indicator.is-low::after { background:#ffe06c; box-shadow:0 0 10px rgba(255,224,108,.76); }
     .player .name { font-weight:700; margin-bottom:4px; white-space:normal; line-height:1.15; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
     .player .info { color:var(--muted); font-size:.85rem; margin-bottom:6px; line-height:1.15; overflow:hidden; text-overflow:ellipsis; }
     .player .chip-line { color:#fff2bd; font-weight:850; font-size:.78rem; line-height:1.15; overflow:hidden; text-overflow:ellipsis; display:flex; align-items:baseline; justify-content:center; gap:4px; flex-wrap:wrap; }
@@ -209,7 +228,7 @@
     .seat-empty { display:grid; gap:8px; align-content:center; min-height:90px; }
     .seat-empty button { font-size:.85rem; }
     .pos-0{bottom:12px;left:50%;transform:translateX(-50%)} .pos-1{bottom:92px;right:64px} .pos-2{top:136px;right:64px}
-    .pos-3{top:22px;left:50%;transform:translateX(-50%)} .pos-4{top:136px;left:64px} .pos-5{bottom:92px;left:64px}
+    .pos-3{top:76px;left:64px;transform:none} .pos-4{top:250px;left:64px} .pos-5{bottom:54px;left:64px}
     .pos-6{bottom:210px;left:18px} .pos-7{bottom:210px;right:18px} .pos-8{top:250px;left:50%;transform:translateX(-50%)}
     .actionbar { background:rgba(18,29,30,.94); border:1px solid rgba(216,182,106,.16); border-radius:18px; box-shadow:var(--shadow); padding:14px; display:grid; gap:12px; transition:border-color var(--btn-ease), box-shadow var(--btn-ease); }
     .game-actions { width:100%; max-width:1180px; justify-self:center; }
@@ -387,22 +406,32 @@
       .hand-summary .summary-detail { font-size:.72rem; }
       .hand-summary .summary-card { min-width:26px; padding:4px 5px; font-size:.72rem; }
       .hand-summary .summary-actions { grid-template-columns:1fr; }
+      .table-dealer { top:7px; gap:1px; }
+      .dealer-face { width:34px; height:34px; border-width:2px; box-shadow:0 0 0 4px rgba(58,89,132,.52), inset 0 -7px 12px rgba(0,0,0,.25); }
+      .dealer-face::before { left:10px; top:15px; width:4px; height:4px; box-shadow:10px 0 0 #f2e989; }
+      .dealer-face::after { left:14px; top:22px; width:7px; height:4px; }
+      .dealer-label { padding:1px 7px 2px; font-size:.5rem; }
       .player { width:106px; min-height:74px; padding:7px; border-radius:12px; display:grid; align-content:center; gap:2px; }
       .player .name { font-size:.8rem; margin-bottom:1px; line-height:1.05; -webkit-line-clamp:1; }
       .player .chip-line { font-size:.68rem; line-height:1.05; display:flex; justify-content:center; gap:4px; flex-wrap:wrap; }
       .player .seat-kind { display:none; }
       .player .last-action { font-size:.65rem; line-height:1.05; margin-bottom:2px; min-height:0; }
       .player .info { font-size:.7rem; margin-bottom:2px; }
+      .player.has-avatar .seat-head { gap:4px; margin-bottom:2px; }
+      .seat-avatar { width:26px; height:26px; border-width:1px; box-shadow:0 0 0 2px rgba(100,211,155,.18), 0 6px 12px rgba(0,0,0,.3); }
+      .seat-turn-indicator { width:28px; height:28px; top:-12px; right:-4px; }
+      .seat-turn-indicator::before { inset:5px; }
+      .seat-turn-indicator::after { inset:10px; }
       .mini-wrap, .mini { width:26px; height:36px; }
       .mini { border-radius:6px; font-size:.64rem; }
       .seat-empty { min-height:70px; gap:5px; }
       .seat-empty button { min-height:34px; padding:5px 6px; font-size:.74rem; }
       .pos-0{bottom:8px;left:50%;transform:translateX(-50%)}
-      .pos-1{bottom:86px;right:8px}
-      .pos-2{top:96px;right:8px}
-      .pos-3{top:8px;left:50%;transform:translateX(-50%)}
-      .pos-4{top:96px;left:8px}
-      .pos-5{bottom:86px;left:8px}
+      .pos-1{bottom:86px;right:0}
+      .pos-2{top:96px;right:0}
+      .pos-3{top:62px;left:8px;transform:none}
+      .pos-4{top:200px;left:8px}
+      .pos-5{bottom:8px;left:8px}
       .pos-6{bottom:220px;left:2px}
       .pos-7{bottom:220px;right:2px}
       .pos-8{top:215px;left:50%;transform:translateX(-50%)}
@@ -440,20 +469,31 @@
       .cards { gap:3px; }
       .card-wrap, .card { width:32px; height:45px; }
       .card { font-size:.65rem; }
+      .table-dealer { top:5px; }
+      .dealer-face { width:30px; height:30px; box-shadow:0 0 0 3px rgba(58,89,132,.5), inset 0 -6px 10px rgba(0,0,0,.25); }
+      .dealer-face::before { left:9px; top:14px; width:3px; height:3px; box-shadow:9px 0 0 #f2e989; }
+      .dealer-face::after { left:13px; top:20px; width:6px; border-bottom-width:1px; }
+      .dealer-label { padding:1px 6px 2px; font-size:.46rem; }
       .player { width:92px; min-height:66px; padding:5px; gap:1px; }
       .player .name { font-size:.7rem; }
       .player .chip-line { font-size:.6rem; }
       .player .last-action { font-size:.58rem; }
       .player .info { font-size:.62rem; }
+      .player.has-avatar .seat-head { gap:3px; margin-bottom:1px; }
+      .seat-avatar { width:22px; height:22px; }
+      .seat-turn-indicator { width:25px; height:25px; top:-10px; right:-1px; border-width:1px; }
+      .seat-turn-indicator::before { inset:5px; }
+      .seat-turn-indicator::after { inset:9px; }
       .mini-wrap, .mini { width:22px; height:31px; }
       .mini { font-size:.56rem; }
       .seat-empty button { min-height:30px; font-size:.68rem; }
       .kick-seat { min-height:24px !important; padding:3px 6px !important; font-size:.62rem !important; }
       .turn-timer { font-size:.72rem; padding:5px 8px; }
-      .pos-1{bottom:82px;right:4px}
-      .pos-2{top:88px;right:4px}
-      .pos-4{top:88px;left:4px}
-      .pos-5{bottom:82px;left:4px}
+      .pos-1{bottom:82px;right:0}
+      .pos-2{top:88px;right:0}
+      .pos-3{top:54px;left:4px;transform:none}
+      .pos-4{top:190px;left:4px}
+      .pos-5{bottom:8px;left:4px}
       .pos-6{bottom:220px;left:0}
       .pos-7{bottom:220px;right:0}
       .pos-8{top:218px;left:50%;transform:translateX(-50%)}
@@ -469,7 +509,7 @@
       .call-match-banner { width:min(100%,155px); }
       .call-match-banner strong { font-size:.62rem; }
       .player { width:86px; }
-      .pos-1{right:2px}.pos-2{right:2px}.pos-4{left:2px}.pos-5{left:2px}
+      .pos-1{right:0}.pos-2{right:0}.pos-3{left:2px}.pos-4{left:2px}.pos-5{left:2px}
     }
     @media (max-height:520px) and (orientation:landscape) and (max-width:900px) {
       .app { padding-top:54px; }
@@ -542,7 +582,7 @@
       display:none !important;
     }
     body.poker-playing .table-center {
-      transform:translate(-50%,-58%);
+      transform:translate(-50%,-30%);
     }
     body.poker-playing .street {
       margin-bottom:4px;
@@ -610,6 +650,13 @@
     }
     body.poker-playing .table-setup-grid {
       display:none;
+    }
+    @media (min-width:901px) {
+      body.poker-table-mode .card-wrap,
+      body.poker-table-mode .card {
+        width:clamp(38px,2.7vw,52px);
+        height:clamp(52px,3.7vw,72px);
+      }
     }
     body.poker-table-mode .game-actions {
       align-self:end;
@@ -741,11 +788,21 @@
       body.poker-table-mode .activity-details summary { min-height:32px; padding:6px 8px; }
     }
     @media (max-width:900px) {
+      body.poker-table-mode {
+        height:auto;
+        min-height:100dvh;
+        overflow:auto;
+      }
       body.poker-table-mode .app {
         padding:58px 8px 8px;
+        height:auto;
+        min-height:100dvh;
+        overflow:visible;
       }
       body.poker-table-mode .center {
+        height:auto;
         gap:7px;
+        grid-template-rows:auto auto auto;
       }
       body.poker-table-mode .topbar {
         min-height:0;
@@ -762,25 +819,35 @@
         width:100%;
         min-height:38px;
       }
+      body.poker-table-mode .table-wrap {
+        height:auto;
+      }
       body.poker-table-mode .table {
-        height:100%;
-        min-height:0;
+        height:clamp(500px, 68dvh, 590px);
+        min-height:500px;
+        max-height:none;
         border-width:6px;
         border-radius:150px;
       }
       body.poker-table-mode .table-center {
         width:50%;
         max-width:180px;
+        transform:translate(-50%,-52%);
       }
       body.poker-table-mode .game-actions {
-        max-height:43dvh;
-        overflow:auto;
+        max-height:none;
+        overflow:visible;
         padding:8px;
       }
       body.poker-playing .player:not(:has(.seat-empty)) {
         width:96px;
         padding:5px;
         border-radius:12px;
+      }
+      body.poker-playing .player:has(.seat-empty) {
+        width:96px;
+        min-height:54px;
+        padding:6px;
       }
       body.poker-playing .player:not(:has(.seat-empty)) .name {
         font-size:.7rem;
@@ -841,6 +908,11 @@
       }
       body.poker-playing .player:not(:has(.seat-empty)) {
         width:86px;
+        padding:5px;
+      }
+      body.poker-playing .player:has(.seat-empty) {
+        width:86px;
+        min-height:50px;
         padding:5px;
       }
       .game-over-actions {
@@ -935,6 +1007,10 @@
         </div>
       </div>
       <div class="table-wrap"><div class="table" id="table">
+        <div class="table-dealer" aria-hidden="true">
+          <span class="dealer-face"></span>
+          <span class="dealer-label">Dealer</span>
+        </div>
         <div class="table-center">
           <div class="turn-timer" id="turnTimer" hidden></div>
           <div class="call-match-banner" id="callMatchBanner" hidden></div>
@@ -943,7 +1019,7 @@
           <div class="winner-banner" id="winnerBanner" hidden></div>
           <div class="cards" id="communityCards"></div>
           <div class="hand-summary" id="handSummary" hidden></div>
-          <div class="hint">Button is marked with D. Current actor is highlighted.</div>
+          <div class="hint">Dealer stays at the top. Current actor is highlighted.</div>
         </div>
       </div></div>
       <section class="actionbar game-actions" aria-label="Poker actions">
@@ -1234,6 +1310,60 @@ function showdownHandText(showdown = []) {
 function boardText(cards = []) {
   const shown = (cards || []).filter(Boolean).map(pretty);
   return shown.length ? shown.join('  ') : 'No board cards';
+}
+function hashString(value) {
+  let hash = 2166136261;
+  for (const ch of String(value || '')) {
+    hash ^= ch.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+function isBotSeat(seat) {
+  return Boolean(seat && seat.ai_level && seat.ai_level !== 'human');
+}
+const BOT_AVATAR_PALETTES = [
+  {bg:'#8ee0a8', face:'#164a3a', accent:'#f3df79', shadow:'#0b2b2b'},
+  {bg:'#9ed1ff', face:'#1d3558', accent:'#ffdf86', shadow:'#112340'},
+  {bg:'#ffc4df', face:'#603052', accent:'#9ee8ff', shadow:'#351d34'},
+  {bg:'#c8ec72', face:'#405722', accent:'#fff2a1', shadow:'#243314'},
+  {bg:'#b7a6ff', face:'#2d285a', accent:'#72efc5', shadow:'#181739'},
+  {bg:'#ffbf78', face:'#633b1f', accent:'#d8fff3', shadow:'#3a2112'},
+];
+function botAvatarMarkup(seat, seatIndex) {
+  if (!isBotSeat(seat)) return '';
+  const seed = hashString(`${seat.player_name || ''}:${seat.ai_level || ''}:${seatIndex}`);
+  const p = BOT_AVATAR_PALETTES[seed % BOT_AVATAR_PALETTES.length];
+  const eye = seed % 3 === 0 ? 4 : 3;
+  const brow = seed % 2 === 0
+    ? `<path d="M17 25 Q23 20 29 24" fill="none" stroke="${p.accent}" stroke-width="3" stroke-linecap="round"/><path d="M35 24 Q41 20 47 25" fill="none" stroke="${p.accent}" stroke-width="3" stroke-linecap="round"/>`
+    : `<rect x="17" y="21" width="12" height="4" rx="2" fill="${p.accent}" opacity=".9"/><rect x="35" y="21" width="12" height="4" rx="2" fill="${p.accent}" opacity=".9"/>`;
+  const mouth = seed % 4 === 0
+    ? '<path d="M24 43 Q32 49 40 43" fill="none" stroke="#eafff3" stroke-width="3" stroke-linecap="round"/>'
+    : seed % 4 === 1
+      ? '<path d="M25 43 H39" fill="none" stroke="#eafff3" stroke-width="3" stroke-linecap="round"/>'
+      : '<path d="M25 41 Q32 45 39 41" fill="none" stroke="#eafff3" stroke-width="3" stroke-linecap="round"/>';
+  const mark = seed % 3 === 0
+    ? `<circle cx="47" cy="14" r="5" fill="${p.accent}" opacity=".9"/>`
+    : seed % 3 === 1
+      ? `<path d="M17 14 L25 7 L33 14 Z" fill="${p.accent}" opacity=".9"/>`
+      : `<rect x="39" y="9" width="12" height="8" rx="4" fill="${p.accent}" opacity=".9"/>`;
+  return `<span class="seat-avatar" aria-hidden="true"><svg viewBox="0 0 64 64" focusable="false">
+    <rect width="64" height="64" rx="18" fill="${p.bg}"/>
+    <path d="M0 49 C15 41 23 60 39 48 C49 40 54 50 64 43 V64 H0 Z" fill="${p.shadow}" opacity=".45"/>
+    <circle cx="32" cy="34" r="22" fill="${p.face}"/>
+    ${mark}
+    ${brow}
+    <circle cx="23" cy="33" r="${eye}" fill="#eafff3"/>
+    <circle cx="41" cy="33" r="${eye}" fill="#eafff3"/>
+    <circle cx="23" cy="33" r="1.6" fill="#071413"/>
+    <circle cx="41" cy="33" r="1.6" fill="#071413"/>
+    ${mouth}
+  </svg></span>`;
+}
+function seatTurnIndicatorMarkup(p, seatIndex) {
+  const active = p?.current_actor_index === seatIndex && p?.hand_in_progress && !p?.hand_complete;
+  return active ? '<div class="seat-turn-indicator" aria-label="Current turn timer"></div>' : '';
 }
 function handSummaryKey(p) {
   return p?.room?.room_id && p?.hand_id ? `${p.room.room_id}:${p.hand_id}` : '';
@@ -1976,6 +2106,30 @@ function turnTimerKey(p) {
   return `${p.room?.room_id || ''}:${p.hand_id}:${p.current_actor_index}:${p.current_bet_to_call}:${p.street}`;
 }
 
+function turnProgressRatio(p = S.lastState) {
+  const actor = p?.current_actor_index;
+  const end = Number(S.turnTimerEnd) || 0;
+  if (!end || actor == null || !p?.hand_in_progress || p?.hand_complete) return 0;
+  const started = Number(p.turn_started_at) || 0;
+  const deadline = Number(p.turn_deadline_at) || 0;
+  const total = deadline > started ? Math.max(1000, deadline - started) : 60000;
+  return Math.max(0, Math.min(1, (end - Date.now()) / total));
+}
+
+function updateSeatTurnIndicator() {
+  const indicators = document.querySelectorAll('.seat-turn-indicator');
+  if (!indicators.length) return;
+  const p = S.lastState;
+  const actor = p?.current_actor_index;
+  indicators.forEach(el => {
+    const ratio = actor != null && el.closest('.player')?.dataset.seat === String(actor)
+      ? turnProgressRatio(p)
+      : 0;
+    el.style.setProperty('--turn-angle', `${Math.round(ratio * 360)}deg`);
+    el.classList.toggle('is-low', ratio > 0 && ratio <= .18);
+  });
+}
+
 // Reads only the locally-anchored deadline (S.turnTimerEnd), never the raw
 // server timestamp, so each tick is consistent and monotonic.
 function updateTurnTimer() {
@@ -1989,6 +2143,7 @@ function updateTurnTimer() {
     el.hidden = true;
     el.textContent = '';
     el.classList.remove('is-mine','is-low');
+    updateSeatTurnIndicator();
     return;
   }
   const left = Math.max(0, Math.round((end - Date.now()) / 1000));
@@ -1997,6 +2152,7 @@ function updateTurnTimer() {
   el.textContent = isMine ? `Your turn · ${left}s` : `Seat ${Number(actor) + 1} to act · ${left}s`;
   el.classList.toggle('is-mine', isMine);
   el.classList.toggle('is-low', left <= 10);
+  updateSeatTurnIndicator();
 }
 
 function startTurnCountdown(p) {
@@ -2323,26 +2479,29 @@ function render(p) {
   let newHoleCount = 0;
   p.seats.forEach((seat,i) => {
     const box = document.createElement('div');
-    box.className = `player pos-${i%9} ${p.current_actor_index===i?'active':''} ${winnerSeats.has(i)?'winner':''}`;
+    box.className = `player pos-${i%9} ${p.current_actor_index===i?'active':''} ${winnerSeats.has(i)?'winner':''} ${isBotSeat(seat)?'has-avatar':''}`;
+    box.dataset.seat = String(i);
     if (!seat) {
       const sit = S.token ? '' : `<button onclick="quickJoin(${i})">Sit</button>`;
       const bot = p.hand_in_progress && !p.hand_complete ? '' : `<button class="bot-btn" onclick="quickAddAi(${i})">Bot</button>`;
       box.innerHTML = `<div class="seat-empty"><div class="muted">Seat ${i+1}</div>${sit}${bot}</div>`;
     } else {
-      const btn = p.button_index===i ? '<span class="pill">D</span>' : '';
       const aiLabel = String(seat.ai_level || '').replace('ai_', '');
       const canKick = isRoomCreator(p.room?.room_id || S.roomId) && i !== p.viewer_seat;
       const kickBtn = canKick ? `<div class="seat-actions"><button class="kick-seat" onclick="kickSeat(${i})" title="Remove this player">Kick</button></div>` : '';
       const stackText = `${seat.chip_stack} chips`;
       const statusText = seat.last_action || (p.current_actor_index === i ? 'Your move' : 'Waiting');
-      box.innerHTML = `<div class="name" title="${escapeHtml(seat.player_name || '')}">${escapeHtml(seat.player_name)} ${btn}</div>
-        <div class="chip-line" title="${escapeHtml(aiLabel)} · ${escapeHtml(stackText)}"><span>${escapeHtml(stackText)}</span><span class="seat-kind">${escapeHtml(aiLabel)}</span></div>
-        <div class="last-action" title="${escapeHtml(statusText)}">${escapeHtml(statusText)}</div>
+      box.innerHTML = `${seatTurnIndicatorMarkup(p, i)}<div class="seat-head">${botAvatarMarkup(seat, i)}<div class="seat-copy">
+          <div class="name" title="${escapeHtml(seat.player_name || '')}">${escapeHtml(seat.player_name)}</div>
+          <div class="chip-line" title="${escapeHtml(aiLabel)} · ${escapeHtml(stackText)}"><span>${escapeHtml(stackText)}</span><span class="seat-kind">${escapeHtml(aiLabel)}</span></div>
+          <div class="last-action" title="${escapeHtml(statusText)}">${escapeHtml(statusText)}</div>
+        </div></div>
         <div class="mini-cards">${seat.hole_cards.map((c,j)=>{const k=i+'-'+j,isNew=S.prevHoles[k]!==c;const isViewerHole=i===p.viewer_seat&&c&&c!=='??';if(!firstRender&&isNew&&isViewerHole)newHoleCount+=1;S.prevHoles[k]=c;return miniEl(c,j,isNew);}).join('')}</div>
         ${seat.hand_label?`<div class="pill" style="margin-top:4px;font-size:.75rem">${escapeHtml(seat.hand_label)}</div>`:''}${kickBtn}`;
     }
     tbl.appendChild(box);
   });
+  updateSeatTurnIndicator();
   // Card reveal sounds are driven by street/hole-count transitions instead of
   // DOM diffing, so they still play after server payloads, refreshes, and first
   // render of a freshly-started hand.
