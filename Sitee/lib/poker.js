@@ -154,6 +154,7 @@ function freshTable(variantName = 'holdem', maxSeats = 6) {
     status_message: 'Waiting for players',
     log: [{ actor: 'System', message: `Table created for ${v.display_name}` }],
     last_showdown: [],
+    game_winner: null,
   };
 }
 
@@ -263,6 +264,7 @@ function normalizeRoom(room) {
   t.turn_actor_index = Number.isFinite(Number(t.turn_actor_index)) ? Number(t.turn_actor_index) : null;
   t.turn_started_at = Number(t.turn_started_at) || 0;
   t.deck = Array.isArray(t.deck) ? t.deck : [];
+  t.game_winner = t.game_winner && Number.isFinite(Number(t.game_winner.seat_number)) ? t.game_winner : null;
 }
 
 function roomLastActivity(room) {
@@ -323,6 +325,8 @@ function roomSummary(room) {
     open_seats: room.table.max_seats - players.length,
     hand_in_progress: !!room.table.hand_in_progress,
     hand_complete: !!room.table.hand_complete,
+    game_complete: !!room.table.game_winner,
+    game_winner: room.table.game_winner || null,
     status_message: room.table.status_message || 'Waiting for players',
     is_default: !!room.is_default,
     created_at: createdAt,
@@ -471,6 +475,32 @@ function iterPlayers(t) { return t.seats.filter(Boolean); }
 function occupiedWithChips(t) { return t.seats.map((p, i) => p && p.chip_stack > 0 ? i : -1).filter(i => i >= 0); }
 function activeNonFoldedSeats(t) { return t.seats.map((p, i) => p && !p.folded && (p.chip_stack > 0 || p.ChipsIn_pot > 0) ? i : -1).filter(i => i >= 0); }
 
+function gameWinnerData(p, t) {
+  return p ? {
+    seat_number: p.seat_number,
+    player_name: p.player_name,
+    ai_level: p.ai_level,
+    chip_stack: p.chip_stack,
+    hand_id: t.hand_id,
+    won_at: Date.now(),
+  } : null;
+}
+
+function updateGameWinner(t) {
+  const occupied = iterPlayers(t);
+  const alive = occupied.filter(p => Number(p.chip_stack || 0) > 0);
+  if (occupied.length >= t.variant.min_players && alive.length === 1) {
+    const winner = gameWinnerData(alive[0], t);
+    const already = t.game_winner && Number(t.game_winner.seat_number) === Number(winner.seat_number);
+    t.game_winner = winner;
+    t.status_message = `${winner.player_name} wins the game`;
+    if (!already) appendLog(t, 'System', `${winner.player_name} wins the overall game`);
+    return t.game_winner;
+  }
+  t.game_winner = null;
+  return null;
+}
+
 function nextOccupiedFrom(t, index) {
   for (let offset = 1; offset <= t.max_seats; offset++) {
     const candidate = (((index || 0) + offset) % t.max_seats + t.max_seats) % t.max_seats;
@@ -608,6 +638,7 @@ function resetPlayerForHand(p) {
 
 function resetTable(t) {
   softReset(t);
+  t.game_winner = null;
   for (const p of iterPlayers(t)) {
     p.chip_stack = t.variant.default_starting_stack;
     resetPlayerForHand(p);
@@ -619,6 +650,7 @@ function resetTable(t) {
 function configureVariant(t, variantName) {
   t.variant = variantFor(variantName);
   softReset(t);
+  t.game_winner = null;
   for (const p of iterPlayers(t)) {
     p.chip_stack = t.variant.default_starting_stack;
     resetPlayerForHand(p);
@@ -633,9 +665,11 @@ function streetName(t) {
 }
 
 function startHand(t) {
+  if (t.hand_in_progress && !t.hand_complete) throw new Error('A hand is already in progress');
+  if (!t.game_winner) updateGameWinner(t);
+  if (t.game_winner) throw new Error('The game is over. Restart the table to play again.');
   const taken = occupiedWithChips(t);
   if (taken.length < t.variant.min_players) throw new Error(`Need at least ${t.variant.min_players} players with chips`);
-  if (t.hand_in_progress && !t.hand_complete) throw new Error('A hand is already in progress');
 
   t.hand_id += 1;
   t.hand_in_progress = true;
@@ -878,10 +912,12 @@ function finishHand(t) {
   t.current_bet_to_call = 0;
   for (const p of iterPlayers(t)) { p.current_bet = 0; p.ChipsIn_pot = 0; p.all_in = false; }
   t.status_message = 'Hand complete';
+  updateGameWinner(t);
 }
 
 function nextHand(t) {
   if (!t.hand_complete && t.hand_in_progress) throw new Error('Finish the current hand first');
+  if (t.game_winner) throw new Error('The game is over. Restart the table to play again.');
   startHand(t);
 }
 
@@ -992,6 +1028,7 @@ function serialize(room, viewerToken = '', viewerClientId = '') {
     seats: t.seats.map(p => p ? seatData(t, p, t.hand_complete || p.seat_number === viewerSeat) : null),
     log: t.log,
     showdown: t.last_showdown,
+    game_winner: t.game_winner || null,
     room: roomSummary(room),
     default_room_id: 'MAIN01',
     realtime_mode: hasRedis() ? 'vercel-redis-polling' : 'temporary-file-polling',

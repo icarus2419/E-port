@@ -8,7 +8,7 @@
     "check:api": "node ./tests/poker-api-smoke.js",
     "check:multiplayer": "node ./tests/multiplayer-deep-audit.js && node ./tests/multiplayer-race-audit.js",
     "check:presence": "node ./tests/presence-timeout-audit.js",
-    "check:all": "node ./tests/poker-api-smoke.js && node ./tests/multiplayer-deep-audit.js && node ./tests/multiplayer-race-audit.js && node ./tests/presence-timeout-audit.js"
+    "check:all": "node ./tests/poker-api-smoke.js && node ./tests/multiplayer-deep-audit.js && node ./tests/multiplayer-race-audit.js && node ./tests/presence-timeout-audit.js && node ./tests/game-winner-audit.js"
   },
   "engines": {
     "node": "20.x"
