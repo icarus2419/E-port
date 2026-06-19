@@ -16,7 +16,27 @@
   <meta name="poker-transport" content="polling" />
   <link rel="stylesheet" href="../assets/poker-transition.css" />
   <style>
-    :root { --bg:#0c1414; --panel:#152122; --felt:radial-gradient(circle at center,#1e6d4a 0%,#145438 55%,#0d3727 100%); --gold:#d8b66a; --text:#eef5f1; --muted:#a7bbb0; --accent:#64d39b; --danger:#ea7d7d; --shadow:0 18px 40px rgba(0,0,0,.35); font-family:Inter,system-ui,Arial,sans-serif; }
+    :root {
+      --bg:#0c1414; --panel:#152122; --felt:radial-gradient(circle at center,#1e6d4a 0%,#145438 55%,#0d3727 100%);
+      --gold:#d8b66a; --text:#eef5f1; --muted:#a7bbb0; --accent:#64d39b; --danger:#ea7d7d;
+      --shadow:0 18px 40px rgba(0,0,0,.35); font-family:Inter,system-ui,Arial,sans-serif;
+      /* Unified button system tokens — one consistent language across lobby, table, and embedded views */
+      --btn-radius:11px;
+      --btn-pad-y:9px; --btn-pad-x:14px;
+      --btn-h:44px;            /* touch-friendly default */
+      --btn-h-compact:34px;    /* dense in-game bar */
+      --btn-font:.92rem;
+      --btn-weight:750;
+      --btn-gap:8px;
+      --btn-ease:160ms cubic-bezier(.4,0,.2,1);
+      --btn-ring:0 0 0 3px rgba(100,211,155,.42);
+      /* Action color ramp */
+      --c-success:#1f9e5c; --c-success-2:#27b96d; --c-success-bd:rgba(120,238,178,.5);
+      --c-danger:#b23838;  --c-danger-2:#cf4646;  --c-danger-bd:rgba(240,150,150,.45);
+      --c-neutral:#3a474c; --c-neutral-2:#4a585e; --c-neutral-bd:rgba(255,255,255,.16);
+      --c-allin:#c79233;   --c-allin-2:#e0aa44;   --c-allin-bd:rgba(244,210,130,.5);
+      --c-base:#2c3a3c;    --c-base-2:#384749;    --c-base-bd:rgba(255,255,255,.12);
+    }
     * { box-sizing:border-box; min-width:0; }
     button, input, select, .panel, .room-card, .player, .seat-empty, .topbar, .side { max-width:100%; }
     button, .room-card, .room-meta, .player .name, .player .info, .seat-empty .muted, .hint, .control-status, .pill { overflow-wrap:anywhere; word-break:break-word; }
@@ -26,36 +46,107 @@
     .portfolio-back:hover { background:rgba(27,44,42,.96); }
     .app { display:grid; grid-template-columns:minmax(0,1fr); grid-template-areas:"table" "variance"; gap:16px; width:min(100%,1600px); margin:0 auto; padding:72px 16px 18px; min-height:100vh; }
     body.poker-table-mode .app { grid-template-columns:minmax(0,1fr); grid-template-areas:"table"; }
-    body.poker-lobby-mode::before { content:''; position:fixed; inset:0; z-index:50; pointer-events:none; background:radial-gradient(circle at 50% 45%, rgba(100,211,155,.08), transparent 34%), rgba(5,10,10,.62); backdrop-filter:blur(4px); }
+    body.poker-lobby-mode::before { content:''; position:fixed; inset:0; z-index:50; pointer-events:none; background:radial-gradient(circle at 50% 45%, rgba(100,211,155,.08), transparent 34%), rgba(5,10,10,.62); backdrop-filter:blur(4px); animation:lobbyFade .3s ease both; }
     .lobby-panel { grid-area:lobby; display:none; position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); z-index:80; width:min(430px,calc(100vw - 32px)); max-height:calc(100dvh - 96px); overflow:auto; }
-    body.poker-lobby-mode .lobby-panel { display:block; }
+    body.poker-lobby-mode .lobby-panel { display:block; animation:lobbyRise .32s cubic-bezier(.4,0,.2,1) both; }
+    @keyframes lobbyFade { from { opacity:0; } to { opacity:1; } }
+    @keyframes lobbyRise { from { opacity:0; transform:translate(-50%,-46%); } to { opacity:1; transform:translate(-50%,-50%); } }
+    @media (prefers-reduced-motion: reduce) { body.poker-lobby-mode::before, body.poker-lobby-mode .lobby-panel { animation:none; } }
     .panel { background:rgba(18,29,30,.94); border:1px solid rgba(216,182,106,.16); border-radius:18px; box-shadow:var(--shadow); padding:16px; }
     h1,h2,h3,p { margin:0; }
     .title { font-size:1.3rem; margin-bottom:6px; }
     .sub { color:var(--muted); font-size:.95rem; margin-bottom:12px; }
     .row { display:flex; gap:8px; }
-    input,select,button { border-radius:4px; border:1px solid #555; background:#333; color:var(--text); padding:8px 12px; font:inherit; }
-    button { cursor:pointer; background:#444; }
-    button:hover { background:#555; }
-    button.primary { background:#2a7a4f; }
-    button.primary:hover { background:#35956a; }
-    button.warn { background:#884040; }
-    button.warn:hover { background:#a05050; }
-    #foldBtn { background:#9f2f2f; border-color:#c84a4a; color:#fff; font-weight:800; }
-    #foldBtn:hover { background:#be3d3d; }
-    #betBtn { background:#218a52; border-color:#35bd76; color:#fff; font-weight:900; }
-    #betBtn:hover { background:#2fac6a; }
-    #checkBtn, #callBtn { background:#555b61; border-color:#757b82; color:#fff; font-weight:800; }
-    #checkBtn:hover, #callBtn:hover { background:#686f76; }
-    button:disabled { opacity:.4; cursor:not-allowed; }
+    input,select { border-radius:9px; border:1px solid rgba(255,255,255,.14); background:rgba(11,18,18,.6); color:var(--text); padding:9px 12px; font:inherit; transition:border-color var(--btn-ease), box-shadow var(--btn-ease); }
+    input:focus-visible, select:focus-visible { outline:none; border-color:var(--accent); box-shadow:var(--btn-ring); }
+
+    /* ── Unified button system ──────────────────────────────────────────────
+       Every button shares one shape, motion, and disabled language. Color
+       encodes intent: green = commit/action, red = fold/leave (danger),
+       grey = neutral check/call, gold = all-in. */
+    button {
+      cursor:pointer;
+      border:1px solid var(--c-base-bd);
+      background:linear-gradient(180deg,var(--c-base-2),var(--c-base));
+      color:var(--text);
+      border-radius:var(--btn-radius);
+      padding:var(--btn-pad-y) var(--btn-pad-x);
+      min-height:var(--btn-h);
+      font:inherit; font-size:var(--btn-font); font-weight:var(--btn-weight);
+      line-height:1.1; letter-spacing:.01em;
+      display:inline-flex; align-items:center; justify-content:center; gap:6px;
+      box-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 2px 6px rgba(0,0,0,.18);
+      transition:transform var(--btn-ease), background var(--btn-ease), border-color var(--btn-ease), box-shadow var(--btn-ease), opacity var(--btn-ease);
+      -webkit-tap-highlight-color:transparent;
+    }
+    button:hover:not(:disabled) { filter:brightness(1.08); border-color:rgba(255,255,255,.22); }
+    button:active:not(:disabled) { transform:translateY(1px); box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 1px 3px rgba(0,0,0,.22); filter:brightness(.96); }
+    button:focus-visible { outline:none; box-shadow:var(--btn-ring), 0 2px 6px rgba(0,0,0,.18); }
+
+    /* Success / commit — Bet, Raise, Start, Create, Join, primary actions */
+    button.primary, #betBtn, #startHandBtn, #createRoomBtn, #joinSeatBtn, .join-btn, #rejoinBtn {
+      background:linear-gradient(180deg,var(--c-success-2),var(--c-success));
+      border-color:var(--c-success-bd); color:#f2fff6; font-weight:850;
+      box-shadow:0 1px 0 rgba(255,255,255,.18) inset, 0 6px 16px rgba(31,158,92,.28);
+    }
+    /* Danger — Fold and destructive table controls */
+    #foldBtn, button.warn, .del-btn {
+      background:linear-gradient(180deg,var(--c-danger-2),var(--c-danger));
+      border-color:var(--c-danger-bd); color:#fff; font-weight:850;
+      box-shadow:0 1px 0 rgba(255,255,255,.14) inset, 0 6px 16px rgba(178,56,56,.26);
+    }
+    /* Neutral — Check, Call, Next Hand and other no-commitment actions */
+    #checkBtn, #callBtn, #nextHandBtn {
+      background:linear-gradient(180deg,var(--c-neutral-2),var(--c-neutral));
+      border-color:var(--c-neutral-bd); color:#eaf2ee; font-weight:800;
+    }
+    /* All-in — distinct gold so the biggest commitment never blends in */
+    #allInBtn {
+      background:linear-gradient(180deg,var(--c-allin-2),var(--c-allin));
+      border-color:var(--c-allin-bd); color:#241a04; font-weight:900; letter-spacing:.02em;
+      box-shadow:0 1px 0 rgba(255,255,255,.28) inset, 0 6px 16px rgba(199,146,51,.26);
+    }
+    /* Leave — secondary danger: outlined, quieter than Fold but clearly an exit */
+    #leaveSeatBtn {
+      background:rgba(178,56,56,.14); border-color:var(--c-danger-bd); color:#ffd2d2; font-weight:800;
+      box-shadow:none;
+    }
+    #leaveSeatBtn:hover:not(:disabled) { background:rgba(178,56,56,.24); filter:none; }
+
+    /* Clearly disabled — washed out, flat, no motion or hover affordance */
+    button:disabled {
+      opacity:.42; cursor:not-allowed; filter:none; transform:none;
+      box-shadow:none; border-color:rgba(255,255,255,.08);
+      background:linear-gradient(180deg,#2a3537,#222c2d); color:rgba(238,245,241,.6);
+    }
     body.is-busy button:not(#muteBtn) { cursor:progress; }
-    .room-card.active-room { border-color:rgba(100,211,155,.34); background:rgba(100,211,155,.07); }
     .stack { display:grid; gap:10px; }
-    .room-list { display:grid; gap:10px; margin-top:10px; }
-    .room-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:12px; }
-    .room-card strong { display:block; margin-bottom:4px; overflow-wrap:anywhere; }
-    .room-meta { line-height:1.28; overflow-wrap:anywhere; }
-    .room-list-empty { color:var(--muted); font-size:.9rem; line-height:1.35; padding:12px; border:1px dashed rgba(255,255,255,.12); border-radius:12px; background:rgba(255,255,255,.03); }
+    /* Lobby structure — grouped, labelled sections so it reads organised not cramped */
+    .lobby-section { margin-top:14px; }
+    .lobby-section:first-of-type { margin-top:10px; }
+    .lobby-section-head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:9px; color:var(--gold); font-size:.74rem; font-weight:850; letter-spacing:.1em; text-transform:uppercase; }
+    .field { display:grid; gap:4px; min-width:0; }
+    .field > span { color:var(--muted); font-size:.74rem; font-weight:750; letter-spacing:.02em; }
+    .field-row { display:grid; grid-template-columns:1.3fr .7fr; gap:8px; }
+    .ghost-btn { background:transparent; border:1px solid rgba(255,255,255,.16); color:var(--muted); min-height:30px; padding:5px 11px; font-size:.78rem; font-weight:700; box-shadow:none; }
+    .ghost-btn:hover:not(:disabled) { color:var(--text); border-color:rgba(255,255,255,.3); filter:none; }
+    .room-list { display:grid; gap:10px; }
+    .room-card { background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.07); border-radius:14px; padding:13px; display:grid; gap:10px; transition:border-color var(--btn-ease), background var(--btn-ease); }
+    .room-card:hover { border-color:rgba(255,255,255,.14); }
+    .room-card.active-room { border-color:rgba(100,211,155,.4); background:rgba(100,211,155,.08); }
+    .room-card-head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .room-card strong { display:block; font-size:1rem; overflow-wrap:anywhere; line-height:1.2; }
+    .room-current { color:var(--accent); font-weight:750; font-size:.82rem; }
+    .room-status { flex:none; padding:3px 9px; border-radius:999px; font-size:.68rem; font-weight:850; letter-spacing:.04em; text-transform:uppercase; border:1px solid transparent; }
+    .room-status.is-open { color:#bff5d8; background:rgba(100,211,155,.14); border-color:rgba(100,211,155,.34); }
+    .room-status.is-playing { color:#ffe8a5; background:rgba(216,182,106,.14); border-color:rgba(216,182,106,.36); }
+    .room-status.is-full { color:#ffd2d2; background:rgba(234,125,125,.12); border-color:rgba(234,125,125,.32); }
+    .room-meta { display:flex; flex-wrap:wrap; gap:6px; line-height:1.2; overflow-wrap:anywhere; }
+    .room-pill { padding:3px 9px; border-radius:999px; background:rgba(0,0,0,.24); border:1px solid rgba(255,255,255,.08); color:var(--muted); font-size:.76rem; font-weight:700; }
+    .room-card .join-btn { width:100%; }
+    .room-card-actions { display:grid; grid-template-columns:1fr auto; gap:8px; }
+    .room-card-actions .copy-room-btn { width:100%; }
+    .room-list-empty { color:var(--muted); font-size:.9rem; line-height:1.4; padding:16px 14px; border:1px dashed rgba(255,255,255,.14); border-radius:14px; background:rgba(255,255,255,.025); text-align:center; }
     .invite-panel { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; border:1px solid rgba(216,182,106,.28); border-radius:16px; background:linear-gradient(135deg,rgba(216,182,106,.12),rgba(100,211,155,.075)); box-shadow:var(--shadow); }
     .invite-panel[hidden] { display:none !important; }
     .invite-copy { display:grid; gap:3px; min-width:0; }
@@ -69,10 +160,10 @@
     .rejoin-card p { color:var(--muted); font-size:.94rem; line-height:1.35; margin:0 0 14px; }
     .rejoin-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
     .saved-room-pill { display:inline-flex; align-items:center; justify-content:center; margin:6px 0 4px; padding:7px 11px; border-radius:999px; border:1px solid rgba(216,182,106,.4); background:rgba(216,182,106,.12); color:var(--gold); font-weight:950; letter-spacing:.08em; }
-    .turn-timer { margin:7px auto 0; width:max-content; max-width:100%; padding:6px 10px; border-radius:999px; background:rgba(0,0,0,.26); border:1px solid rgba(255,255,255,.1); color:#ffe8a5; font-weight:900; font-size:.83rem; }
+    .turn-timer { position:relative; z-index:40; margin:0 auto 8px; width:max-content; max-width:100%; padding:6px 12px; border-radius:999px; background:rgba(8,14,14,.92); border:1px solid rgba(255,255,255,.14); color:#ffe8a5; font-weight:900; font-size:.83rem; box-shadow:0 6px 18px rgba(0,0,0,.4); backdrop-filter:blur(4px); }
     .turn-timer[hidden] { display:none !important; }
-    .turn-timer.is-mine { border-color:rgba(100,211,155,.55); color:#d8ffe9; background:rgba(100,211,155,.12); }
-    .turn-timer.is-low { border-color:rgba(234,125,125,.6); color:#ffd1d1; animation:timerPulse .8s ease-in-out infinite alternate; }
+    .turn-timer.is-mine { border-color:rgba(100,211,155,.65); color:#d8ffe9; background:rgba(15,46,33,.94); box-shadow:0 6px 18px rgba(0,0,0,.4), 0 0 16px rgba(100,211,155,.22); }
+    .turn-timer.is-low { border-color:rgba(234,125,125,.7); color:#ffd1d1; background:rgba(46,18,18,.94); animation:timerPulse .8s ease-in-out infinite alternate; }
     @keyframes timerPulse { from { transform:scale(1); } to { transform:scale(1.035); } }
     .call-match-banner { margin:0 auto 9px; width:min(100%,320px); padding:9px 12px; border-radius:14px; border:1px solid rgba(216,182,106,.48); background:rgba(216,182,106,.16); color:#fff7d8; font-weight:950; line-height:1.18; text-align:center; box-shadow:0 0 20px rgba(216,182,106,.13); }
     .call-match-banner[hidden] { display:none !important; }
@@ -90,7 +181,7 @@
     .kick-seat { min-height:26px !important; padding:4px 7px !important; font-size:.68rem !important; border-color:rgba(234,125,125,.5); background:rgba(136,64,64,.8); color:#fff; }
     .kick-seat:hover { background:#a94b4b; }
     .room-meta { font-size:.88rem; color:var(--muted); margin-bottom:8px; }
-    .center { grid-area:table; display:grid; grid-template-rows:auto auto 1fr auto; gap:14px; }
+    .center { grid-area:table; display:grid; grid-template-rows:auto auto 1fr auto; gap:14px; transition:filter .32s ease; }
     .topbar { display:flex; justify-content:space-between; align-items:center; padding:14px 18px; background:rgba(18,29,30,.94); border:1px solid rgba(216,182,106,.16); border-radius:18px; box-shadow:var(--shadow); }
     .topbar .room { font-size:1.1rem; font-weight:700; }
     .topbar .meta { color:var(--muted); font-size:.9rem; }
@@ -120,8 +211,10 @@
     .pos-0{bottom:12px;left:50%;transform:translateX(-50%)} .pos-1{bottom:92px;right:64px} .pos-2{top:136px;right:64px}
     .pos-3{top:22px;left:50%;transform:translateX(-50%)} .pos-4{top:136px;left:64px} .pos-5{bottom:92px;left:64px}
     .pos-6{bottom:210px;left:18px} .pos-7{bottom:210px;right:18px} .pos-8{top:250px;left:50%;transform:translateX(-50%)}
-    .actionbar { background:rgba(18,29,30,.94); border:1px solid rgba(216,182,106,.16); border-radius:18px; box-shadow:var(--shadow); padding:14px; display:grid; gap:12px; }
+    .actionbar { background:rgba(18,29,30,.94); border:1px solid rgba(216,182,106,.16); border-radius:18px; box-shadow:var(--shadow); padding:14px; display:grid; gap:12px; transition:border-color var(--btn-ease), box-shadow var(--btn-ease); }
     .game-actions { width:100%; max-width:1180px; justify-self:center; }
+    /* Quiet "it's your move" cue — a soft accent edge, nothing flashy */
+    body.poker-my-turn .game-actions { border-color:rgba(100,211,155,.4); box-shadow:var(--shadow), 0 0 0 1px rgba(100,211,155,.18), 0 -10px 30px rgba(100,211,155,.07); }
     .game-actions .control-status { text-align:center; }
     .game-actions .hand-flow { width:min(100%,440px); margin:0 auto; }
     .game-actions .bet-actions { grid-template-columns:repeat(4,minmax(96px,1fr)); align-items:stretch; }
@@ -158,8 +251,12 @@
     .bet-slider strong { color:var(--gold); font-size:.95rem; }
     .bet-slider input[type=range] { width:100%; min-height:28px; padding:0; accent-color:var(--accent); cursor:pointer; }
     .bet-slider.disabled { display:none; }
-    .primary-actions button:disabled, .hand-flow button:disabled, .bet-actions button:disabled, .table-tools-grid button:disabled { display:none; }
+    .primary-actions button:disabled, .hand-flow button:disabled, .table-tools-grid button:disabled { display:none; }
     .primary-actions:has(> button:disabled), .hand-flow:not(:has(> button:not(:disabled))) { display:none; }
+    /* Core action bar stays present and stable during a live hand; illegal moves
+       grey out (clearly disabled) instead of disappearing, so buttons never jump. */
+    .bet-actions.player-actions { display:none; }
+    body.poker-table-mode.poker-hand-live .bet-actions.player-actions { display:grid; }
     .control-status { padding:9px 10px; border-radius:12px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.06); line-height:1.25; }
     .advanced-note { display:none; color:var(--muted); font-size:.74rem; line-height:1.25; opacity:.9; }
     .seat-empty .muted { font-size:.85rem; font-weight:700; }
@@ -202,6 +299,12 @@
     .winner-banner .winner-hand { display:inline-block; color:rgba(216,234,223,.82); font-size:.68rem; font-weight:800; overflow-wrap:anywhere; }
     .winner-banner .winner-timer { display:inline-flex; align-items:center; color:#d7eadf; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.08); border-radius:999px; padding:2px 7px; font-size:.67rem; font-weight:900; white-space:nowrap; }
     .winner-banner .winner-start { margin:0; min-height:24px; padding:3px 8px; border-radius:999px; font-size:.66rem; }
+    .winner-banner .winner-reason { display:block; flex-basis:100%; font-size:.7rem; font-weight:800; color:rgba(238,245,241,.82); line-height:1.2; }
+    /* Personalised win: the viewer winning is the loudest moment on the table */
+    .winner-banner.is-you { border-color:rgba(100,211,155,.85); background:linear-gradient(135deg,rgba(8,28,20,.94),rgba(24,90,58,.9)); box-shadow:0 12px 32px rgba(0,0,0,.3), 0 0 26px rgba(100,211,155,.34); }
+    .winner-banner.is-you .winner-title { color:#9affc9; font-size:.72rem; }
+    .winner-banner.is-you .winner-detail { color:#eafff3; }
+    .winner-banner.by-fold .winner-detail { color:#fff6cf; }
     .player.winner { border-color:rgba(216,182,106,.95); box-shadow:0 0 0 2px rgba(216,182,106,.28), 0 0 28px rgba(216,182,106,.42), var(--shadow); z-index:7; }
     .player.winner .name::before { content:'🏆 '; }
     .winner-result { border:1px solid rgba(216,182,106,.5); background:rgba(216,182,106,.1); color:#fff8df; }
@@ -671,130 +774,6 @@
         display:none;
       }
     }
-
-    /* ============================================================
-       Action deck — balanced, sleek button layout (same idea)
-       ============================================================ */
-    /* The bar reads as one quiet control deck */
-    body.poker-table-mode .game-actions {
-      background:
-        linear-gradient(180deg, rgba(216,182,106,.05), rgba(255,255,255,0) 40%),
-        linear-gradient(180deg, rgba(20,32,33,.96), rgba(14,23,24,.97));
-      border:1px solid rgba(216,182,106,.14);
-      border-radius:18px;
-      padding:10px 12px 12px;
-      gap:9px;
-      box-shadow:0 -18px 40px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.04);
-    }
-    /* matched / to-call indicator becomes a compact centered pill */
-    body.poker-table-mode .game-actions .mobile-call-panel {
-      width:max-content;
-      max-width:100%;
-      margin:0 auto;
-      padding:6px 16px;
-      border-radius:999px;
-      text-align:center;
-      display:flex;
-      align-items:baseline;
-      justify-content:center;
-      gap:8px;
-    }
-    body.poker-table-mode .game-actions .mobile-call-panel strong { font-size:.74rem; }
-    body.poker-table-mode .game-actions .mobile-call-panel span { margin-top:0; font-size:.7rem; opacity:.85; }
-    /* status line: quiet, centered, hairline under it */
-    body.poker-table-mode .control-status {
-      width:min(100%,760px);
-      margin:0 auto;
-      padding:2px 4px 8px;
-      background:transparent;
-      border:0;
-      border-bottom:1px solid rgba(216,182,106,.12);
-      border-radius:0;
-      text-align:center;
-      color:var(--muted);
-      font-size:.78rem;
-      letter-spacing:.01em;
-    }
-
-    /* Two clean rows: decisions (fold/check/call/all-in) + commit (slider + bet) */
-    .bet-actions.player-actions {
-      display:flex;
-      flex-direction:column;
-      gap:9px;
-      width:min(100%,760px);
-      margin:0 auto;
-    }
-    .pa-decisions { display:flex; gap:9px; }
-    .pa-decisions button { flex:1 1 0; }
-    .pa-commit { display:flex; gap:10px; align-items:stretch; }
-    .pa-commit .bet-slider { flex:1 1 auto; margin:0; }
-    .pa-commit #betBtn { flex:0 0 clamp(118px, 26%, 168px); }
-
-    /* shared sleek button base */
-    .player-actions button {
-      min-height:50px;
-      padding:11px 14px;
-      border-radius:13px;
-      border:1px solid transparent;
-      color:#fff;
-      font-weight:800;
-      letter-spacing:.02em;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.10), 0 7px 18px rgba(0,0,0,.24);
-      transition:transform .07s ease, filter .15s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    .player-actions button:active { transform:translateY(1px); }
-    .player-actions button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
-
-    /* Fold — give up (red) */
-    #foldBtn { background:linear-gradient(180deg,#b5413f,#8c2c2b); border-color:rgba(234,125,125,.42); }
-    #foldBtn:hover { background:linear-gradient(180deg,#c24b49,#9a3433); }
-    /* Check / Call — passive (slate) */
-    #checkBtn, #callBtn { background:linear-gradient(180deg,#3c474d,#2b3439); border-color:rgba(255,255,255,.13); color:#eef5f1; }
-    #checkBtn:hover, #callBtn:hover { background:linear-gradient(180deg,#47535b,#343f45); }
-    /* All-in — maximum aggression, carries the table-rail gold */
-    #allInBtn {
-      background:linear-gradient(180deg, rgba(216,182,106,.16), rgba(216,182,106,.05));
-      border-color:rgba(216,182,106,.55);
-      color:#f4e2b0;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 0 18px rgba(216,182,106,.12), 0 7px 18px rgba(0,0,0,.24);
-    }
-    #allInBtn:hover { background:linear-gradient(180deg, rgba(216,182,106,.28), rgba(216,182,106,.12)); color:#fff0c4; border-color:rgba(216,182,106,.75); }
-    /* Bet / Raise — aggression (green) */
-    #betBtn { background:linear-gradient(180deg,#2faa67,#1d8049); border-color:rgba(53,189,118,.5); font-weight:900; }
-    #betBtn:hover { background:linear-gradient(180deg,#37bd74,#229256); }
-    .player-actions button:disabled { opacity:.4; }
-
-    /* bet slider matches button height, sits inline with Bet */
-    body.poker-table-mode .pa-commit .bet-slider {
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap:5px;
-      min-height:50px;
-      padding:7px 14px;
-      border-radius:13px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-    }
-    body.poker-table-mode .pa-commit .bet-slider label { font-size:.74rem; }
-    body.poker-table-mode .pa-commit .bet-slider strong { font-size:.86rem; }
-    body.poker-table-mode .pa-commit .bet-slider input[type=range] { min-height:20px; }
-
-    /* show/hide for the nested structure */
-    .pa-decisions button:disabled { display:none; }
-    .pa-decisions:not(:has(button:not(:disabled))) { display:none; }
-    .bet-actions.player-actions:has(button:not(:disabled)),
-    .bet-actions.player-actions:has(.bet-slider:not(.disabled)) { display:flex; }
-    .bet-actions.player-actions:not(:has(button:not(:disabled))):not(:has(.bet-slider:not(.disabled))) { display:none; }
-
-    /* narrow screens stay balanced, never lopsided */
-    @media (max-width:640px) {
-      .pa-decisions { flex-wrap:wrap; }
-      .pa-decisions button { flex:1 1 calc(50% - 5px); min-height:46px; }
-      .pa-commit { flex-wrap:wrap; }
-      .pa-commit .bet-slider { flex:1 1 100%; }
-      .pa-commit #betBtn { flex:1 1 100%; }
-    }
   </style>
 </head>
 <body>
@@ -822,19 +801,33 @@
   </div>
   <div class="app" style="display:none" id="appMain">
     <aside class="panel lobby-panel">
-      <h1 class="title">Lobby</h1>
-      <p class="sub">Create or join a table. Join Room seats you automatically; the creator can kick stuck seats if someone closes their tab.</p>
+      <h1 class="title">Poker Lobby</h1>
+      <p class="sub">Create a private table or join one with an invite link. Joining seats you automatically.</p>
       <div id="storageNotice" class="storage-notice" hidden></div>
-      <div class="stack">
-        <input id="roomName" placeholder="Room name" value="Evening Table" />
-        <div class="row">
-          <select id="roomVariant"><option value="holdem">No-limit Hold'em</option><option value="highcard">High-card only (toy)</option></select>
-          <select id="roomSeats"><option>2</option><option>3</option><option>4</option><option selected>6</option><option>9</option></select>
+      <div class="lobby-section">
+        <div class="lobby-section-head">Create a table</div>
+        <div class="stack">
+          <label class="field"><span>Table name</span>
+            <input id="roomName" placeholder="Room name" value="Evening Table" />
+          </label>
+          <div class="field-row">
+            <label class="field"><span>Game</span>
+              <select id="roomVariant"><option value="holdem">No-limit Hold'em</option><option value="highcard">High-card only (toy)</option></select>
+            </label>
+            <label class="field"><span>Seats</span>
+              <select id="roomSeats"><option>2</option><option>3</option><option>4</option><option selected>6</option><option>9</option></select>
+            </label>
+          </div>
+          <button class="primary" id="createRoomBtn">Create Table</button>
         </div>
-        <button class="primary" id="createRoomBtn">Create Room</button>
-        <button id="refreshRoomsBtn">Refresh Rooms</button>
       </div>
-      <div class="room-list" id="roomList"></div>
+      <div class="lobby-section">
+        <div class="lobby-section-head">
+          <span>Open tables</span>
+          <button id="refreshRoomsBtn" class="ghost-btn" type="button">Refresh</button>
+        </div>
+        <div class="room-list" id="roomList"></div>
+      </div>
     </aside>
     <main class="center">
       <div class="topbar">
@@ -856,13 +849,13 @@
       </div>
       <div class="table-wrap"><div class="table" id="table">
         <div class="table-center">
+          <div class="turn-timer" id="turnTimer" hidden></div>
           <div class="call-match-banner" id="callMatchBanner" hidden></div>
           <div class="street" id="streetLabel">Waiting for players</div>
           <div class="pot" id="potLabel">Pot: 0</div>
           <div class="winner-banner" id="winnerBanner" hidden></div>
           <div class="cards" id="communityCards"></div>
           <div class="hand-summary" id="handSummary" hidden></div>
-          <div class="turn-timer" id="turnTimer" hidden></div>
           <div class="hint">Button is marked with D. Current actor is highlighted.</div>
         </div>
       </div></div>
@@ -904,19 +897,15 @@
           <button id="nextHandBtn">Next Hand</button>
         </div>
         <div class="bet-actions player-actions">
-          <div class="pa-decisions">
-            <button id="foldBtn">Fold</button>
-            <button id="checkBtn">Check</button>
-            <button id="callBtn">Call</button>
-            <button id="allInBtn">All-in</button>
+          <button id="foldBtn">Fold</button>
+          <button id="checkBtn">Check</button>
+          <button id="callBtn">Call</button>
+          <button id="allInBtn">All-in</button>
+          <div class="bet-slider wide" id="betSliderWrap">
+            <label for="betAmount"><span id="betSliderLabel">Bet amount</span><strong id="betAmountValue">10</strong></label>
+            <input id="betAmount" type="range" min="1" max="10" step="1" value="10" />
           </div>
-          <div class="pa-commit">
-            <div class="bet-slider wide" id="betSliderWrap">
-              <label for="betAmount"><span id="betSliderLabel">Bet amount</span><strong id="betAmountValue">10</strong></label>
-              <input id="betAmount" type="range" min="1" max="10" step="1" value="10" />
-            </div>
-            <button class="wide" id="betBtn">Bet / Raise</button>
-          </div>
+          <button class="wide" id="betBtn">Bet / Raise</button>
         </div>
         <details class="activity-details">
           <summary>Log & showdown</summary>
@@ -1021,7 +1010,7 @@ const S = {
   selectedSeat: 0, prevCommunity: [], prevHoles: {}, lastPot: null,
   lastTurnKey: '', lastSoundRoom: '', hasRenderedState: false, lastChipSoundAt: 0, lastState: null,
   creatorTokens: JSON.parse(localStorage.getItem('poker.creatorTokens') || '{}'),
-  ws: null, wsTimer: null, lobbyWs: null, lobbyTimer: null, pollTimer: null, lobbyPollTimer: null, heartbeatTimer: null, turnCountdownTimer: null, autoNextTimer: null, autoNextInterval: null, autoNextKey: '', dismissedSummaryKey: '',
+  ws: null, wsTimer: null, lobbyWs: null, lobbyTimer: null, pollTimer: null, lobbyPollTimer: null, heartbeatTimer: null, turnCountdownTimer: null, turnTimerKey: '', turnTimerEnd: 0, autoNextTimer: null, autoNextInterval: null, autoNextKey: '', dismissedSummaryKey: '',
   wantsRoomPolling: false, wantsLobbyPolling: false, fastPollUntil: 0, pendingMutation: false,
   lastLegalActions: [],
   lastRevealHandKey: '', lastRevealCommunityCount: 0, lastRevealHoleCount: 0, playedHoleRevealFor: '',
@@ -1047,8 +1036,16 @@ function syncPokerLayout(p = S.lastState) {
   const tableMode = isTableMode(p);
   const wasTableMode = document.body.classList.contains('poker-table-mode');
   const seated = tableMode;
+  // "hand-live" = a hand is actually being played (not the post-hand summary).
+  // The core Fold/Check/Call/Raise/All-in bar shows only during a live hand so
+  // it stays a stable, consistent set rather than appearing and disappearing.
+  const handLive = Boolean(p && p.hand_in_progress && !p.hand_complete);
+  const myTurn = Boolean(p && p.viewer_token_valid && p.current_actor_index === p.viewer_seat
+    && Array.isArray(p.legal_actions) && p.legal_actions.length > 0);
   document.body.classList.toggle('poker-table-mode', tableMode);
   document.body.classList.toggle('poker-playing', playing);
+  document.body.classList.toggle('poker-hand-live', handLive);
+  document.body.classList.toggle('poker-my-turn', myTurn);
   document.body.classList.toggle('poker-lobby-mode', !tableMode);
   document.body.classList.toggle('poker-no-room', !hasRoom);
   const leaveBtn = $('leaveSeatBtn');
@@ -1868,18 +1865,34 @@ function stopTurnCountdown() {
   S.turnCountdownTimer = null;
 }
 
-function updateTurnTimer(deadline = S.lastState?.turn_deadline_at || 0, actor = S.lastState?.current_actor_index, viewerSeat = S.lastState?.viewer_seat) {
+function resetTurnTimer() {
+  S.turnTimerKey = '';
+  S.turnTimerEnd = 0;
+  stopTurnCountdown();
+  updateTurnTimer();
+}
+
+function turnTimerKey(p) {
+  if (!p) return '';
+  return `${p.room?.room_id || ''}:${p.hand_id}:${p.current_actor_index}:${p.current_bet_to_call}:${p.street}`;
+}
+
+// Reads only the locally-anchored deadline (S.turnTimerEnd), never the raw
+// server timestamp, so each tick is consistent and monotonic.
+function updateTurnTimer() {
   const el = $('turnTimer');
   if (!el) return;
-  const end = Number(deadline) || 0;
-  if (!end || actor == null || !S.lastState?.hand_in_progress || S.lastState?.hand_complete) {
+  const p = S.lastState;
+  const actor = p?.current_actor_index;
+  const viewerSeat = p?.viewer_seat;
+  const end = Number(S.turnTimerEnd) || 0;
+  if (!end || actor == null || !p?.hand_in_progress || p?.hand_complete) {
     el.hidden = true;
     el.textContent = '';
     el.classList.remove('is-mine','is-low');
-    stopTurnCountdown();
     return;
   }
-  const left = Math.max(0, Math.ceil((end - Date.now()) / 1000));
+  const left = Math.max(0, Math.round((end - Date.now()) / 1000));
   const isMine = viewerSeat != null && actor === viewerSeat;
   el.hidden = false;
   el.textContent = isMine ? `Your turn · ${left}s` : `Seat ${Number(actor) + 1} to act · ${left}s`;
@@ -1889,9 +1902,23 @@ function updateTurnTimer(deadline = S.lastState?.turn_deadline_at || 0, actor = 
 
 function startTurnCountdown(p) {
   stopTurnCountdown();
-  updateTurnTimer(p?.turn_deadline_at, p?.current_actor_index, p?.viewer_seat);
-  if (!p?.turn_deadline_at || p.current_actor_index == null || !p.hand_in_progress || p.hand_complete) return;
-  S.turnCountdownTimer = setInterval(() => updateTurnTimer(), 1000);
+  const active = p && p.turn_deadline_at && p.current_actor_index != null && p.hand_in_progress && !p.hand_complete;
+  if (!active) { resetTurnTimer(); return; }
+  const key = turnTimerKey(p);
+  // Anchor the countdown to a single LOCAL deadline, captured once when a new
+  // turn begins. Re-anchoring only on a real turn change (not every poll)
+  // stops clock-skew between the server timestamp and the browser clock from
+  // making the number bounce around (e.g. 3s -> 10s -> 2s -> 10s). Prefer the
+  // server-computed seconds-left, which is already skew-free.
+  if (key !== S.turnTimerKey || !S.turnTimerEnd) {
+    const secs = Number(p.turn_seconds_left);
+    S.turnTimerEnd = (Number.isFinite(secs) && secs > 0)
+      ? Date.now() + secs * 1000
+      : (Number(p.turn_deadline_at) || 0);
+    S.turnTimerKey = key;
+  }
+  updateTurnTimer();
+  S.turnCountdownTimer = setInterval(updateTurnTimer, 250);
 }
 
 function clearAutoNextCountdown() {
@@ -1946,15 +1973,31 @@ function renderHandSummary(p, winnerSummary) {
     return;
   }
 
-  const headline = winnerHeadline(p.showdown || []) || winnerSummary;
-  const hand = showdownHandText(p.showdown || []);
+  const rows = Array.isArray(p.showdown) ? p.showdown : [];
+  const viewerSeat = p.viewer_seat;
+  const viewerWon = viewerSeat != null && rows.some(r => Number(r.seat_number) === Number(viewerSeat));
+  const uncontested = rows.length === 1 && rows[0]?.reason === 'uncontested';
+  const headline = winnerHeadline(rows) || winnerSummary;
+  const hand = showdownHandText(rows);
   const creator = isRoomCreator(p.room?.room_id || S.roomId);
   const canAuto = creator && Number(p.room?.occupied_seats || 0) >= 2;
 
+  // Plain-language result: emphasise when the viewer wins, and never leave a
+  // fold-win ambiguous — spell out that everyone else folded.
+  const title = viewerWon
+    ? (uncontested ? '🏆 You win — everyone folded' : '🏆 You win!')
+    : (uncontested ? '🏆 Hand won — everyone folded' : '🏆 Result');
+  const reason = uncontested
+    ? (viewerWon ? 'All other players folded, so the pot is yours.' : 'All other players folded.')
+    : '';
+
   banner.hidden = false;
+  banner.classList.toggle('is-you', viewerWon);
+  banner.classList.toggle('by-fold', uncontested);
   banner.innerHTML = `
-    <span class="winner-title">🏆 Result</span>
+    <span class="winner-title">${title}</span>
     <span class="winner-detail">${escapeHtml(headline)}</span>
+    ${reason ? `<span class="winner-reason">${escapeHtml(reason)}</span>` : ''}
     ${hand ? `<span class="winner-hand">${escapeHtml(hand)}</span>` : ''}
     <span class="winner-timer" id="autoNextText">${canAuto ? 'Next: 10s' : 'Waiting for creator'}</span>
     ${creator ? '<button class="primary winner-start" id="summaryStartNow" type="button">Start</button>' : ''}`;
@@ -1980,7 +2023,7 @@ function showNoRoomSelected() {
   if ($('mobileCallPanel')) { $('mobileCallPanel').hidden = true; $('mobileCallPanel').innerHTML = ''; $('mobileCallPanel').className = 'mobile-call-panel'; }
   if ($('handSummary')) { $('handSummary').hidden = true; $('handSummary').innerHTML = ''; }
   if ($('invitePanel')) $('invitePanel').hidden = true;
-  updateTurnTimer(0);
+  resetTurnTimer();
   clearAutoNextCountdown();
   if (table) table.querySelectorAll('.player').forEach(n => n.remove());
   ['foldBtn','checkBtn','callBtn','allInBtn','betBtn','startHandBtn','nextHandBtn','leaveSeatBtn','resetBtn','joinSeatBtn','addAiBtn'].forEach(id => { const el=$(id); if (el) el.disabled = true; });
@@ -2002,8 +2045,25 @@ function renderRoomList(rooms = []) {
     const canDel = !room.is_default && S.creatorTokens[room.room_id];
     const active = String(room.room_id).toUpperCase() === String(S.roomId).toUpperCase();
     div.classList.toggle('active-room', active);
-    div.innerHTML = `<strong>${room.name}${active ? ' · current' : ''}</strong><div class="room-meta">${room.room_id} · ${room.variant_display} · ${room.occupied_seats}/${room.max_seats} seated</div>
-      <div class="row"><button class="join-btn">${active && S.token ? 'Open Table' : 'Join & Sit'}</button><button class="copy-room-btn" type="button">Copy Link</button>${canDel?'<button class="warn del-btn">Delete</button>':''}</div>`;
+    const full = room.open_seats <= 0;
+    const statusPill = room.hand_in_progress ? 'In play' : (full ? 'Full' : 'Open');
+    const statusClass = room.hand_in_progress ? 'is-playing' : (full ? 'is-full' : 'is-open');
+    const joinLabel = active && S.token ? 'Open Table' : (full ? 'Table Full' : 'Join & Sit');
+    div.innerHTML = `
+      <div class="room-card-head">
+        <strong>${escapeHtml(room.name)}${active ? ' <span class="room-current">· current</span>' : ''}</strong>
+        <span class="room-status ${statusClass}">${statusPill}</span>
+      </div>
+      <div class="room-meta">
+        <span class="room-pill">${escapeHtml(room.room_id)}</span>
+        <span class="room-pill">${escapeHtml(room.variant_display)}</span>
+        <span class="room-pill">${room.occupied_seats}/${room.max_seats} seated</span>
+      </div>
+      <button class="join-btn"${full && !(active && S.token) ? ' disabled' : ''}>${joinLabel}</button>
+      <div class="room-card-actions">
+        <button class="copy-room-btn ghost-btn" type="button">Copy link</button>
+        ${canDel ? '<button class="warn del-btn">Delete</button>' : ''}
+      </div>`;
     div.querySelector('.join-btn').onclick = () => { autoJoinRoom(room.room_id); };
     div.querySelector('.copy-room-btn').onclick = async () => { await copyRoomLink(room.room_id); };
     if (canDel) div.querySelector('.del-btn').onclick = () => deleteRoom(room.room_id);
@@ -2162,11 +2222,11 @@ function render(p) {
   $('leaveSeatBtn').disabled = !p.viewer_token_valid;
   $('resetBtn').disabled = p.room.occupied_seats === 0;
   syncBotControls(p);
-  const prettyLegal = legal
-    .map(a => a === 'all_in' ? 'all-in' : a)
-    .join(' · ');
+  const callStatus = p.hand_in_progress && !p.hand_complete && p.viewer_token_valid
+    ? (callAmount > 0 ? `Need ${callAmount} to call` : 'You are matched')
+    : '';
   $('hintText').textContent = p.viewer_token_valid
-    ? `Seat ${p.viewer_seat+1}${legal.length ? ' · Your turn' : ' · Waiting'}${legal.length ? ' · ' + prettyLegal : ''}`
+    ? `Seat ${p.viewer_seat+1}${legal.length ? ' · Your turn' : ' · Waiting'}${callStatus ? ' · ' + callStatus : ''}${legal.length ? ' · ' + legal.join(', ') : ''}`
     : 'Join a room to auto-sit.';
   const isMyTurn = p.viewer_token_valid && p.current_actor_index === p.viewer_seat && legal.length > 0;
   const turnKey = `${p.room.room_id}:${p.hand_id}:${p.current_actor_index}:${p.current_bet_to_call}:${p.street}`;
@@ -2418,6 +2478,10 @@ function openAppAndBoot() {
   $('nameGate').style.display = 'none';
   $('rejoinGate').hidden = true;
   $('appMain').style.display = '';
+  // Paint the correct shell (lobby or table) on the first frame instead of
+  // briefly showing the bare grid and then snapping into lobby mode once the
+  // async room fetch resolves — that snap is what felt janky on load.
+  syncPokerLayout(S.lastState);
   bootPokerApp();
 }
 function showRejoinPrompt() {

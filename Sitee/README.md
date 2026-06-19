@@ -95,7 +95,7 @@ This version fixes the tab-switch/table deletion bugs:
 
 - Switching browser tabs no longer leaves your seat.
 - Leaving a seat no longer deletes a private table immediately.
-- Private table expiry is based on recent activity: a table is auto-deleted after 1 hour with no activity. Real actions and the 30-minute presence heartbeat from a seated player keep it alive (override with POKER_ROOM_TTL_MS).
+- Private table expiry is now based on recent activity and lasts 24 hours.
 - Player seat tokens are saved per room instead of one global token, so changing rooms/tabs does not wipe the wrong seat.
 - The poker page shows a storage warning if Redis/KV is not connected.
 - Redis-backed writes now use a small table lock so two friends joining or acting at nearly the same time do not overwrite each other.

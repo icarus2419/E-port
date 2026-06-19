@@ -11,9 +11,11 @@ const STORE_KEY = 'joseph:poker-platform:v2';
 const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || '';
 const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '';
 const LOCAL_STATE_FILE = process.env.POKER_LOCAL_STATE_FILE || path.join(os.tmpdir(), 'joseph-poker-platform-v2.json');
-// Private tables are deleted after 1 hour with no activity. Any real interaction
-// (create/join/bet/fold/reset) and the 30-minute presence heartbeat from a seated
-// player both refresh last_activity_at, so an occupied, open table stays alive.
+// Tables auto-delete after 1 hour of no meaningful activity. Every join/leave,
+// hand start/deal, bet/call/check/fold/raise/all-in, reset, and settings change
+// refreshes `last_activity_at` via touchRoom(), so genuinely-used tables never
+// expire while abandoned ones are reaped on the next API hit (serverless-safe).
+// Override with POKER_ROOM_TTL_MS for tests or special deployments.
 const ROOM_TTL_MS = Math.max(60000, Number(process.env.POKER_ROOM_TTL_MS || 60 * 60 * 1000));
 const PLAYER_STALE_MS = Math.max(60000, Number(process.env.POKER_PLAYER_STALE_MS || 90 * 60 * 1000));
 const LEGACY_GHOST_MS = Math.max(60000, Number(process.env.POKER_LEGACY_GHOST_MS || 2 * 60 * 1000));
@@ -263,12 +265,29 @@ function normalizeRoom(room) {
   t.deck = Array.isArray(t.deck) ? t.deck : [];
 }
 
+function roomLastActivity(room) {
+  // A table counts as "active" on any meaningful action (tracked by
+  // last_activity_at) OR while a human is demonstrably still present at the
+  // table (their seat heartbeat keeps last_seen_at fresh). Taking the max of
+  // both means we never delete a table someone is actively sitting at, but we
+  // still reap tables that have been abandoned for an hour.
+  let latest = Number(room.last_activity_at) || Number(room.created_at) || 0;
+  const seats = room.table && Array.isArray(room.table.seats) ? room.table.seats : [];
+  for (const p of seats) {
+    if (p && p.ai_level === 'human') {
+      const seen = Number(p.last_seen_at) || 0;
+      if (seen > latest) latest = seen;
+    }
+  }
+  return latest;
+}
+
 function pruneExpiredRooms(state) {
   const now = Date.now();
   let pruned = 0;
   for (const [roomId, room] of Object.entries(state.rooms || {})) {
     if (room.is_default || roomId === state.default_room_id) continue;
-    if (now - (Number(room.last_activity_at) || Number(room.created_at) || now) >= ROOM_TTL_MS) {
+    if (now - (roomLastActivity(room) || now) >= ROOM_TTL_MS) {
       delete state.rooms[roomId];
       pruned += 1;
     }
