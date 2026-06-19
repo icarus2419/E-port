@@ -21,7 +21,7 @@
       --gold:#d8b66a; --text:#eef5f1; --muted:#a7bbb0; --accent:#64d39b; --danger:#ea7d7d;
       --shadow:0 18px 40px rgba(0,0,0,.35); font-family:Inter,system-ui,Arial,sans-serif;
       /* Unified button system tokens — one consistent language across lobby, table, and embedded views */
-      --btn-radius:11px;
+      --btn-radius:8px;
       --btn-pad-y:9px; --btn-pad-x:14px;
       --btn-h:44px;            /* touch-friendly default */
       --btn-h-compact:34px;    /* dense in-game bar */
@@ -31,10 +31,10 @@
       --btn-ease:160ms cubic-bezier(.4,0,.2,1);
       --btn-ring:0 0 0 3px rgba(100,211,155,.42);
       /* Action color ramp */
-      --c-success:#1f9e5c; --c-success-2:#27b96d; --c-success-bd:rgba(120,238,178,.5);
-      --c-danger:#b23838;  --c-danger-2:#cf4646;  --c-danger-bd:rgba(240,150,150,.45);
-      --c-neutral:#3a474c; --c-neutral-2:#4a585e; --c-neutral-bd:rgba(255,255,255,.16);
-      --c-allin:#c79233;   --c-allin-2:#e0aa44;   --c-allin-bd:rgba(244,210,130,.5);
+      --c-success:#1f9654; --c-success-2:#239b58; --c-success-bd:rgba(92,224,147,.55);
+      --c-danger:#ad3335;  --c-danger-2:#b53638;  --c-danger-bd:rgba(224,92,92,.55);
+      --c-neutral:#44484a; --c-neutral-2:#596168; --c-neutral-bd:rgba(205,215,220,.24);
+      --c-allin:#44484a;   --c-allin-2:#4f5355;   --c-allin-bd:rgba(205,215,220,.18);
       --c-base:#2c3a3c;    --c-base-2:#384749;    --c-base-bd:rgba(255,255,255,.12);
     }
     * { box-sizing:border-box; min-width:0; }
@@ -63,7 +63,7 @@
     /* ── Unified button system ──────────────────────────────────────────────
        Every button shares one shape, motion, and disabled language. Color
        encodes intent: green = commit/action, red = fold/leave (danger),
-       grey = neutral check/call, gold = all-in. */
+       grey = neutral/check/call/all-in. */
     button {
       cursor:pointer;
       border:1px solid var(--c-base-bd);
@@ -75,7 +75,7 @@
       font:inherit; font-size:var(--btn-font); font-weight:var(--btn-weight);
       line-height:1.1; letter-spacing:.01em;
       display:inline-flex; align-items:center; justify-content:center; gap:6px;
-      box-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 2px 6px rgba(0,0,0,.18);
+      box-shadow:0 1px 0 rgba(255,255,255,.09) inset, 0 1px 2px rgba(0,0,0,.28);
       transition:transform var(--btn-ease), background var(--btn-ease), border-color var(--btn-ease), box-shadow var(--btn-ease), opacity var(--btn-ease);
       -webkit-tap-highlight-color:transparent;
     }
@@ -87,24 +87,24 @@
     button.primary, #betBtn, #startHandBtn, #createRoomBtn, #joinSeatBtn, .join-btn, #rejoinBtn {
       background:linear-gradient(180deg,var(--c-success-2),var(--c-success));
       border-color:var(--c-success-bd); color:#f2fff6; font-weight:850;
-      box-shadow:0 1px 0 rgba(255,255,255,.18) inset, 0 6px 16px rgba(31,158,92,.28);
+      box-shadow:0 1px 0 rgba(255,255,255,.18) inset, 0 1px 2px rgba(0,0,0,.26);
     }
     /* Danger — Fold and destructive table controls */
     #foldBtn, button.warn, .del-btn {
       background:linear-gradient(180deg,var(--c-danger-2),var(--c-danger));
       border-color:var(--c-danger-bd); color:#fff; font-weight:850;
-      box-shadow:0 1px 0 rgba(255,255,255,.14) inset, 0 6px 16px rgba(178,56,56,.26);
+      box-shadow:0 1px 0 rgba(255,255,255,.16) inset, 0 1px 2px rgba(0,0,0,.26);
     }
     /* Neutral — Check, Call, Next Hand and other no-commitment actions */
     #checkBtn, #callBtn, #nextHandBtn {
       background:linear-gradient(180deg,var(--c-neutral-2),var(--c-neutral));
-      border-color:var(--c-neutral-bd); color:#eaf2ee; font-weight:800;
+      border-color:var(--c-neutral-bd); color:#f4f7f5; font-weight:850;
     }
-    /* All-in — distinct gold so the biggest commitment never blends in */
+    /* All-in — dark neutral, matching the compact action controls */
     #allInBtn {
       background:linear-gradient(180deg,var(--c-allin-2),var(--c-allin));
-      border-color:var(--c-allin-bd); color:#241a04; font-weight:900; letter-spacing:.02em;
-      box-shadow:0 1px 0 rgba(255,255,255,.28) inset, 0 6px 16px rgba(199,146,51,.26);
+      border-color:var(--c-allin-bd); color:#f4f7f5; font-weight:850; letter-spacing:0;
+      box-shadow:0 1px 0 rgba(255,255,255,.13) inset, 0 1px 2px rgba(0,0,0,.26);
     }
     /* Leave — secondary danger: outlined, quieter than Fold but clearly an exit */
     #leaveSeatBtn {
@@ -1010,7 +1010,7 @@ const S = {
   selectedSeat: 0, prevCommunity: [], prevHoles: {}, lastPot: null,
   lastTurnKey: '', lastSoundRoom: '', hasRenderedState: false, lastChipSoundAt: 0, lastState: null,
   creatorTokens: JSON.parse(localStorage.getItem('poker.creatorTokens') || '{}'),
-  ws: null, wsTimer: null, lobbyWs: null, lobbyTimer: null, pollTimer: null, lobbyPollTimer: null, heartbeatTimer: null, turnCountdownTimer: null, turnTimerKey: '', turnTimerEnd: 0, autoNextTimer: null, autoNextInterval: null, autoNextKey: '', dismissedSummaryKey: '',
+  ws: null, wsTimer: null, lobbyWs: null, lobbyTimer: null, pollTimer: null, lobbyPollTimer: null, heartbeatTimer: null, turnCountdownTimer: null, turnTimerKey: '', turnTimerEnd: 0, autoNextTimer: null, autoNextInterval: null, autoNextKey: '', autoNextDeadline: 0, autoNextSuppressedKey: '', dismissedSummaryKey: '',
   wantsRoomPolling: false, wantsLobbyPolling: false, fastPollUntil: 0, pendingMutation: false,
   lastLegalActions: [],
   lastRevealHandKey: '', lastRevealCommunityCount: 0, lastRevealHoleCount: 0, playedHoleRevealFor: '',
@@ -1921,29 +1921,52 @@ function startTurnCountdown(p) {
   S.turnCountdownTimer = setInterval(updateTurnTimer, 250);
 }
 
-function clearAutoNextCountdown() {
+function clearAutoNextCountdown(resetKey = false) {
   if (S.autoNextTimer) { clearTimeout(S.autoNextTimer); S.autoNextTimer = null; }
   if (S.autoNextInterval) { clearInterval(S.autoNextInterval); S.autoNextInterval = null; }
+  S.autoNextDeadline = 0;
+  if (resetKey) S.autoNextKey = '';
+}
+function autoNextSecondsLeft() {
+  if (!S.autoNextDeadline) return 10;
+  return Math.max(0, Math.ceil((S.autoNextDeadline - Date.now()) / 1000));
+}
+function autoNextSecondsForKey(key) {
+  return S.autoNextKey === key && S.autoNextDeadline ? autoNextSecondsLeft() : 10;
+}
+function hideHandResultBanner() {
+  const banner = $('winnerBanner');
+  if (banner) { banner.hidden = true; banner.innerHTML = ''; }
+  const panel = $('handSummary');
+  if (panel) { panel.hidden = true; panel.innerHTML = ''; }
+}
+function prepareHandAdvance() {
+  const key = handSummaryKey(S.lastState);
+  if (key) S.autoNextSuppressedKey = key;
+  clearAutoNextCountdown(true);
+  hideHandResultBanner();
 }
 function updateAutoNextText(seconds = null, message = '') {
   const el = $('autoNextText');
   if (!el) return;
   if (message) { el.textContent = message; return; }
-  if (seconds == null) return;
+  if (seconds == null) seconds = autoNextSecondsLeft();
   el.textContent = `Next: ${seconds}s`; 
 }
 function startAutoNextCountdown(p) {
   const key = handSummaryKey(p);
-  if (!key || S.autoNextKey === key || !isRoomCreator(p.room?.room_id || S.roomId)) return;
+  if (!key || S.autoNextSuppressedKey === key || !isRoomCreator(p.room?.room_id || S.roomId)) return;
   if (!p.hand_complete || p.hand_in_progress || Number(p.room?.occupied_seats || 0) < 2) return;
+  if (S.autoNextKey === key && S.autoNextDeadline) {
+    updateAutoNextText(autoNextSecondsLeft());
+    return;
+  }
   S.autoNextKey = key;
   clearAutoNextCountdown();
-  let remaining = 10;
-  updateAutoNextText(remaining);
-  S.autoNextInterval = setInterval(() => {
-    remaining -= 1;
-    updateAutoNextText(Math.max(0, remaining));
-  }, 1000);
+  S.autoNextKey = key;
+  S.autoNextDeadline = Date.now() + 10000;
+  updateAutoNextText(autoNextSecondsLeft());
+  S.autoNextInterval = setInterval(() => updateAutoNextText(autoNextSecondsLeft()), 250);
   S.autoNextTimer = setTimeout(async () => {
     clearAutoNextCountdown();
     if (S.lastState && handSummaryKey(S.lastState) === key && S.lastState.hand_complete) {
@@ -1953,7 +1976,9 @@ function startAutoNextCountdown(p) {
 }
 function stopAutoNextIfNeeded(p) {
   if (!p?.hand_complete) {
-    clearAutoNextCountdown();
+    clearAutoNextCountdown(true);
+    const key = handSummaryKey(p);
+    if (!key || S.autoNextSuppressedKey !== key) S.autoNextSuppressedKey = '';
     return;
   }
 }
@@ -1966,10 +1991,11 @@ function renderHandSummary(p, winnerSummary) {
   const banner = $('winnerBanner');
   if (!banner) return;
   const key = handSummaryKey(p);
-  if (!p?.hand_complete || !winnerSummary || S.dismissedSummaryKey === key) {
+  if (S.autoNextSuppressedKey && S.autoNextSuppressedKey !== key) S.autoNextSuppressedKey = '';
+  if (!p?.hand_complete || !winnerSummary || S.dismissedSummaryKey === key || S.autoNextSuppressedKey === key) {
     banner.hidden = true;
     banner.innerHTML = '';
-    clearAutoNextCountdown();
+    clearAutoNextCountdown(S.autoNextSuppressedKey !== key);
     return;
   }
 
@@ -1981,6 +2007,7 @@ function renderHandSummary(p, winnerSummary) {
   const hand = showdownHandText(rows);
   const creator = isRoomCreator(p.room?.room_id || S.roomId);
   const canAuto = creator && Number(p.room?.occupied_seats || 0) >= 2;
+  const autoNextSeconds = canAuto ? autoNextSecondsForKey(key) : null;
 
   // Plain-language result: emphasise when the viewer wins, and never leave a
   // fold-win ambiguous — spell out that everyone else folded.
@@ -1999,11 +2026,11 @@ function renderHandSummary(p, winnerSummary) {
     <span class="winner-detail">${escapeHtml(headline)}</span>
     ${reason ? `<span class="winner-reason">${escapeHtml(reason)}</span>` : ''}
     ${hand ? `<span class="winner-hand">${escapeHtml(hand)}</span>` : ''}
-    <span class="winner-timer" id="autoNextText">${canAuto ? 'Next: 10s' : 'Waiting for creator'}</span>
+    <span class="winner-timer" id="autoNextText">${canAuto ? `Next: ${autoNextSeconds}s` : 'Waiting for creator'}</span>
     ${creator ? '<button class="primary winner-start" id="summaryStartNow" type="button">Start</button>' : ''}`;
 
   const startBtn = $('summaryStartNow');
-  if (startBtn) startBtn.onclick = async () => { clearAutoNextCountdown(); await nextHand(); };
+  if (startBtn) startBtn.onclick = async () => { await nextHand(); };
   if (canAuto) startAutoNextCountdown(p);
 }
 
@@ -2341,6 +2368,7 @@ async function addAi() {
 async function startHand() {
   return runMutation(async () => {
     try {
+      prepareHandAdvance();
       const p = await api('/api/start_hand',{method:'POST',body:JSON.stringify({room_id:S.roomId,token:S.token,client_id:S.clientId})});
       await applyServerPayload(p, {fast:9000});
     }
@@ -2350,6 +2378,7 @@ async function startHand() {
 async function nextHand() {
   return runMutation(async () => {
     try {
+      prepareHandAdvance();
       const p = await api('/api/next_hand',{method:'POST',body:JSON.stringify({room_id:S.roomId,token:S.token,client_id:S.clientId})});
       await applyServerPayload(p, {fast:9000});
     }
