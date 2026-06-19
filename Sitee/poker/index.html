@@ -564,6 +564,8 @@
       padding:10px;
       border-radius:20px;
       overflow:hidden;
+      width:100%;
+      justify-self:center;
     }
     body.poker-table-mode .table {
       width:100%;
@@ -652,6 +654,40 @@
       display:none;
     }
     @media (min-width:901px) {
+      body.poker-table-mode .table-wrap {
+        width:min(100%,1360px);
+      }
+      body.poker-table-mode .pos-1 {
+        bottom:clamp(74px,15%,116px);
+        right:clamp(38px,5.2%,76px);
+      }
+      body.poker-table-mode .pos-2 {
+        top:clamp(110px,21%,160px);
+        right:clamp(38px,5.2%,76px);
+      }
+      body.poker-table-mode .pos-3 {
+        top:clamp(76px,15%,118px);
+        left:clamp(38px,5.2%,76px);
+      }
+      body.poker-table-mode .pos-4 {
+        top:50%;
+        left:clamp(28px,3.6%,58px);
+        transform:translateY(-50%);
+      }
+      body.poker-table-mode .pos-5 {
+        bottom:clamp(48px,10%,88px);
+        left:clamp(58px,7.4%,100px);
+      }
+      body.poker-table-mode .pos-6 {
+        bottom:50%;
+        left:clamp(18px,2.4%,42px);
+        transform:translateY(50%);
+      }
+      body.poker-table-mode .pos-7 {
+        bottom:50%;
+        right:clamp(18px,2.4%,42px);
+        transform:translateY(50%);
+      }
       body.poker-table-mode .card-wrap,
       body.poker-table-mode .card {
         width:clamp(38px,2.7vw,52px);
@@ -830,8 +866,8 @@
         border-radius:150px;
       }
       body.poker-table-mode .table-center {
-        width:50%;
-        max-width:180px;
+        width:46%;
+        max-width:170px;
         transform:translate(-50%,-52%);
       }
       body.poker-table-mode .game-actions {
@@ -1364,6 +1400,12 @@ function botAvatarMarkup(seat, seatIndex) {
 function seatTurnIndicatorMarkup(p, seatIndex) {
   const active = p?.current_actor_index === seatIndex && p?.hand_in_progress && !p?.hand_complete;
   return active ? '<div class="seat-turn-indicator" aria-label="Current turn timer"></div>' : '';
+}
+function visualSeatPosition(p, seatIndex) {
+  const maxSeats = Number(p?.max_seats || p?.seats?.length || 0);
+  const viewerSeat = Number(p?.viewer_seat);
+  if (!p?.viewer_token_valid || !Number.isInteger(viewerSeat) || !maxSeats) return seatIndex % 9;
+  return ((Number(seatIndex) - viewerSeat + maxSeats) % maxSeats) % 9;
 }
 function handSummaryKey(p) {
   return p?.room?.room_id && p?.hand_id ? `${p.room.room_id}:${p.hand_id}` : '';
@@ -2479,8 +2521,10 @@ function render(p) {
   let newHoleCount = 0;
   p.seats.forEach((seat,i) => {
     const box = document.createElement('div');
-    box.className = `player pos-${i%9} ${p.current_actor_index===i?'active':''} ${winnerSeats.has(i)?'winner':''} ${isBotSeat(seat)?'has-avatar':''}`;
+    const visualPos = visualSeatPosition(p, i);
+    box.className = `player pos-${visualPos} ${p.current_actor_index===i?'active':''} ${winnerSeats.has(i)?'winner':''} ${isBotSeat(seat)?'has-avatar':''}`;
     box.dataset.seat = String(i);
+    box.dataset.visualSeat = String(visualPos);
     if (!seat) {
       const sit = S.token ? '' : `<button onclick="quickJoin(${i})">Sit</button>`;
       const bot = p.hand_in_progress && !p.hand_complete ? '' : `<button class="bot-btn" onclick="quickAddAi(${i})">Bot</button>`;
