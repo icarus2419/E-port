@@ -188,6 +188,10 @@
     .topbar .meta { color:var(--muted); font-size:.9rem; }
     .topbar-actions { display:flex; align-items:center; justify-content:flex-end; gap:8px; flex-wrap:wrap; }
     .topbar-actions button { min-height:38px; white-space:nowrap; }
+    .topbar-actions .sound-group { width:240px; margin:0; padding:6px 8px; border-radius:10px; }
+    .topbar-actions .sound-row { grid-template-columns:auto minmax(92px,1fr); gap:7px; }
+    .topbar-actions .sound-row button { min-height:34px; padding:5px 9px; font-size:.8rem; }
+    .topbar-actions .sound-volume { font-size:.72rem; }
     .table-wrap { position:relative; background:rgba(10,17,17,.35); border-radius:30px; padding:18px; border:1px solid rgba(216,182,106,.16); box-shadow:var(--shadow); }
     .table { position:relative; min-height:620px; border-radius:280px; background:var(--felt); border:12px solid #5a4322; outline:2px solid rgba(216,182,106,.32); overflow:hidden; }
     .table-dealer { position:absolute; top:10px; left:50%; transform:translateX(-50%); z-index:8; display:grid; justify-items:center; gap:2px; pointer-events:none; filter:drop-shadow(0 10px 20px rgba(0,0,0,.3)); }
@@ -230,6 +234,16 @@
     .pos-0{bottom:12px;left:50%;transform:translateX(-50%)} .pos-1{bottom:92px;right:64px} .pos-2{top:136px;right:64px}
     .pos-3{top:76px;left:64px;transform:none} .pos-4{top:250px;left:64px} .pos-5{bottom:54px;left:64px}
     .pos-6{bottom:210px;left:18px} .pos-7{bottom:210px;right:18px} .pos-8{top:250px;left:50%;transform:translateX(-50%)}
+    .table[data-max-seats="9"] .player { width:clamp(132px,10.6vw,142px); inset:auto; transform:none; }
+    .table[data-max-seats="9"] .pos-0{bottom:18px;left:50%;transform:translateX(-50%)}
+    .table[data-max-seats="9"] .pos-1{bottom:8%;right:13%;transform:none}
+    .table[data-max-seats="9"] .pos-2{top:50%;right:.5%;transform:translateY(-50%)}
+    .table[data-max-seats="9"] .pos-3{top:20%;right:13%;transform:none}
+    .table[data-max-seats="9"] .pos-4{top:4%;right:34%;transform:none}
+    .table[data-max-seats="9"] .pos-5{top:4%;left:34%;transform:none}
+    .table[data-max-seats="9"] .pos-6{top:20%;left:13%;transform:none}
+    .table[data-max-seats="9"] .pos-7{top:50%;left:.5%;transform:translateY(-50%)}
+    .table[data-max-seats="9"] .pos-8{bottom:8%;left:13%;transform:none}
     .actionbar { background:rgba(18,29,30,.94); border:1px solid rgba(216,182,106,.16); border-radius:18px; box-shadow:var(--shadow); padding:14px; display:grid; gap:12px; transition:border-color var(--btn-ease), box-shadow var(--btn-ease); }
     .game-actions { width:100%; max-width:1180px; justify-self:center; }
     /* Quiet "it's your move" cue — a soft accent edge, nothing flashy */
@@ -240,7 +254,7 @@
     .game-actions .bet-actions button { min-height:46px; }
     .game-actions .bet-slider { grid-column:1 / span 3; }
     .game-actions #betBtn { grid-column:4; }
-    .table-setup-grid { display:grid; grid-template-columns:minmax(220px,1fr) minmax(260px,1.15fr) minmax(220px,.9fr); gap:10px; align-items:stretch; }
+    .table-setup-grid { display:grid; grid-template-columns:minmax(260px,1.15fr) minmax(220px,.9fr); gap:10px; align-items:stretch; }
     .table-setup-grid > * { min-width:0; }
     .game-actions .sound-group { margin:0; }
     .game-actions .bot-tools { height:100%; }
@@ -380,6 +394,7 @@
       .topbar .meta { font-size:.82rem; line-height:1.25; }
       .topbar-actions { display:grid; grid-template-columns:1fr; }
       .topbar-actions button, #copyRoomLinkBtn { width:100%; }
+      .topbar-actions .sound-group { width:100%; }
       .invite-panel { flex-direction:column; align-items:stretch; text-align:center; padding:10px; }
       .invite-panel .row { grid-template-columns:1fr 1fr; }
       .table-wrap { border-radius:18px; padding:8px; overflow:hidden; }
@@ -435,6 +450,17 @@
       .pos-6{bottom:220px;left:2px}
       .pos-7{bottom:220px;right:2px}
       .pos-8{top:215px;left:50%;transform:translateX(-50%)}
+      .table[data-max-seats="9"] .player { width:96px; padding:6px; }
+      .table[data-max-seats="9"] .seat-avatar { width:24px; height:24px; }
+      .table[data-max-seats="9"] .pos-0{bottom:8px;left:50%;transform:translateX(-50%)}
+      .table[data-max-seats="9"] .pos-1{bottom:72px;right:4px;transform:none}
+      .table[data-max-seats="9"] .pos-2{top:50%;right:0;transform:translateY(-50%)}
+      .table[data-max-seats="9"] .pos-3{top:102px;right:4px;transform:none}
+      .table[data-max-seats="9"] .pos-4{top:54px;right:24%;transform:none}
+      .table[data-max-seats="9"] .pos-5{top:54px;left:24%;transform:none}
+      .table[data-max-seats="9"] .pos-6{top:102px;left:4px;transform:none}
+      .table[data-max-seats="9"] .pos-7{top:50%;left:0;transform:translateY(-50%)}
+      .table[data-max-seats="9"] .pos-8{bottom:72px;left:4px;transform:none}
       .side { align-self:stretch; padding:10px; }
       .side h2 { font-size:1rem; }
       .control-group { gap:8px; }
@@ -497,6 +523,18 @@
       .pos-6{bottom:220px;left:0}
       .pos-7{bottom:220px;right:0}
       .pos-8{top:218px;left:50%;transform:translateX(-50%)}
+      .table[data-max-seats="9"] .player { width:84px; padding:4px; }
+      .table[data-max-seats="9"] .seat-avatar { width:20px; height:20px; }
+      .table[data-max-seats="9"] .seat-turn-indicator { right:-4px; }
+      .table[data-max-seats="9"] .pos-0{bottom:7px;left:50%;transform:translateX(-50%)}
+      .table[data-max-seats="9"] .pos-1{bottom:68px;right:2px;transform:none}
+      .table[data-max-seats="9"] .pos-2{top:50%;right:0;transform:translateY(-50%)}
+      .table[data-max-seats="9"] .pos-3{top:104px;right:2px;transform:none}
+      .table[data-max-seats="9"] .pos-4{top:60px;right:25%;transform:none}
+      .table[data-max-seats="9"] .pos-5{top:60px;left:25%;transform:none}
+      .table[data-max-seats="9"] .pos-6{top:104px;left:2px;transform:none}
+      .table[data-max-seats="9"] .pos-7{top:50%;left:0;transform:translateY(-50%)}
+      .table[data-max-seats="9"] .pos-8{bottom:68px;left:2px;transform:none}
       .primary-actions, .hand-flow, .bet-actions, .table-tools-grid { grid-template-columns:1fr 1fr; }
       #seatJoinSelect, #playerName, #joinSeatBtn { grid-column:auto; }
       .bot-tools { grid-template-columns:1fr; }
@@ -510,6 +548,9 @@
       .call-match-banner strong { font-size:.62rem; }
       .player { width:86px; }
       .pos-1{right:0}.pos-2{right:0}.pos-3{left:2px}.pos-4{left:2px}.pos-5{left:2px}
+      .table[data-max-seats="9"] .player { width:78px; padding:4px; }
+      .table[data-max-seats="9"] .pos-4{right:23%}
+      .table[data-max-seats="9"] .pos-5{left:23%}
     }
     @media (max-height:520px) and (orientation:landscape) and (max-width:900px) {
       .app { padding-top:54px; }
@@ -765,7 +806,7 @@
     body.poker-table-mode .table-setup-grid {
       width:min(100%,980px);
       margin:0 auto;
-      grid-template-columns:minmax(170px,.85fr) minmax(260px,1.1fr) minmax(170px,.75fr);
+      grid-template-columns:minmax(260px,1.1fr) minmax(170px,.75fr);
       gap:6px;
     }
     body.poker-table-mode .sound-group,
@@ -819,7 +860,7 @@
       body.poker-table-mode .topbar { min-height:48px; padding-top:6px; padding-bottom:6px; }
       body.poker-table-mode .table-wrap { padding:8px; }
       body.poker-table-mode .game-actions { padding:5px 7px 6px; gap:4px; }
-      body.poker-table-mode .table-setup-grid { grid-template-columns:minmax(160px,.85fr) minmax(240px,1.1fr) minmax(150px,.7fr); gap:5px; }
+      body.poker-table-mode .table-setup-grid { grid-template-columns:minmax(240px,1.1fr) minmax(150px,.7fr); gap:5px; }
       body.poker-playing .table-setup-grid { display:none; }
       body.poker-table-mode .activity-details summary { min-height:32px; padding:6px 8px; }
     }
@@ -841,6 +882,9 @@
         grid-template-rows:auto auto auto;
       }
       body.poker-table-mode .topbar {
+        position:sticky;
+        top:max(54px, env(safe-area-inset-top));
+        z-index:35;
         min-height:0;
         padding:8px;
         flex-direction:column;
@@ -850,6 +894,9 @@
         display:grid;
         grid-template-columns:1fr 1fr;
         gap:7px;
+      }
+      body.poker-table-mode .topbar-actions .sound-group {
+        grid-column:1 / -1;
       }
       body.poker-table-mode .topbar-actions button {
         width:100%;
@@ -1028,6 +1075,15 @@
       <div class="topbar">
         <div><div class="room" id="roomTitle">Create or join a table</div><div class="meta" id="roomMeta">No table selected yet</div></div>
         <div class="topbar-actions">
+          <div class="sound-group" aria-label="Sound controls">
+            <div class="sound-row">
+              <button id="muteBtn" type="button" aria-pressed="false">Mute</button>
+              <label class="sound-volume" for="volumeRange">
+                <span>Vol <span id="volumeValue" class="sound-value">35%</span></span>
+                <input id="volumeRange" type="range" min="0" max="1" step="0.01" value="0.35" />
+              </label>
+            </div>
+          </div>
           <button id="copyRoomLinkBtn" type="button" title="Copy an invite link for this table">Copy room link</button>
           <button class="warn" id="leaveSeatBtn" type="button" hidden>Leave Game</button>
         </div>
@@ -1072,15 +1128,6 @@
           </div>
         </div>
         <div class="table-setup-grid">
-          <div class="sound-group" aria-label="Sound controls">
-            <div class="sound-row">
-              <button id="muteBtn" type="button" aria-pressed="false">Mute</button>
-              <label class="sound-volume" for="volumeRange">
-                <span>Vol <span id="volumeValue" class="sound-value">35%</span></span>
-                <input id="volumeRange" type="range" min="0" max="1" step="0.01" value="0.35" />
-              </label>
-            </div>
-          </div>
           <div class="bot-tools" id="botTools">
             <label class="bot-difficulty" for="aiKindSelect">
               <span>Bot difficulty</span>
@@ -2517,6 +2564,7 @@ function render(p) {
     : '<div class="muted">No showdown yet</div>';
   const winnerSeats = new Set(showdownRows.map(x => Number(x.seat_number)).filter(Number.isFinite));
   const tbl = $('table');
+  tbl.dataset.maxSeats = String(Number(p.max_seats || p.seats?.length || 0));
   tbl.querySelectorAll('.player').forEach(n => n.remove());
   let newHoleCount = 0;
   p.seats.forEach((seat,i) => {
