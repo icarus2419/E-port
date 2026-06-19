@@ -159,7 +159,7 @@
     .bet-slider input[type=range] { width:100%; min-height:28px; padding:0; accent-color:var(--accent); cursor:pointer; }
     .bet-slider.disabled { display:none; }
     .primary-actions button:disabled, .hand-flow button:disabled, .bet-actions button:disabled, .table-tools-grid button:disabled { display:none; }
-    .primary-actions:has(> button:disabled), .hand-flow:not(:has(> button:not(:disabled))), .bet-actions:not(:has(> button:not(:disabled))) { display:none; }
+    .primary-actions:has(> button:disabled), .hand-flow:not(:has(> button:not(:disabled))) { display:none; }
     .control-status { padding:9px 10px; border-radius:12px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.06); line-height:1.25; }
     .advanced-note { display:none; color:var(--muted); font-size:.74rem; line-height:1.25; opacity:.9; }
     .seat-empty .muted { font-size:.85rem; font-weight:700; }
@@ -671,6 +671,130 @@
         display:none;
       }
     }
+
+    /* ============================================================
+       Action deck — balanced, sleek button layout (same idea)
+       ============================================================ */
+    /* The bar reads as one quiet control deck */
+    body.poker-table-mode .game-actions {
+      background:
+        linear-gradient(180deg, rgba(216,182,106,.05), rgba(255,255,255,0) 40%),
+        linear-gradient(180deg, rgba(20,32,33,.96), rgba(14,23,24,.97));
+      border:1px solid rgba(216,182,106,.14);
+      border-radius:18px;
+      padding:10px 12px 12px;
+      gap:9px;
+      box-shadow:0 -18px 40px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.04);
+    }
+    /* matched / to-call indicator becomes a compact centered pill */
+    body.poker-table-mode .game-actions .mobile-call-panel {
+      width:max-content;
+      max-width:100%;
+      margin:0 auto;
+      padding:6px 16px;
+      border-radius:999px;
+      text-align:center;
+      display:flex;
+      align-items:baseline;
+      justify-content:center;
+      gap:8px;
+    }
+    body.poker-table-mode .game-actions .mobile-call-panel strong { font-size:.74rem; }
+    body.poker-table-mode .game-actions .mobile-call-panel span { margin-top:0; font-size:.7rem; opacity:.85; }
+    /* status line: quiet, centered, hairline under it */
+    body.poker-table-mode .control-status {
+      width:min(100%,760px);
+      margin:0 auto;
+      padding:2px 4px 8px;
+      background:transparent;
+      border:0;
+      border-bottom:1px solid rgba(216,182,106,.12);
+      border-radius:0;
+      text-align:center;
+      color:var(--muted);
+      font-size:.78rem;
+      letter-spacing:.01em;
+    }
+
+    /* Two clean rows: decisions (fold/check/call/all-in) + commit (slider + bet) */
+    .bet-actions.player-actions {
+      display:flex;
+      flex-direction:column;
+      gap:9px;
+      width:min(100%,760px);
+      margin:0 auto;
+    }
+    .pa-decisions { display:flex; gap:9px; }
+    .pa-decisions button { flex:1 1 0; }
+    .pa-commit { display:flex; gap:10px; align-items:stretch; }
+    .pa-commit .bet-slider { flex:1 1 auto; margin:0; }
+    .pa-commit #betBtn { flex:0 0 clamp(118px, 26%, 168px); }
+
+    /* shared sleek button base */
+    .player-actions button {
+      min-height:50px;
+      padding:11px 14px;
+      border-radius:13px;
+      border:1px solid transparent;
+      color:#fff;
+      font-weight:800;
+      letter-spacing:.02em;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.10), 0 7px 18px rgba(0,0,0,.24);
+      transition:transform .07s ease, filter .15s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .player-actions button:active { transform:translateY(1px); }
+    .player-actions button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+    /* Fold — give up (red) */
+    #foldBtn { background:linear-gradient(180deg,#b5413f,#8c2c2b); border-color:rgba(234,125,125,.42); }
+    #foldBtn:hover { background:linear-gradient(180deg,#c24b49,#9a3433); }
+    /* Check / Call — passive (slate) */
+    #checkBtn, #callBtn { background:linear-gradient(180deg,#3c474d,#2b3439); border-color:rgba(255,255,255,.13); color:#eef5f1; }
+    #checkBtn:hover, #callBtn:hover { background:linear-gradient(180deg,#47535b,#343f45); }
+    /* All-in — maximum aggression, carries the table-rail gold */
+    #allInBtn {
+      background:linear-gradient(180deg, rgba(216,182,106,.16), rgba(216,182,106,.05));
+      border-color:rgba(216,182,106,.55);
+      color:#f4e2b0;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 0 18px rgba(216,182,106,.12), 0 7px 18px rgba(0,0,0,.24);
+    }
+    #allInBtn:hover { background:linear-gradient(180deg, rgba(216,182,106,.28), rgba(216,182,106,.12)); color:#fff0c4; border-color:rgba(216,182,106,.75); }
+    /* Bet / Raise — aggression (green) */
+    #betBtn { background:linear-gradient(180deg,#2faa67,#1d8049); border-color:rgba(53,189,118,.5); font-weight:900; }
+    #betBtn:hover { background:linear-gradient(180deg,#37bd74,#229256); }
+    .player-actions button:disabled { opacity:.4; }
+
+    /* bet slider matches button height, sits inline with Bet */
+    body.poker-table-mode .pa-commit .bet-slider {
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:5px;
+      min-height:50px;
+      padding:7px 14px;
+      border-radius:13px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    body.poker-table-mode .pa-commit .bet-slider label { font-size:.74rem; }
+    body.poker-table-mode .pa-commit .bet-slider strong { font-size:.86rem; }
+    body.poker-table-mode .pa-commit .bet-slider input[type=range] { min-height:20px; }
+
+    /* show/hide for the nested structure */
+    .pa-decisions button:disabled { display:none; }
+    .pa-decisions:not(:has(button:not(:disabled))) { display:none; }
+    .bet-actions.player-actions:has(button:not(:disabled)),
+    .bet-actions.player-actions:has(.bet-slider:not(.disabled)) { display:flex; }
+    .bet-actions.player-actions:not(:has(button:not(:disabled))):not(:has(.bet-slider:not(.disabled))) { display:none; }
+
+    /* narrow screens stay balanced, never lopsided */
+    @media (max-width:640px) {
+      .pa-decisions { flex-wrap:wrap; }
+      .pa-decisions button { flex:1 1 calc(50% - 5px); min-height:46px; }
+      .pa-commit { flex-wrap:wrap; }
+      .pa-commit .bet-slider { flex:1 1 100%; }
+      .pa-commit #betBtn { flex:1 1 100%; }
+    }
   </style>
 </head>
 <body>
@@ -780,15 +904,19 @@
           <button id="nextHandBtn">Next Hand</button>
         </div>
         <div class="bet-actions player-actions">
-          <button id="foldBtn">Fold</button>
-          <button id="checkBtn">Check</button>
-          <button id="callBtn">Call</button>
-          <button id="allInBtn">All-in</button>
-          <div class="bet-slider wide" id="betSliderWrap">
-            <label for="betAmount"><span id="betSliderLabel">Bet amount</span><strong id="betAmountValue">10</strong></label>
-            <input id="betAmount" type="range" min="1" max="10" step="1" value="10" />
+          <div class="pa-decisions">
+            <button id="foldBtn">Fold</button>
+            <button id="checkBtn">Check</button>
+            <button id="callBtn">Call</button>
+            <button id="allInBtn">All-in</button>
           </div>
-          <button class="wide" id="betBtn">Bet / Raise</button>
+          <div class="pa-commit">
+            <div class="bet-slider wide" id="betSliderWrap">
+              <label for="betAmount"><span id="betSliderLabel">Bet amount</span><strong id="betAmountValue">10</strong></label>
+              <input id="betAmount" type="range" min="1" max="10" step="1" value="10" />
+            </div>
+            <button class="wide" id="betBtn">Bet / Raise</button>
+          </div>
         </div>
         <details class="activity-details">
           <summary>Log & showdown</summary>
@@ -2034,11 +2162,11 @@ function render(p) {
   $('leaveSeatBtn').disabled = !p.viewer_token_valid;
   $('resetBtn').disabled = p.room.occupied_seats === 0;
   syncBotControls(p);
-  const callStatus = p.hand_in_progress && !p.hand_complete && p.viewer_token_valid
-    ? (callAmount > 0 ? `Need ${callAmount} to call` : 'You are matched')
-    : '';
+  const prettyLegal = legal
+    .map(a => a === 'all_in' ? 'all-in' : a)
+    .join(' · ');
   $('hintText').textContent = p.viewer_token_valid
-    ? `Seat ${p.viewer_seat+1}${legal.length ? ' · Your turn' : ' · Waiting'}${callStatus ? ' · ' + callStatus : ''}${legal.length ? ' · ' + legal.join(', ') : ''}`
+    ? `Seat ${p.viewer_seat+1}${legal.length ? ' · Your turn' : ' · Waiting'}${legal.length ? ' · ' + prettyLegal : ''}`
     : 'Join a room to auto-sit.';
   const isMyTurn = p.viewer_token_valid && p.current_actor_index === p.viewer_seat && legal.length > 0;
   const turnKey = `${p.room.room_id}:${p.hand_id}:${p.current_actor_index}:${p.current_bet_to_call}:${p.street}`;

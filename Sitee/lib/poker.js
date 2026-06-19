@@ -11,7 +11,10 @@ const STORE_KEY = 'joseph:poker-platform:v2';
 const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || '';
 const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '';
 const LOCAL_STATE_FILE = process.env.POKER_LOCAL_STATE_FILE || path.join(os.tmpdir(), 'joseph-poker-platform-v2.json');
-const ROOM_TTL_MS = 24 * 60 * 60 * 1000;
+// Private tables are deleted after 1 hour with no activity. Any real interaction
+// (create/join/bet/fold/reset) and the 30-minute presence heartbeat from a seated
+// player both refresh last_activity_at, so an occupied, open table stays alive.
+const ROOM_TTL_MS = Math.max(60000, Number(process.env.POKER_ROOM_TTL_MS || 60 * 60 * 1000));
 const PLAYER_STALE_MS = Math.max(60000, Number(process.env.POKER_PLAYER_STALE_MS || 90 * 60 * 1000));
 const LEGACY_GHOST_MS = Math.max(60000, Number(process.env.POKER_LEGACY_GHOST_MS || 2 * 60 * 1000));
 const TURN_TIMEOUT_MS = Math.max(15000, Number(process.env.POKER_TURN_TIMEOUT_MS || 60 * 1000));
