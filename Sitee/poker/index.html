@@ -2112,7 +2112,7 @@ function turnProgressRatio(p = S.lastState) {
   if (!end || actor == null || !p?.hand_in_progress || p?.hand_complete) return 0;
   const started = Number(p.turn_started_at) || 0;
   const deadline = Number(p.turn_deadline_at) || 0;
-  const total = deadline > started ? Math.max(1000, deadline - started) : 60000;
+  const total = deadline > started ? Math.max(1000, deadline - started) : 30000;
   return Math.max(0, Math.min(1, (end - Date.now()) / total));
 }
 
