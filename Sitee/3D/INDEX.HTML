@@ -15,6 +15,7 @@
       <div class="loader-card">
         <h1>Loading</h1>
         <p>Building the scene…</p>
+        <a id="loader-back-link" class="loader-back-link" href="../">Back to 2D portfolio</a>
         <div class="loader-track"><div id="loader-bar"></div></div>
       </div>
     </div>
@@ -43,6 +44,13 @@
         </div>
       </div>
       <nav class="top-actions" aria-label="Quick menu">
+        <a id="back-2d-button" class="icon-button back-2d-button" href="../" aria-label="Back to 2D portfolio" title="Back to 2D portfolio">
+          <svg class="ico ico-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 12H5"/>
+            <path d="M12 5 5 12l7 7"/>
+          </svg>
+          <span class="sr-only">Back to 2D portfolio</span>
+        </a>
         <button id="help-button" class="icon-button" type="button" aria-label="Open menu" aria-expanded="false">
           <svg class="ico ico-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
             <line class="ico-bar ico-bar-top" x1="4" y1="7" x2="20" y2="7"/>
@@ -161,9 +169,14 @@
           var badge = document.querySelector('.loader-badge');
           var title = document.querySelector('.loader-card h1');
           var text = document.querySelector('.loader-card p');
+          var back = document.querySelector('#loader-back-link');
           if (badge) badge.textContent = 'NOT STARTED';
           if (title) title.textContent = 'Could not load the 3D app';
-          if (text) text.innerHTML = 'The page scripts did not start. Check your connection and refresh. If you are running the source locally, run <b>npm install</b> then <b>npm run dev</b> (opening the file directly blocks module loading).';
+          if (text) {
+            text.style.display = 'block';
+            text.innerHTML = 'The 3D experience could not start in this browser. Try refreshing, updating your browser, or enabling hardware acceleration. You can keep using the regular 2D portfolio instead.';
+          }
+          if (back) back.style.display = 'inline-flex';
         }
       }, 3000);
     </script>
