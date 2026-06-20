@@ -1,0 +1,21 @@
+{
+  "name": "secure-document-approval-blueclean",
+  "version": "5.2.0",
+  "description": "Connected SecureDoc frontend and Express backend for role-based document approvals, uploads, SHA-256 evidence, and audit trails.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check server.js && node --check public/app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "motion": "^12.40.0",
+    "multer": "^2.0.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

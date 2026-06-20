@@ -3701,3 +3701,151 @@ body.intro-active:not(.light-has-switched) .hero-pull {
 body.intro-active:not(.light-has-switched) .hero-illustration .lamp {
   filter: brightness(1.08) saturate(.92) drop-shadow(0 0 .55rem rgba(255, 209, 102, .08));
 }
+
+
+/* --- Custom featured project cards and case pages --- */
+.launchvault-art,
+.securedoc-art {
+  isolation: isolate;
+  background: radial-gradient(circle at 18% 14%, rgba(255, 214, 102, .24), transparent 24%), linear-gradient(135deg, rgba(255,255,255,.08), rgba(0,0,0,.14));
+}
+.launchvault-art::before,
+.securedoc-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,.13) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.13) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: .48;
+  z-index: -1;
+}
+.art-live-dot {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: .72rem;
+  height: .72rem;
+  border-radius: 50%;
+  background: var(--sun);
+  box-shadow: 0 0 0 .45rem rgba(255, 214, 102, .16);
+}
+.launchvault-art .art-panel,
+.securedoc-art .art-panel {
+  position: absolute;
+  display: block;
+  border: 3px solid #fff8ee;
+  background: rgba(255, 248, 238, .93);
+  color: var(--ink);
+  box-shadow: 5px 5px 0 rgba(0,0,0,.15);
+}
+.launchvault-art .art-panel {
+  width: 7.6rem;
+  height: 4.7rem;
+  border-radius: .9rem;
+}
+.launchvault-art .art-panel.one { left: 1.15rem; top: 1.5rem; transform: rotate(-7deg); }
+.launchvault-art .art-panel.two { right: 1.35rem; top: 2.15rem; transform: rotate(5deg); }
+.launchvault-art .art-panel.three { left: 50%; bottom: 1.1rem; transform: translateX(-50%) rotate(-1deg); }
+.launchvault-art .art-panel::before {
+  content: "";
+  position: absolute;
+  left: .65rem;
+  top: .72rem;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: .5rem;
+  background: #9b2c2c;
+}
+.launchvault-art .art-panel::after {
+  content: "";
+  position: absolute;
+  left: 2.75rem;
+  right: .7rem;
+  top: .82rem;
+  height: .42rem;
+  border-radius: 999px;
+  background: #9b2c2c;
+  box-shadow: 0 .85rem 0 rgba(155,44,44,.35), 0 1.7rem 0 rgba(155,44,44,.18);
+}
+.securedoc-art {
+  background: radial-gradient(circle at 75% 20%, rgba(254, 243, 199, .26), transparent 24%), linear-gradient(135deg, rgba(155,44,44,.7), rgba(35,35,41,.7));
+}
+.securedoc-art .art-panel {
+  width: 5.8rem;
+  height: 7.65rem;
+  border-radius: .72rem;
+}
+.securedoc-art .art-panel.one { left: 2rem; top: 1.35rem; transform: rotate(-13deg); opacity: .82; }
+.securedoc-art .art-panel.two { left: 50%; top: 1rem; transform: translateX(-50%) rotate(1deg); z-index: 2; }
+.securedoc-art .art-panel.three { right: 2rem; top: 1.55rem; transform: rotate(13deg); opacity: .82; }
+.securedoc-art .art-panel::before {
+  content: "";
+  position: absolute;
+  left: .75rem;
+  right: .75rem;
+  top: 1rem;
+  height: .52rem;
+  border-radius: 999px;
+  background: #9b2c2c;
+  box-shadow: 0 1.15rem 0 rgba(155,44,44,.36), 0 2.3rem 0 rgba(155,44,44,.2);
+}
+.securedoc-art .art-panel.two::after {
+  content: "✓";
+  position: absolute;
+  right: -.85rem;
+  bottom: .8rem;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 3px solid #fff8ee;
+  background: #9b2c2c;
+  color: #fef3c7;
+  font-size: 1.7rem;
+  font-weight: 1000;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.16);
+}
+.project-detail-hero {
+  min-height: auto;
+  padding: 8rem clamp(1rem, 5vw, 4rem) 4rem;
+  background: linear-gradient(90deg, var(--paper) 0 35%, var(--mint) 35% 100%);
+}
+.project-detail-wrap {
+  max-width: 74rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 2rem;
+  align-items: center;
+}
+.project-detail-copy { padding: clamp(1rem, 3vw, 2rem); }
+.project-detail-copy h1 {
+  max-width: 12ch;
+  font-size: clamp(3rem, 7vw, 6.2rem);
+  line-height: .92;
+  margin-bottom: 1rem;
+}
+.project-detail-copy p:not(.hand-note) { line-height: 1.7; font-weight: 650; font-size: 1.08rem; }
+.detail-art { min-height: 18rem; }
+.project-detail-section { padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 5vw, 4rem); }
+.project-detail-grid {
+  max-width: 74rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.3rem;
+}
+.project-detail-grid .case-box h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+.project-detail-grid .case-box p,
+.project-detail-grid .case-box li { line-height: 1.7; font-weight: 650; }
+@media (max-width: 800px) {
+  .project-detail-hero { background: var(--mint); padding-top: 6.5rem; }
+  .project-detail-wrap,
+  .project-detail-grid { grid-template-columns: 1fr; }
+  .detail-art { min-height: 13rem; }
+  .launchvault-art .art-panel { width: 6.2rem; height: 4.1rem; }
+  .securedoc-art .art-panel { width: 4.7rem; height: 6.35rem; }
+  .securedoc-art .art-panel.one { left: 1.4rem; }
+  .securedoc-art .art-panel.three { right: 1.4rem; }
+}

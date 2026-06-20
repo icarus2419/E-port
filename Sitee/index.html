@@ -18,6 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Nunito+Sans:wght@800;900;1000&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./assets/styles.css" />
   <link rel="stylesheet" href="./assets/poker-transition.css" />
+  <link rel="stylesheet" href="./assets/project-transitions.css" />
   <noscript><style>.light-intro{display:none}body.intro-active{overflow:auto}body.intro-active:not(.light-has-switched) .lamp .light{opacity:.68;transform:translateX(-50%) scaleY(1);filter:none}body.intro-active:not(.light-has-switched) .shade::after{background:#fff7cf;box-shadow:none}body.intro-active:not(.light-has-switched) .hero-illustration>:not(.lamp),body.intro-active:not(.light-has-switched) .site-header{filter:none}body.intro-active:not(.light-has-switched) .hero-illustration{background:radial-gradient(circle at 42% 72%, rgba(255,255,255,.035), transparent 32%),var(--hero-left)}body.intro-active:not(.light-has-switched) .hero-pull::after{display:none}body.intro-active .hero-pull{animation:none;filter:none}</style></noscript>
 </head>
 <body class="intro-active">
@@ -164,25 +165,29 @@
 
         <article class="window-card project-card reveal tilt-card">
           <div class="window-top"><span></span><span></span><span></span></div>
-          <div class="project-art grid-art" aria-hidden="true"><span>soon</span></div>
+          <div class="project-art launchvault-art" aria-hidden="true">
+            <span class="art-live-dot"></span><span class="art-panel one"></span><span class="art-panel two"></span><span class="art-panel three"></span>
+          </div>
           <div class="project-content">
-            <p class="tag">Software Engineering</p>
-            <h3>Project Coming Soon</h3>
-            <p>A future project will be added here to showcase more technical range and problem-solving ability.</p>
-            <div class="chip-row"><span>TBD</span><span>Build</span><span>Deploy</span></div>
-            <a class="text-link" href="./project/coming-soon-1/">Open placeholder →</a>
+            <p class="tag">Client Portal / SaaS UI</p>
+            <h3>LaunchVault Client Content Collection</h3>
+            <p>A React/Vite product interface for collecting client website copy, brand assets, revisions, reminders, and final launch approval in one organized portal.</p>
+            <div class="chip-row"><span>React</span><span>TypeScript</span><span>Vite</span><span>Tailwind</span><span>Framer Motion</span></div>
+            <div class="project-actions"><a class="button primary compact-button" href="./project/launchvault-client-content/demo/" data-project-transition="to-project-1" data-project-name="launchvault-client-content">Demo</a><a class="text-link" href="./project/launchvault-client-content/">Read case study →</a></div>
           </div>
         </article>
 
         <article class="window-card project-card reveal tilt-card">
           <div class="window-top"><span></span><span></span><span></span></div>
-          <div class="project-art grid-art alt" aria-hidden="true"><span>next</span></div>
+          <div class="project-art securedoc-art" aria-hidden="true">
+            <span class="art-live-dot"></span><span class="art-panel one"></span><span class="art-panel two"></span><span class="art-panel three"></span>
+          </div>
           <div class="project-content">
-            <p class="tag">Web Application</p>
-            <h3>Project Coming Soon</h3>
-            <p>Another project card ready to be replaced with a case study, live demo, GitHub link, and technical breakdown.</p>
-            <div class="chip-row"><span>TBD</span><span>UI</span><span>Backend</span></div>
-            <a class="text-link" href="./project/coming-soon-2/">Open placeholder →</a>
+            <p class="tag">Security / Approval App</p>
+            <h3>SecureDoc Document Approval</h3>
+            <p>A secure document approval workflow with role-based dashboards, reviewer decisions, comments, version history, SHA-256 evidence, and audit trail concepts.</p>
+            <div class="chip-row"><span>JavaScript</span><span>Node.js</span><span>Express</span><span>Multer</span><span>CSS</span></div>
+            <div class="project-actions"><a class="button primary compact-button" href="./project/secure-document-approval/demo/" data-project-transition="to-project-2" data-project-name="secure-document-approval">Demo</a><a class="text-link" href="./project/secure-document-approval/">Read case study →</a></div>
           </div>
         </article>
       </div>
@@ -299,5 +304,6 @@
 
   <script src="./assets/script.js" defer></script>
   <script src="./assets/poker-transition.js" defer></script>
+  <script src="./assets/project-transitions.js" defer></script>
 </body>
 </html>
