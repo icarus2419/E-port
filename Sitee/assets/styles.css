@@ -3849,3 +3849,32 @@ body.intro-active:not(.light-has-switched) .hero-illustration .lamp {
   .securedoc-art .art-panel.one { left: 1.4rem; }
   .securedoc-art .art-panel.three { right: 1.4rem; }
 }
+
+/* --- Project card alignment patch ---
+   Keep the three featured project cards on one clean baseline. The old stagger
+   offsets made LaunchVault sit lower/shorter than the poker and SecureDoc cards. */
+.project-grid {
+  align-items: stretch;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 0 !important;
+}
+
+.project-card .window-top,
+.project-card .project-art {
+  flex: 0 0 auto;
+}
+
+.project-card .project-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card .project-actions {
+  margin-top: auto;
+}
