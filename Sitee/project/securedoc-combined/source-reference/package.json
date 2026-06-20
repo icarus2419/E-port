@@ -1,0 +1,21 @@
+{
+  "name": "securedoc-combined",
+  "version": "6.0.0",
+  "description": "SecureDoc — a warm-themed marketing landing rewritten to showcase SecureDoc, served at /, plus the Express backend and re-skinned approval app served at /app. Role-based document approvals, uploads, SHA-256 evidence, and a tamper-evident audit trail.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check server.js && node --check public/app.js",
+    "build:landing": "cd landing-src && vite build && rm -rf ../landing-dist && cp -r dist ../landing-dist"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "multer": "^2.0.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

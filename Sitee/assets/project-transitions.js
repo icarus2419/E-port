@@ -1,16 +1,15 @@
 
 (() => {
   const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const DURATION = 920;
-  const WATCHDOG = 1450;
+  const DURATION = 760;
+  const WATCHDOG = 1200;
   let overlay = null;
   let navTimer = 0;
   let watchdogTimer = 0;
   let navigating = false;
 
   const projectLabel = (slug) => ({
-    'launchvault-client-content': 'LaunchVault',
-    'secure-document-approval': 'SecureDoc'
+    'securedoc-combined': 'SecureDoc'
   })[slug] || 'Project';
 
   function cleanup() {
@@ -28,21 +27,23 @@
   function inferSlug(anchor, mode) {
     const explicit = anchor.getAttribute('data-project-name');
     if (explicit) return explicit;
-    if (mode === 'to-project-1') return 'launchvault-client-content';
-    if (mode === 'to-project-2') return 'secure-document-approval';
+    if (mode === 'to-project-1') return 'securedoc-combined';
     try {
       const url = new URL(anchor.getAttribute('href'), window.location.href);
-      if (url.pathname.includes('secure-document-approval')) return 'secure-document-approval';
-      if (url.pathname.includes('launchvault-client-content')) return 'launchvault-client-content';
+      if (url.pathname.includes('securedoc-combined')) return 'securedoc-combined';
     } catch (_) {}
-    return 'launchvault-client-content';
+    return 'securedoc-combined';
   }
 
   function markup(slug) {
-    if (slug === 'secure-document-approval') {
-      return '<div class="sd-doc one"></div><div class="sd-doc two"></div><div class="sd-doc three"></div><div class="sd-seal"></div><div class="sd-check"></div>';
-    }
-    return '<div class="lv-card one"></div><div class="lv-card two"></div><div class="lv-card three"></div><div class="lv-upload"></div><div class="lv-dot one"></div><div class="lv-dot two"></div><div class="lv-dot three"></div>';
+    return [
+      '<div class="sd-simple-transition">',
+      '<div class="sd-simple-paper back left"></div>',
+      '<div class="sd-simple-paper back right"></div>',
+      '<div class="sd-simple-paper main"><span></span><span></span><span></span><i></i></div>',
+      '<div class="sd-simple-check"></div>',
+      '</div>'
+    ].join('');
   }
 
   function createOverlay(slug, mode) {

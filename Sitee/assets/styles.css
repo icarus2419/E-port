@@ -3684,6 +3684,14 @@ body {
   padding: .65rem 1rem;
   font-size: .9rem;
 }
+.disabled-button {
+  cursor: not-allowed;
+  opacity: .72;
+}
+.disabled-link {
+  cursor: not-allowed;
+  opacity: .86;
+}
 
 
 /* --- Intro pull restoration ---
@@ -3704,107 +3712,108 @@ body.intro-active:not(.light-has-switched) .hero-illustration .lamp {
 
 
 /* --- Custom featured project cards and case pages --- */
-.launchvault-art,
-.securedoc-art {
+.securedoc-art,
+.coming-soon-art {
   isolation: isolate;
-  background: radial-gradient(circle at 18% 14%, rgba(255, 214, 102, .24), transparent 24%), linear-gradient(135deg, rgba(255,255,255,.08), rgba(0,0,0,.14));
+  background:
+    linear-gradient(135deg, rgba(155,44,44,.5), rgba(35,35,41,.42)),
+    rgba(255,255,255,.08);
 }
-.launchvault-art::before,
-.securedoc-art::before {
+.securedoc-art::before,
+.coming-soon-art::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255,255,255,.13) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.13) 1px, transparent 1px);
-  background-size: 26px 26px;
-  opacity: .48;
+  background-image:
+    linear-gradient(rgba(255,255,255,.14) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255,255,255,.14) 2px, transparent 2px);
+  background-size: 22px 22px;
+  opacity: .58;
   z-index: -1;
 }
 .art-live-dot {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: .72rem;
-  height: .72rem;
+  top: 1.35rem;
+  right: 1.35rem;
+  width: 1.15rem;
+  height: 1.15rem;
   border-radius: 50%;
   background: var(--sun);
-  box-shadow: 0 0 0 .45rem rgba(255, 214, 102, .16);
+  box-shadow: 0 0 0 .85rem rgba(255, 214, 102, .12), 0 8px 20px rgba(0,0,0,.18);
 }
-.launchvault-art .art-panel,
 .securedoc-art .art-panel {
   position: absolute;
   display: block;
   border: 3px solid #fff8ee;
-  background: rgba(255, 248, 238, .93);
+  background: #fff8ee;
   color: var(--ink);
-  box-shadow: 5px 5px 0 rgba(0,0,0,.15);
-}
-.launchvault-art .art-panel {
-  width: 7.6rem;
-  height: 4.7rem;
-  border-radius: .9rem;
-}
-.launchvault-art .art-panel.one { left: 1.15rem; top: 1.5rem; transform: rotate(-7deg); }
-.launchvault-art .art-panel.two { right: 1.35rem; top: 2.15rem; transform: rotate(5deg); }
-.launchvault-art .art-panel.three { left: 50%; bottom: 1.1rem; transform: translateX(-50%) rotate(-1deg); }
-.launchvault-art .art-panel::before {
-  content: "";
-  position: absolute;
-  left: .65rem;
-  top: .72rem;
-  width: 1.65rem;
-  height: 1.65rem;
-  border-radius: .5rem;
-  background: #9b2c2c;
-}
-.launchvault-art .art-panel::after {
-  content: "";
-  position: absolute;
-  left: 2.75rem;
-  right: .7rem;
-  top: .82rem;
-  height: .42rem;
-  border-radius: 999px;
-  background: #9b2c2c;
-  box-shadow: 0 .85rem 0 rgba(155,44,44,.35), 0 1.7rem 0 rgba(155,44,44,.18);
-}
-.securedoc-art {
-  background: radial-gradient(circle at 75% 20%, rgba(254, 243, 199, .26), transparent 24%), linear-gradient(135deg, rgba(155,44,44,.7), rgba(35,35,41,.7));
+  box-shadow: 6px 8px 0 rgba(0,0,0,.18);
 }
 .securedoc-art .art-panel {
-  width: 5.8rem;
-  height: 7.65rem;
-  border-radius: .72rem;
+  width: 4.55rem;
+  height: 6.3rem;
+  border-radius: .62rem;
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1);
 }
-.securedoc-art .art-panel.one { left: 2rem; top: 1.35rem; transform: rotate(-13deg); opacity: .82; }
-.securedoc-art .art-panel.two { left: 50%; top: 1rem; transform: translateX(-50%) rotate(1deg); z-index: 2; }
-.securedoc-art .art-panel.three { right: 2rem; top: 1.55rem; transform: rotate(13deg); opacity: .82; }
+.securedoc-art .art-panel.one { left: 50%; top: 2.15rem; transform: translateX(-145%) rotate(-12deg); }
+.securedoc-art .art-panel.two { left: 50%; top: 1.8rem; transform: translateX(-50%) rotate(2deg); z-index: 2; }
+.securedoc-art .art-panel.three { left: 50%; top: 2.25rem; transform: translateX(45%) rotate(13deg); }
 .securedoc-art .art-panel::before {
   content: "";
   position: absolute;
-  left: .75rem;
-  right: .75rem;
-  top: 1rem;
+  left: .7rem;
+  right: .7rem;
+  top: .95rem;
   height: .52rem;
   border-radius: 999px;
   background: #9b2c2c;
-  box-shadow: 0 1.15rem 0 rgba(155,44,44,.36), 0 2.3rem 0 rgba(155,44,44,.2);
+  box-shadow:
+    0 1.05rem 0 rgba(155,44,44,.38),
+    0 2.1rem 0 rgba(155,44,44,.2),
+    0 3.15rem 0 rgba(155,44,44,.16);
 }
 .securedoc-art .art-panel.two::after {
   content: "✓";
   position: absolute;
-  right: -.85rem;
-  bottom: .8rem;
+  right: -.7rem;
+  bottom: .72rem;
   display: grid;
   place-items: center;
-  width: 3rem;
-  height: 3rem;
+  width: 2.65rem;
+  height: 2.65rem;
   border-radius: 50%;
   border: 3px solid #fff8ee;
   background: #9b2c2c;
   color: #fef3c7;
-  font-size: 1.7rem;
+  font-size: 1.55rem;
   font-weight: 1000;
   box-shadow: 4px 4px 0 rgba(0,0,0,.16);
+}
+.project-card-soon {
+  color: var(--ink);
+}
+.coming-soon-art {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,248,238,.12), transparent 34%),
+    linear-gradient(135deg, rgba(155,44,44,.38), rgba(255,255,255,.08));
+}
+.soon-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width: 6.4rem;
+  height: 4.45rem;
+  border: 3px solid #fff8ee;
+  border-radius: 1rem;
+  background: rgba(255,248,238,.08);
+  color: #fff8ee;
+  font-size: 2rem;
+  font-weight: 1000;
+  line-height: 4.05rem;
+  text-align: center;
+  transform: translate(-50%, -50%) rotate(8deg);
+  box-shadow: 5px 6px 0 rgba(0,0,0,.16);
 }
 .project-detail-hero {
   min-height: auto;
@@ -3844,15 +3853,12 @@ body.intro-active:not(.light-has-switched) .hero-illustration .lamp {
   .project-detail-wrap,
   .project-detail-grid { grid-template-columns: 1fr; }
   .detail-art { min-height: 13rem; }
-  .launchvault-art .art-panel { width: 6.2rem; height: 4.1rem; }
-  .securedoc-art .art-panel { width: 4.7rem; height: 6.35rem; }
-  .securedoc-art .art-panel.one { left: 1.4rem; }
-  .securedoc-art .art-panel.three { right: 1.4rem; }
+  .securedoc-art .art-panel { width: 3.75rem; height: 5.25rem; }
+  .securedoc-art .art-panel.one { transform: translateX(-142%) rotate(-12deg); }
+  .securedoc-art .art-panel.three { transform: translateX(42%) rotate(13deg); }
 }
 
-/* --- Project card alignment patch ---
-   Keep the three featured project cards on one clean baseline. The old stagger
-   offsets made LaunchVault sit lower/shorter than the poker and SecureDoc cards. */
+/* --- Project card alignment patch --- */
 .project-grid {
   align-items: stretch;
 }

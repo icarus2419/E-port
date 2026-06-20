@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>SecureDoc Document Approval | Joseph Doyle-Samadi</title>
+  <link rel="icon" href="/favicon.ico?v=6" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=6" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=6" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=6" />
+  <link rel="manifest" href="/site.webmanifest?v=6" />
+  <meta name="theme-color" content="#232329" />
+  <meta name="description" content="Case study for SecureDoc Document Approval, a Joseph Doyle-Samadi portfolio project for role-based document approvals, SHA-256 evidence, approval receipts, and audit trails." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Nunito+Sans:wght@800;900;1000&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/styles.css" />
+  <link rel="stylesheet" href="../../assets/project-transitions.css" />
+</head>
+<body class="case-study-page light-has-switched">
+  <header class="site-header solid scrolled" id="siteHeader">
+    <a class="brand" href="../../index.html#home" aria-label="Joseph Doyle-Samadi home"><span class="brand-wordmark">joseph</span><span class="brand-sub">Doyle-Samadi</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation"><a href="../../index.html#projects">projects</a><a href="../../index.html#skills">skills</a><a href="../../index.html#contact">contact</a><button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode"><span class="toggle-dot"></span></button></nav>
+  </header>
+
+  <main>
+    <section class="project-detail-hero">
+      <div class="project-detail-wrap">
+        <div class="case-card reveal visible">
+          <div class="window-top"><span></span><span></span><span></span></div>
+          <div class="project-art securedoc-art detail-art" aria-hidden="true"><span class="art-live-dot"></span><span class="art-panel one"></span><span class="art-panel two"></span><span class="art-panel three"></span></div>
+        </div>
+        <div class="project-detail-copy reveal visible">
+          <p class="hand-note small">Document Approval App</p>
+          <h1>SecureDoc Document Approval</h1>
+          <p>A secure document approval workflow with role-based access, document uploads, reviewer decisions, version history, SHA-256 fingerprints, approval receipts, and audit-trail concepts.</p>
+          <div class="chip-row"><span>JavaScript</span><span>Node.js</span><span>Express</span><span>Multer</span><span>CSS</span></div>
+          <div class="button-row"><a class="button primary" href="./demo/" data-project-transition="to-project-1" data-project-name="securedoc-combined">Open demo</a><a class="button secondary" href="../../index.html#projects" data-project-transition="to-portfolio" data-project-name="securedoc-combined">← Back to projects</a></div>
+        </div>
+      </div>
+    </section>
+    <section class="project-detail-section">
+      <div class="project-detail-grid">
+        <article class="case-box reveal visible"><p class="tag">Problem</p><h2>What it solves</h2><p>Approval workflows need a clear record of who submitted a file, who reviewed it, what changed, and which exact document version was approved. SecureDoc focuses on auditable document decisions instead of informal email approvals.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Main features</p><h2>Feature set</h2><ul><li>Role-based app experience for submitters, reviewers, and admins.</li><li>Document uploads, reviewer decisions, change requests, version history, and approval receipts.</li><li>SHA-256 fingerprints stored with each document version.</li><li>Tamper-evident audit trail concepts for logins, uploads, comments, reviews, and downloads.</li></ul></article>
+        <article class="case-box reveal visible"><p class="tag">Build</p><h2>What I built</h2><ul><li>Built a focused approval workspace for demo users with distinct permissions.</li><li>Included Express backend source for authentication, uploads, document decisions, and audit logging.</li><li>Adapted the portfolio demo so the approval app runs from static hosting with a browser-local API shim.</li></ul></article>
+        <article class="case-box reveal visible"><p class="tag">Tech used</p><h2>Stack</h2><p>JavaScript, Node.js, Express, Multer, HTML, and CSS.</p></article>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>© 2026 Joseph Doyle-Samadi.</p><p><a href="../../index.html#home">Back home</a></p></footer>
+  <script src="../../assets/script.js" defer></script>
+  <script src="../../assets/project-transitions.js" defer></script>
+</body>
+</html>
