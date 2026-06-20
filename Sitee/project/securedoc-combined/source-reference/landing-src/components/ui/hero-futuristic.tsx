@@ -90,7 +90,7 @@ function VaultCore({ compact = false }: { compact?: boolean }) {
   });
 
   return (
-    <group ref={group} position={compact ? [0.1, -0.04, -0.25] : [0.48, -0.03, -0.25]} scale={compact ? 0.68 : 0.78}>
+    <group ref={group} position={compact ? [0.08, -0.02, -0.25] : [0.48, -0.03, -0.25]} scale={compact ? 0.76 : 0.78}>
       <mesh castShadow receiveShadow position={[0.06, -0.06, -0.045]}>
         <boxGeometry args={[2.16, 1.34, 0.08]} />
         <meshBasicMaterial color="#d8cec7" transparent opacity={0.32} />
@@ -190,15 +190,15 @@ function HeroScene({ compact = false }: { compact?: boolean }) {
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       shadows
     >
-      <PerspectiveCamera makeDefault position={[0, 0.22, compact ? 6.2 : 5.6]} fov={compact ? 48 : 43} />
+      <PerspectiveCamera makeDefault position={[0, 0.22, compact ? 5.85 : 5.6]} fov={compact ? 46 : 43} />
       <ambientLight intensity={1.5} />
       <pointLight position={[3.5, 4, 4]} intensity={35} color="#fef3c7" />
       <pointLight position={[-4, 1.5, 2]} intensity={20} color="#9b2c2c" />
       <Sparkles count={compact ? 30 : 45} scale={[compact ? 3.6 : 5, 2.8, 2.2]} size={compact ? 1.9 : 2.3} speed={0.28} color="#b45309" opacity={0.45} />
       <VaultCore compact={compact} />
-      <FloatingDocument position={compact ? [-1.22, 0.86, -0.18] : [-1.05, 1.0, -0.18]} rotation={[0.06, 0.34, -0.13]} scale={compact ? 0.58 : 0.76} variant="upload" />
-      <FloatingDocument position={compact ? [1.22, 0.62, -0.34] : [1.62, 0.74, -0.34]} rotation={[-0.08, -0.34, 0.18]} scale={compact ? 0.64 : 0.9} />
-      <FloatingDocument position={compact ? [1.16, -0.86, -0.08] : [1.72, -1.08, -0.08]} rotation={[0.12, -0.26, 0.08]} scale={compact ? 0.62 : 0.86} variant="approval" />
+      <FloatingDocument position={compact ? [-1.22, 0.86, -0.18] : [-1.05, 1.0, -0.18]} rotation={[0.06, 0.34, -0.13]} scale={compact ? 0.66 : 0.76} variant="upload" />
+      <FloatingDocument position={compact ? [1.22, 0.62, -0.34] : [1.62, 0.74, -0.34]} rotation={[-0.08, -0.34, 0.18]} scale={compact ? 0.72 : 0.9} />
+      <FloatingDocument position={compact ? [1.16, -0.86, -0.08] : [1.72, -1.08, -0.08]} rotation={[0.12, -0.26, 0.08]} scale={compact ? 0.7 : 0.86} variant="approval" />
     </Canvas>
   );
 }
@@ -383,7 +383,7 @@ export function HeroFuturistic() {
       <section className="relative isolate overflow-hidden bg-background" aria-label="SecureDoc hero">
         <div className="absolute inset-0 warm-grid opacity-55" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_42%,color-mix(in_srgb,var(--accent)_72%,transparent),transparent_34%),radial-gradient(circle_at_30%_80%,color-mix(in_srgb,var(--secondary)_82%,transparent),transparent_33%)]" />
-        <div className="pointer-events-none absolute inset-x-0 top-[45%] h-[46%] opacity-55 sm:top-[41%] sm:h-[50%] md:opacity-70 lg:inset-y-0 lg:left-auto lg:top-0 lg:h-auto lg:w-[54%] lg:opacity-100 xl:w-[50%]">
+        <div className="pointer-events-none absolute inset-x-0 top-[38%] h-[34%] opacity-60 sm:top-[35%] sm:h-[48%] sm:opacity-60 md:top-[38%] md:opacity-70 lg:inset-y-0 lg:left-auto lg:top-0 lg:h-auto lg:w-[54%] lg:opacity-100 xl:w-[50%]">
           <HeroScene compact={!isLargeScene} />
         </div>
         <motion.div
