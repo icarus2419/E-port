@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
+const DEMO_APP_URL = "./app/";
+
 interface PricingCardProps {
   name: string;
   price: string;
@@ -35,7 +37,7 @@ export function PricingCard({ name, price, description, features, highlighted }:
           </li>
         ))}
       </ul>
-      <Button className="mt-6 w-full" variant={highlighted ? "default" : "outline"} onClick={() => { window.location.href = "/app"; }}>
+      <Button className="mt-6 w-full" variant={highlighted ? "default" : "outline"} onClick={() => { window.location.href = DEMO_APP_URL; }}>
         Start {name}
       </Button>
     </Card>

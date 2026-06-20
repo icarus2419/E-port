@@ -7,8 +7,6 @@ import {
   ArrowRight,
   CheckCircle,
   Clock,
-  FileText,
-  Folder,
   MessageSquare,
   ShieldCheck,
   Upload
@@ -26,17 +24,33 @@ const heroSignals = [
   { label: "Reviewer note #4", meta: "In review", icon: MessageSquare, tone: "accent" as const }
 ];
 
-function supportsWebGPUHero() {
+const DEMO_APP_URL = "./app/";
+
+function supportsAnimatedHero() {
   if (typeof window === "undefined" || typeof document === "undefined") {
     return false;
   }
 
   const canvas = document.createElement("canvas");
   const hasWebGL = Boolean(canvas.getContext("webgl2") || canvas.getContext("webgl"));
-  const hasWebGPU = "gpu" in navigator;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  return hasWebGL && hasWebGPU && !reducedMotion;
+  return hasWebGL && !reducedMotion;
+}
+
+function listenToQuery(query: MediaQueryList, listener: () => void) {
+  if (typeof query.addEventListener === "function") {
+    query.addEventListener("change", listener);
+    return () => query.removeEventListener("change", listener);
+  }
+
+  const legacyQuery = query as MediaQueryList & {
+    addListener: (listener: () => void) => void;
+    removeListener: (listener: () => void) => void;
+  };
+
+  legacyQuery.addListener(listener);
+  return () => legacyQuery.removeListener(listener);
 }
 
 class HeroSceneBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { hasError: boolean }> {
@@ -59,7 +73,7 @@ class HeroSceneBoundary extends Component<{ children: ReactNode; fallback: React
   }
 }
 
-function VaultCore() {
+function VaultCore({ compact = false }: { compact?: boolean }) {
   const group = useRef<THREE.Group>(null);
   const scan = useRef<THREE.Mesh>(null);
 
@@ -76,7 +90,7 @@ function VaultCore() {
   });
 
   return (
-    <group ref={group} position={[0.72, -0.03, -0.25]} scale={0.78}>
+    <group ref={group} position={compact ? [0.1, -0.04, -0.25] : [0.48, -0.03, -0.25]} scale={compact ? 0.68 : 0.78}>
       <mesh castShadow receiveShadow position={[0.06, -0.06, -0.045]}>
         <boxGeometry args={[2.16, 1.34, 0.08]} />
         <meshBasicMaterial color="#d8cec7" transparent opacity={0.32} />
@@ -168,30 +182,30 @@ function FloatingDocument({
   );
 }
 
-function HeroScene() {
+function HeroScene({ compact = false }: { compact?: boolean }) {
   return (
     <Canvas
       className="absolute inset-0"
-      dpr={[1, 1.6]}
+      dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       shadows
     >
-      <PerspectiveCamera makeDefault position={[0, 0.2, 5.5]} fov={43} />
+      <PerspectiveCamera makeDefault position={[0, 0.22, compact ? 6.2 : 5.6]} fov={compact ? 48 : 43} />
       <ambientLight intensity={1.5} />
       <pointLight position={[3.5, 4, 4]} intensity={35} color="#fef3c7" />
       <pointLight position={[-4, 1.5, 2]} intensity={20} color="#9b2c2c" />
-      <Sparkles count={45} scale={[5, 2.8, 2.2]} size={2.3} speed={0.28} color="#b45309" opacity={0.45} />
-      <VaultCore />
-      <FloatingDocument position={[-0.95, 1.0, -0.18]} rotation={[0.06, 0.34, -0.13]} scale={0.76} variant="upload" />
-      <FloatingDocument position={[1.92, 0.74, -0.34]} rotation={[-0.08, -0.34, 0.18]} scale={0.9} />
-      <FloatingDocument position={[2.18, -1.08, -0.08]} rotation={[0.12, -0.26, 0.08]} scale={0.86} variant="approval" />
+      <Sparkles count={compact ? 30 : 45} scale={[compact ? 3.6 : 5, 2.8, 2.2]} size={compact ? 1.9 : 2.3} speed={0.28} color="#b45309" opacity={0.45} />
+      <VaultCore compact={compact} />
+      <FloatingDocument position={compact ? [-1.22, 0.86, -0.18] : [-1.05, 1.0, -0.18]} rotation={[0.06, 0.34, -0.13]} scale={compact ? 0.58 : 0.76} variant="upload" />
+      <FloatingDocument position={compact ? [1.22, 0.62, -0.34] : [1.62, 0.74, -0.34]} rotation={[-0.08, -0.34, 0.18]} scale={compact ? 0.64 : 0.9} />
+      <FloatingDocument position={compact ? [1.16, -0.86, -0.08] : [1.72, -1.08, -0.08]} rotation={[0.12, -0.26, 0.08]} scale={compact ? 0.62 : 0.86} variant="approval" />
     </Canvas>
   );
 }
 
 function HeroCopy() {
   const goToApp = () => {
-    window.location.href = "/app";
+    window.location.href = DEMO_APP_URL;
   };
 
   const scrollToDemo = () => {
@@ -199,13 +213,13 @@ function HeroCopy() {
   };
 
   return (
-    <div className="relative z-10 mx-auto flex min-h-[720px] w-full max-w-7xl flex-col justify-center px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-      <div className="max-w-3xl">
+    <div className="relative z-10 mx-auto flex min-h-[min(700px,92svh)] w-full max-w-7xl flex-col justify-center px-4 pb-8 pt-16 sm:min-h-[min(720px,92svh)] sm:px-6 sm:py-20 lg:min-h-[min(760px,92svh)] lg:px-8 lg:py-24">
+      <div className="max-w-[42rem] xl:max-w-3xl">
         <Badge tone="accent" className="mb-5">
           SecureDoc approval platform
         </Badge>
         <motion.h1
-          className="font-display text-5xl font-bold leading-[1.04] text-foreground sm:text-6xl lg:text-7xl"
+          className="font-display text-[clamp(3rem,12vw,4.9rem)] font-bold leading-[1.04] text-foreground sm:text-6xl lg:text-7xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
@@ -213,7 +227,7 @@ function HeroCopy() {
           Approve documents with evidence.
         </motion.h1>
         <motion.p
-          className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground sm:text-xl"
+          className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg lg:text-xl"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
@@ -270,11 +284,11 @@ function HeroSignalCards({ className }: { className?: string }) {
         <motion.div
           key={signal.label}
           className={cn(
-            "absolute w-60 rounded-lg border border-border bg-card/90 p-4 shadow-warm backdrop-blur",
-            index === 0 && "right-[7%] top-[20%]",
-            index === 1 && "right-[16%] top-[39%]",
-            index === 2 && "right-[6%] bottom-[28%]",
-            index === 3 && "right-[30%] bottom-[12%]"
+            "absolute w-[min(17rem,22vw)] min-w-56 rounded-lg border border-border bg-card/90 p-4 shadow-warm backdrop-blur",
+            index === 0 && "right-[clamp(1.5rem,7vw,7rem)] top-[clamp(7rem,18vh,10rem)]",
+            index === 1 && "right-[clamp(5rem,16vw,15rem)] top-[clamp(17rem,41vh,22rem)]",
+            index === 2 && "right-[clamp(1.5rem,6vw,6rem)] bottom-[clamp(5rem,19vh,10rem)]",
+            index === 3 && "right-[clamp(11rem,28vw,25rem)] bottom-[clamp(2.5rem,9vh,5.5rem)]"
           )}
           initial={{ opacity: 0, y: 18, scale: 0.96 }}
           animate={{ opacity: 1, y: [0, -8, 0], scale: 1 }}
@@ -307,11 +321,11 @@ export function FallbackHero() {
         animate={{ y: [0, 520, 0], opacity: [0.25, 0.62, 0.25] }}
         transition={{ duration: 6.4, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div className="absolute right-0 top-0 h-[520px] w-[520px] rounded-full bg-accent/55 blur-3xl" />
-      <div className="absolute bottom-0 left-0 h-[420px] w-[420px] rounded-full bg-secondary/70 blur-3xl" />
+      <div className="absolute right-0 top-0 h-[min(520px,58vw)] w-[min(520px,58vw)] rounded-full bg-accent/55 blur-3xl" />
+      <div className="absolute bottom-0 left-0 h-[min(420px,70vw)] w-[min(420px,70vw)] rounded-full bg-secondary/70 blur-3xl" />
       <HeroCopy />
       <HeroSignalCards />
-      <div className="absolute bottom-8 right-4 z-10 hidden w-[360px] rounded-lg border border-border bg-card/90 p-4 shadow-warm backdrop-blur md:block lg:right-[8%]">
+      <div className="absolute bottom-[clamp(1.5rem,5vh,3rem)] right-4 z-10 hidden w-[min(360px,42vw)] rounded-lg border border-border bg-card/90 p-4 shadow-warm backdrop-blur md:block lg:right-[8%] xl:w-[360px]">
         <div className="flex items-center justify-between">
           <div>
             <p className="font-label text-[11px] font-semibold uppercase text-muted-foreground">Integrity scan</p>
@@ -337,10 +351,27 @@ export function FallbackHero() {
 }
 
 export function HeroFuturistic() {
-  const [canRenderScene, setCanRenderScene] = useState(false);
+  const [canRenderScene, setCanRenderScene] = useState(() => supportsAnimatedHero());
+  const [isLargeScene, setIsLargeScene] = useState(() =>
+    typeof window === "undefined" ? false : window.matchMedia("(min-width: 1024px)").matches
+  );
 
   useEffect(() => {
-    setCanRenderScene(supportsWebGPUHero());
+    const sceneQuery = window.matchMedia("(min-width: 1024px)");
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateSceneState = () => {
+      setCanRenderScene(supportsAnimatedHero());
+      setIsLargeScene(sceneQuery.matches);
+    };
+
+    updateSceneState();
+    const stopListeningToScene = listenToQuery(sceneQuery, updateSceneState);
+    const stopListeningToMotion = listenToQuery(motionQuery, updateSceneState);
+
+    return () => {
+      stopListeningToScene();
+      stopListeningToMotion();
+    };
   }, []);
 
   if (!canRenderScene) {
@@ -352,8 +383,8 @@ export function HeroFuturistic() {
       <section className="relative isolate overflow-hidden bg-background" aria-label="SecureDoc hero">
         <div className="absolute inset-0 warm-grid opacity-55" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_42%,color-mix(in_srgb,var(--accent)_72%,transparent),transparent_34%),radial-gradient(circle_at_30%_80%,color-mix(in_srgb,var(--secondary)_82%,transparent),transparent_33%)]" />
-        <div className="absolute inset-y-0 right-0 w-full lg:w-[54%] xl:w-[50%]">
-          <HeroScene />
+        <div className="pointer-events-none absolute inset-x-0 top-[45%] h-[46%] opacity-55 sm:top-[41%] sm:h-[50%] md:opacity-70 lg:inset-y-0 lg:left-auto lg:top-0 lg:h-auto lg:w-[54%] lg:opacity-100 xl:w-[50%]">
+          <HeroScene compact={!isLargeScene} />
         </div>
         <motion.div
           aria-hidden="true"

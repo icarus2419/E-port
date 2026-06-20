@@ -23,7 +23,7 @@ import { HeroFuturistic } from "@/components/ui/hero-futuristic";
 import { PricingCard } from "@/components/ui/pricing-card";
 import { Progress } from "@/components/ui/progress";
 
-const APP_URL = "/app";
+const APP_URL = "./app/";
 
 const painCards = [
   {
