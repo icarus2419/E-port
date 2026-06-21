@@ -9,7 +9,7 @@ const approvalChecks = [
   "I approve this document for release"
 ];
 
-export function ApprovalileUploadPreview() {
+export function ApprovalFileUploadPreview() {
   return (
     <div className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-[1fr_0.8fr]">
       <Card className="overflow-hidden">

@@ -12,7 +12,7 @@ import {
   Sparkles,
   Users
 } from "lucide-react";
-import { ApprovalileUploadPreview } from "@/components/ui/approvalile-upload-preview";
+import { ApprovalFileUploadPreview } from "@/components/ui/approval-file-upload-preview";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -321,7 +321,7 @@ function App() {
             description="A timestamped receipt records the reviewer, the decision, the note, and the exact file fingerprint."
           />
           <div className="mt-12">
-            <ApprovalileUploadPreview />
+            <ApprovalFileUploadPreview />
           </div>
         </div>
       </section>
