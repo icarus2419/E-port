@@ -1,0 +1,9 @@
+export const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+export const root = document.documentElement;
+export const header = document.getElementById('siteHeader');
+export const nav = document.getElementById('primaryNav');
+export const menuToggle = document.getElementById('menuToggle');
+export const themeToggle = document.getElementById('themeToggle');
+export const lightIntro = document.getElementById('lightIntro');
+export const THEME_STORAGE_KEY = 'jds-theme-v2';
+export const INTRO_SCROLL_STORAGE_KEY = 'jds-last-scroll-y';

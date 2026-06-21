@@ -1,0 +1,65 @@
+:root {
+  --ink: #25242c;
+  --paper: #fff8ee;
+  --paper-soft: #fff2df;
+  --mint: #70d7be;
+  --mint-dark: #48bea3;
+  --plum: #7a426d;
+  --plum-deep: #4f3b78;
+  --lavender: #cab4f2;
+  --sun: #ffd166;
+  --coral: #f58a8a;
+  --outline: rgba(37, 36, 44, .22);
+  --shadow: 12px 12px 0 rgba(37, 36, 44, .16);
+  --radius: 28px;
+  --font: ui-rounded, "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+html[data-theme="night"] {
+  --ink: #f9f3ea;
+  --paper: #232329;
+  --paper-soft: #2f2f3a;
+  --mint: #7c4a70;
+  --mint-dark: #603a5a;
+  --plum: #4a3f73;
+  --plum-deep: #332a59;
+  --lavender: #9b8bd9;
+  --sun: #ffd166;
+  --coral: #ff9f9f;
+  --outline: rgba(249, 243, 234, .24);
+  --shadow: 12px 12px 0 rgba(0, 0, 0, .28);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  overflow-x: hidden;
+}
+body.no-scroll { overflow: hidden; }
+::selection { background: var(--sun); color: #222; }
+a { color: inherit; }
+button, input, textarea { font: inherit; }
+a, button { -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible { outline: 4px solid var(--sun); outline-offset: 4px; }
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -5rem;
+  z-index: 1000;
+  background: var(--sun);
+  color: #222;
+  padding: .8rem 1rem;
+  border-radius: 999px;
+  transition: top .2s ease;
+}
+.skip-link:focus { top: 1rem; }
+

@@ -1,0 +1,269 @@
+/* --- Experience timeline responsive repair ---
+   Fixes tablet/mobile clipping where the date column stayed too wide and pushed
+   job titles/content off-screen. Desktop keeps the original timeline layout. */
+@media (max-width: 1180px) {
+  .experience-section {
+    overflow-x: clip;
+  }
+
+  .experience-section .section-intro,
+  .experience-section .timeline {
+    width: 100%;
+    max-width: min(100%, 52rem);
+    box-sizing: border-box;
+  }
+
+  .experience-section .timeline {
+    margin-inline: auto;
+    padding-left: clamp(1rem, 3.5vw, 1.35rem) !important;
+    border-left-width: 3px;
+  }
+
+  .experience-section .timeline-item {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: .55rem !important;
+    min-width: 0;
+    max-width: 100%;
+    padding-bottom: clamp(1.8rem, 5vw, 2.45rem);
+  }
+
+  .experience-section .timeline-item > div,
+  .experience-section .timeline-item time,
+  .experience-section .timeline-item h3,
+  .experience-section .timeline-item ul,
+  .experience-section .timeline-item li {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .experience-section .timeline-item::before {
+    left: calc(-1 * clamp(1.58rem, 4.2vw, 1.86rem)) !important;
+    top: .18rem;
+    width: clamp(.86rem, 2.4vw, 1rem);
+    height: clamp(.86rem, 2.4vw, 1rem);
+    border-width: 3px;
+  }
+
+  .experience-section .timeline-item time {
+    display: block;
+    font-size: clamp(.78rem, 2.7vw, .95rem);
+    line-height: 1.25;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .experience-section .timeline-item h3 {
+    font-size: clamp(1.45rem, 5.6vw, 2.35rem) !important;
+    line-height: 1.04 !important;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    margin-bottom: .7rem;
+  }
+
+  .experience-section .timeline-item ul {
+    padding-left: 1.05rem;
+  }
+
+  .experience-section .timeline-item li {
+    overflow-wrap: break-word;
+  }
+}
+
+@media (max-width: 520px) {
+  .experience-section .timeline {
+    margin-left: .45rem;
+    max-width: calc(100% - .45rem);
+  }
+
+  .experience-section .timeline-item h3 {
+    font-size: clamp(1.35rem, 6.6vw, 1.85rem) !important;
+  }
+}
+
+/* --- Final Experience timeline fix: chronological, no tablet/mobile clipping ---
+   This override intentionally comes last so older timeline rules cannot keep the
+   wide desktop grid active on iPad/tablet widths. */
+.experience-section {
+  overflow-x: hidden !important;
+}
+
+.experience-section .section-intro,
+.experience-section .timeline {
+  width: 100% !important;
+  max-width: min(100%, 68rem) !important;
+  box-sizing: border-box !important;
+}
+
+.experience-section .section-intro h2 {
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+}
+
+.experience-section .timeline {
+  margin-inline: auto !important;
+  border-left: 4px solid var(--ink) !important;
+  padding-left: clamp(1.1rem, 2.8vw, 1.6rem) !important;
+}
+
+.experience-section .timeline-item {
+  grid-template-columns: minmax(9.25rem, 13.5rem) minmax(0, 1fr) !important;
+  gap: clamp(1rem, 2.8vw, 1.75rem) !important;
+  align-items: start !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+.experience-section .timeline-item > div,
+.experience-section .timeline-item time,
+.experience-section .timeline-item h3,
+.experience-section .timeline-item ul,
+.experience-section .timeline-item li {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.experience-section .timeline-item time {
+  display: block !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+
+.experience-section .timeline-item h3 {
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  text-wrap: balance;
+}
+
+.experience-section .timeline-item li {
+  overflow-wrap: break-word !important;
+  hyphens: auto;
+}
+
+@media (max-width: 1240px) {
+  .experience-section .section-intro {
+    grid-template-columns: 1fr !important;
+    max-width: min(100%, 44rem) !important;
+  }
+
+  .experience-section .timeline {
+    max-width: min(100%, 44rem) !important;
+    padding-left: clamp(1rem, 4vw, 1.35rem) !important;
+    border-left-width: 3px !important;
+  }
+
+  .experience-section .timeline-item {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: .65rem !important;
+    padding-bottom: clamp(2rem, 6vw, 2.75rem) !important;
+  }
+
+  .experience-section .timeline-item::before {
+    left: calc(-1 * clamp(1.62rem, 4.4vw, 1.9rem)) !important;
+    top: .16rem !important;
+    width: clamp(.88rem, 2.7vw, 1.05rem) !important;
+    height: clamp(.88rem, 2.7vw, 1.05rem) !important;
+    border-width: 3px !important;
+  }
+
+  .experience-section .timeline-item time {
+    font-size: clamp(.78rem, 2.4vw, .92rem) !important;
+    line-height: 1.25 !important;
+  }
+
+  .experience-section .timeline-item h3 {
+    font-size: clamp(1.5rem, 5.3vw, 2.25rem) !important;
+    line-height: 1.03 !important;
+    letter-spacing: -.045em !important;
+  }
+
+  .experience-section .timeline-item ul {
+    padding-left: 1.05rem !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .experience-section .timeline {
+    max-width: calc(100% - .35rem) !important;
+    margin-left: .35rem !important;
+    margin-right: 0 !important;
+  }
+
+  .experience-section .timeline-item h3 {
+    font-size: clamp(1.35rem, 7vw, 1.85rem) !important;
+  }
+}
+
+/* --- Experience timeline final alignment/order polish ---
+   Reverse-chronological order is handled in the HTML. These rules keep the
+   vertical dots mathematically centered on the timeline stroke and prevent the
+   two-column desktop layout from clipping on laptop/tablet widths. */
+.experience-section .timeline {
+  --timeline-pad: clamp(1.45rem, 4vw, 2rem);
+  --timeline-border: 4px;
+  --timeline-half-border: 2px;
+  --timeline-dot-size: 1.35rem;
+  --timeline-dot-border: 4px;
+  border-left: var(--timeline-border) solid var(--ink) !important;
+  padding-left: var(--timeline-pad) !important;
+}
+
+.experience-section .timeline-item::before {
+  box-sizing: border-box !important;
+  left: calc(-1 * var(--timeline-pad) - var(--timeline-half-border)) !important;
+  top: .18rem !important;
+  width: var(--timeline-dot-size) !important;
+  height: var(--timeline-dot-size) !important;
+  border: var(--timeline-dot-border) solid var(--ink) !important;
+  transform: translateX(-50%) !important;
+}
+
+@media (max-width: 1500px) {
+  .experience-section .section-intro,
+  .experience-section .timeline {
+    max-width: min(100%, 48rem) !important;
+  }
+
+  .experience-section .timeline {
+    --timeline-pad: clamp(1.35rem, 4.2vw, 1.7rem);
+    --timeline-border: 3px;
+    --timeline-half-border: 1.5px;
+    --timeline-dot-size: clamp(1.15rem, 3vw, 1.35rem);
+    --timeline-dot-border: 3px;
+    margin-inline: auto !important;
+  }
+
+  .experience-section .timeline-item {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: .7rem !important;
+    padding-bottom: clamp(2.2rem, 6vw, 3rem) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .experience-section .section-intro,
+  .experience-section .timeline {
+    max-width: 100% !important;
+  }
+
+  .experience-section .timeline {
+    --timeline-pad: clamp(1.1rem, 5.2vw, 1.35rem);
+    --timeline-dot-size: 1.08rem;
+    margin-left: clamp(.35rem, 2.5vw, .7rem) !important;
+    margin-right: 0 !important;
+  }
+
+  .experience-section .timeline-item {
+    padding-bottom: 2.2rem !important;
+  }
+}
+
+.experience-section .section-intro h2 {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+

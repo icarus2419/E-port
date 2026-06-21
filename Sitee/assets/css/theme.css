@@ -1,0 +1,194 @@
+/* Final light-theme palette refresh: softer, cleaner secondary palette for the toggle version */
+html[data-theme="day"] {
+  --ink: #2b2631;
+  --paper: #fff7ef;
+  --paper-soft: #ffe9dc;
+  --hero-left: #fff1e6;
+  --hero-left-soft: #f4d9cf;
+  --hero-purple: #c97290;
+  --hero-purple-deep: #96536f;
+  --cream: #fffaf2;
+  --cassie-lavender: #7f66c7;
+  --cassie-muted: #756a73;
+  --plum: #b56582;
+  --plum-deep: #714762;
+  --lavender: #8f7bd9;
+  --sun: #ffd166;
+  --coral: #ef8298;
+  --mint: #95d8c8;
+  --mint-dark: #59aa99;
+  --outline: rgba(43, 38, 49, .18);
+  --shadow: 12px 12px 0 rgba(74, 48, 62, .14);
+}
+
+html[data-theme="day"] body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+html[data-theme="day"] .site-header {
+  color: var(--ink);
+}
+
+html[data-theme="day"] .site-header.scrolled,
+html[data-theme="day"] .site-header.solid {
+  background: rgba(255, 247, 239, .92);
+  color: var(--ink);
+  box-shadow: 0 14px 34px rgba(74, 48, 62, .12);
+}
+
+html[data-theme="day"] .brand-wordmark,
+html[data-theme="day"] .site-header.scrolled .brand-wordmark,
+html[data-theme="day"] .site-header.solid .brand-wordmark {
+  color: var(--cassie-lavender);
+  text-shadow: 0 3px 0 rgba(43, 38, 49, .08);
+}
+
+html[data-theme="day"] .brand-sub,
+html[data-theme="day"] .primary-nav {
+  color: var(--ink);
+}
+
+html[data-theme="day"] .primary-nav a::after {
+  background: var(--sun);
+}
+
+html[data-theme="day"] .theme-toggle {
+  background: #fffaf2;
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+html[data-theme="day"] .theme-toggle::before {
+  content: "☀";
+  color: #e8a93d;
+  left: .55rem;
+}
+
+html[data-theme="day"] .toggle-dot {
+  background: var(--hero-purple);
+  box-shadow: inset -3px -3px 0 rgba(43, 38, 49, .12);
+}
+
+html[data-theme="day"] .hero {
+  background: linear-gradient(90deg, var(--hero-left) 0 35%, var(--hero-purple) 35% 100%);
+  color: var(--cream);
+}
+
+html[data-theme="day"] .hero::before {
+  background: rgba(127, 102, 199, .32);
+}
+
+html[data-theme="day"] .hero::after {
+  border-color: rgba(255, 250, 242, .22);
+}
+
+html[data-theme="day"] .hero-illustration {
+  background: radial-gradient(circle at 42% 72%, rgba(127,102,199,.10), transparent 32%), var(--hero-left);
+}
+
+html[data-theme="day"] .hero-illustration::after {
+  background: #ecd5cb;
+  border-top-color: rgba(43, 38, 49, .08);
+  box-shadow: 0 -24px 64px rgba(74, 48, 62, .10);
+}
+
+html[data-theme="day"] .wall-line {
+  background: rgba(127, 102, 199, .22);
+}
+
+html[data-theme="day"] .shelf {
+  background: #fffaf2;
+  box-shadow: 0 .55rem 0 rgba(74, 48, 62, .12);
+}
+
+html[data-theme="day"] .light {
+  background: linear-gradient(90deg, rgba(255, 209, 102, .18), rgba(201, 114, 144, .20));
+  mix-blend-mode: multiply;
+  opacity: .38;
+}
+
+html[data-theme="day"] .desk-scene,
+html[data-theme="day"] .window-card,
+html[data-theme="day"] .skill-panel,
+html[data-theme="day"] .about-card,
+html[data-theme="day"] .contact-window {
+  box-shadow: var(--shadow);
+}
+
+html[data-theme="day"] .hero-copy > .hand-note,
+html[data-theme="day"] .cassie-title,
+html[data-theme="day"] .cassie-title .title-line {
+  color: var(--cream);
+}
+
+html[data-theme="day"] .cassie-title .outline-word {
+  color: #25242c;
+  -webkit-text-stroke: 0;
+}
+
+html[data-theme="day"] .hero .button.primary {
+  background: var(--sun);
+  border-color: var(--sun);
+  color: var(--ink);
+}
+
+html[data-theme="day"] .hero .button.secondary {
+  background: rgba(255, 250, 242, .12);
+  border-color: var(--cream);
+  color: var(--cream);
+}
+
+html[data-theme="day"] .projects-section {
+  background: var(--plum-deep);
+}
+
+html[data-theme="day"] .window-card {
+  background: color-mix(in srgb, var(--plum) 86%, #fffaf2);
+}
+
+html[data-theme="day"] .about-section {
+  background: linear-gradient(90deg, var(--mint) 0 44%, var(--paper) 44% 100%);
+}
+
+html[data-theme="day"] .contact-section {
+  background: var(--mint);
+}
+
+@media (max-width: 1180px) {
+  html[data-theme="day"] .hero {
+    background: linear-gradient(90deg, var(--hero-left) 0 40%, var(--hero-purple) 40% 100%);
+  }
+}
+
+@media (max-width: 980px) {
+  html[data-theme="day"] .hero {
+    background: linear-gradient(180deg, var(--hero-purple) 0 48%, var(--hero-left) 48% 100%);
+  }
+}
+
+@media (max-width: 760px) {
+  html[data-theme="day"] .menu-toggle {
+    background: rgba(255, 247, 239, .88);
+    color: var(--ink);
+  }
+
+  html[data-theme="day"] .primary-nav {
+    background: var(--paper);
+    color: var(--ink);
+  }
+}
+
+/* Dark theme is the default opening palette. The toggle switches to the softer light palette below. */
+html:not([data-theme]),
+html[data-theme="night"] {
+  color-scheme: dark;
+}
+
+html[data-theme="day"] {
+  color-scheme: light;
+}
+
+/* The intro overlay is intentionally theme-independent (always dark), so saved
+   light-mode preferences do not flash a pale first paint. Styles live with .light-intro above. */
+

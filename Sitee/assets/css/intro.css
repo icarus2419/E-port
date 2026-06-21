@@ -1,0 +1,465 @@
+/* --- Real hero-lamp "turn on the light" intro --- */
+
+/* Fix: hide header controls during the lamp intro.
+   The darkened theme toggle was still visible as a small oval on the top-right
+   during refresh before the lamp is pulled. */
+body.intro-active:not(.light-has-switched) .primary-nav,
+body.intro-active:not(.light-has-switched) .theme-toggle,
+body.intro-active:not(.light-has-switched) .menu-toggle {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+body.intro-active:not(.intro-scroll-free) {
+  overflow: hidden;
+}
+
+/* The cursor-following glow blob bleeds through the darkness as a big soft
+   oval, so keep it off entirely until the light is on. */
+body.intro-active .cursor-blob {
+  display: none;
+}
+
+/* Registered so it can transition: the reveal animates this multiplier,
+   making the darkness recede outward from the lamp like spreading light. */
+@property --spread {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
+.light-intro {
+  will-change: opacity;
+  /* The room is almost pitch black; the fallback cutout starts on the
+     real left-side lamp so there is no split-second oval on the right before
+     JS measures the lamp position. */
+  --lamp-x: 24%;
+  --lamp-y: 36%;
+  --lamp-rx: 8.2rem;
+  --lamp-ry: 15rem;
+  --room: 2, 2, 5;
+  --spread: 1;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  min-height: 100vh;
+  min-height: 100svh;
+  pointer-events: none;
+  color: #fff8ee;
+  background:
+    radial-gradient(ellipse calc(var(--lamp-rx) * var(--spread)) calc(var(--lamp-ry) * var(--spread)) at var(--lamp-x) var(--lamp-y),
+      rgba(var(--room), 0) 0 84%,
+      rgba(var(--room), .93) 94%,
+      rgba(var(--room), .982) 100%);
+  transition:
+    opacity 1s ease .1s,
+    visibility 1s ease .1s,
+    --spread 1.7s cubic-bezier(.3, .55, .35, 1);
+}
+
+/* When the lamp switches on, the clear zone grows until the darkness has
+   been pushed off-screen — light spreading from the lamp, no shape to see. */
+.light-intro.light-on {
+  --spread: 20;
+}
+
+/* A faint warm wash that rides along the expanding edge. Low alpha and a
+   long feather so it reads as warmth, never as an oval of light. */
+.light-intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse calc(var(--lamp-rx) * var(--spread) * 1.15) calc(var(--lamp-ry) * var(--spread) * 1.15) at var(--lamp-x) var(--lamp-y),
+      rgba(255, 209, 102, .12) 0,
+      rgba(255, 209, 102, .05) 38%,
+      rgba(255, 209, 102, 0) 72%);
+  transition: opacity 1s ease;
+}
+
+.light-intro.light-on::before {
+  opacity: 1;
+}
+
+.light-intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,.07) 1px, transparent 0);
+  background-size: 48px 48px;
+  opacity: .07;
+  -webkit-mask-image: radial-gradient(ellipse calc(var(--lamp-rx) * var(--spread)) calc(var(--lamp-ry) * var(--spread)) at var(--lamp-x) var(--lamp-y), transparent 0 86%, #000 97%);
+  mask-image: radial-gradient(ellipse calc(var(--lamp-rx) * var(--spread)) calc(var(--lamp-ry) * var(--spread)) at var(--lamp-x) var(--lamp-y), transparent 0 86%, #000 97%);
+}
+
+.light-intro.intro-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.intro-copy {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(2.8rem, 14vh, 8rem);
+  transform: translateX(-50%);
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  width: min(92vw, 30rem);
+  text-align: center;
+  font-family: var(--mono, monospace);
+  text-shadow: 0 0 18px rgba(0,0,0,.8);
+  transition: opacity .28s ease, transform .28s ease;
+}
+
+.intro-status {
+  margin: 0;
+  font-size: .92rem;
+  letter-spacing: .22em;
+}
+
+.intro-status .intro-on {
+  display: none;
+  color: #ffd166;
+  text-shadow: 0 0 16px rgba(255,209,102,.65);
+}
+
+.light-intro.light-on .intro-status .intro-off { display: none; }
+.light-intro.light-on .intro-status .intro-on { display: inline; }
+
+.intro-hint {
+  margin: 0;
+  max-width: 92vw;
+  font-size: clamp(.82rem, 2.6vw, 1rem);
+  letter-spacing: .02em;
+  color: rgba(255,248,238,.72);
+  animation: introHint 2.2s ease-in-out infinite;
+}
+
+.light-intro.light-on .intro-copy {
+  opacity: 0;
+  transform: translateX(-50%) translateY(.7rem);
+}
+
+@keyframes introHint {
+  0%, 100% { opacity: .5; }
+  50% { opacity: .95; }
+}
+
+/* The actual hero lamp starts off. The user pulls this same lamp's cord. */
+.lamp {
+  pointer-events: none;
+}
+
+/* The shade paints above the pull button (z 10) so the string's top tucks
+   underneath it instead of overlapping the purple. The lamp has
+   pointer-events: none, so the shade never blocks clicks on the cord. */
+.lamp .shade {
+  z-index: 11;
+}
+
+/* While the room is dark, the lamp (and its pull cord) must sit above the
+   desk scene so nothing covers or click-blocks the cord. The moment the
+   light switches on it returns to its natural stacking (still in the dark),
+   so the light cone rises behind the computer exactly like the final page. */
+body.intro-active:not(.light-has-switched) .hero-illustration .lamp {
+  z-index: 12;
+}
+
+/* Everything that shares the room with the lamp goes almost black too, so
+   the clear zone around the lamp doesn't expose the desk/shelf at full
+   brightness. It eases back up as the light spreads. */
+body.intro-active .hero-illustration > :not(.lamp) {
+  transition: filter 1.2s ease .1s;
+}
+
+body.intro-active:not(.light-has-switched) .hero-illustration > :not(.lamp) {
+  filter: brightness(.16) saturate(.5);
+}
+
+/* The wall behind the lamp and the header (whose wordmark sits inside the
+   cutout) also go near-black, so the cutout edge can't be seen as a glow —
+   only the lamp itself remains readable in the dark. */
+body.intro-active .hero-illustration {
+  transition: background-color 1.2s ease .1s;
+}
+
+body.intro-active:not(.light-has-switched) .hero-illustration {
+  background: #040407;
+}
+
+
+/* During the dark lamp intro, hide the large right-side video CTA entirely.
+   The lamp/cord on the left stays highlighted, but the pill-shaped video
+   button no longer bleeds through as a weird oval during refresh/load. */
+body.intro-active:not(.light-has-switched) .hero-video,
+body.intro-active:not(.light-has-switched) .hero-copy .button-row {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Hide the small monitor/run pill during the off-state intro. It was visible
+   inside the lamp cutout as a stray oval near the right of the lamp area. */
+body.intro-active:not(.light-has-switched) .mini-run {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+body.intro-active.light-has-switched .hero-video,
+body.light-has-switched .hero-copy .button-row {
+  visibility: visible;
+}
+
+body.intro-active .site-header {
+  transition: filter 1.2s ease .1s;
+}
+
+body.intro-active:not(.light-has-switched) .site-header {
+  filter: brightness(.16) saturate(.5);
+}
+
+.hero-pull {
+  position: absolute;
+  top: 14.15rem;
+  /* String center lands ~2.1rem right of the lamp's axis — under the shade
+     rim, right beside the bulb, so it clearly hangs from the lamp. */
+  left: calc(50% + .75rem);
+  width: 2.7rem;
+  height: 8.2rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  transform-origin: top center;
+  z-index: 10;
+  animation: heroPullSway 2.45s ease-in-out infinite;
+}
+
+.hero-pull:focus-visible {
+  outline: 3px dashed var(--sun);
+  outline-offset: .35rem;
+  border-radius: 999px;
+}
+
+.hero-pull-string {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 1.5px);
+  width: 3px;
+  height: 5.6rem;
+  border-radius: 999px;
+  background: rgba(255, 248, 238, .88);
+  box-shadow: 0 0 .45rem rgba(0,0,0,.35);
+}
+
+.hero-pull-knob {
+  position: absolute;
+  top: 5.4rem;
+  left: calc(50% - .55rem);
+  width: 1.1rem;
+  height: 1.45rem;
+  border-radius: 999px;
+  background: var(--sun);
+  box-shadow: 0 0 1rem rgba(255, 209, 102, .55), 0 .28rem .45rem rgba(0,0,0,.3);
+}
+
+/* Handwritten "pull me" tag beside the knob, in the same script style as
+   the joseph wordmark. Only shown while the light is off. */
+.hero-pull-label {
+  position: absolute;
+  top: 5.35rem;
+  left: 2.55rem;
+  font-family: "Caveat", "Comic Sans MS", cursive;
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+  text-transform: lowercase;
+  line-height: 1;
+  white-space: nowrap;
+  color: #cab4f2;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, .35), 0 0 14px rgba(202, 180, 242, .35);
+  opacity: 0;
+  transform: rotate(-7deg);
+  transform-origin: left center;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+
+body.intro-active:not(.light-has-switched) .hero-pull-label {
+  opacity: 1;
+  animation: pullLabelBob 2.45s ease-in-out infinite;
+}
+
+@keyframes pullLabelBob {
+  0%, 100% { transform: rotate(-7deg) translateY(0); }
+  50% { transform: rotate(-4deg) translateY(-.18rem); }
+}
+
+body.intro-active .hero-pull {
+  filter: drop-shadow(0 0 .75rem rgba(255, 209, 102, .4));
+}
+
+body.intro-active:not(.light-has-switched) .hero-pull-string {
+  background: rgba(255, 248, 238, .96);
+  box-shadow: 0 0 .55rem rgba(0, 0, 0, .5), 0 0 .9rem rgba(255, 209, 102, .25);
+}
+
+body.intro-active:not(.light-has-switched) .hero-pull-knob {
+  box-shadow:
+    0 0 1.2rem .15rem rgba(255, 209, 102, .65),
+    0 .28rem .45rem rgba(0, 0, 0, .35);
+}
+
+/* Pulsing ring around the knob: "pull me". */
+body.intro-active:not(.light-has-switched) .hero-pull::after {
+  content: "";
+  position: absolute;
+  top: 4.95rem;
+  left: calc(50% - 1.1rem);
+  width: 2.2rem;
+  height: 2.55rem;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 209, 102, .75);
+  animation: pullPing 1.9s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pullPing {
+  0% { transform: scale(.72); opacity: .9; }
+  70% { transform: scale(1.4); opacity: 0; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+body.intro-pulling .hero-pull {
+  /* Gentle recoil swing of the whole cord after the tug. */
+  animation: pullSwing .95s ease both;
+}
+
+body.intro-pulling .hero-pull-string {
+  /* The string visibly stretches downward, overshoots back, and settles. */
+  transform-origin: top center;
+  animation: pullStringStretch .95s cubic-bezier(.3, 1.4, .55, 1) both;
+}
+
+body.intro-pulling .hero-pull-knob {
+  /* The handle dips down with the pull, bounces up past rest, settles. */
+  animation: pullKnobDip .95s cubic-bezier(.3, 1.4, .55, 1) both;
+}
+
+/* Keep the tug animation running even after the light flips on mid-pull. */
+body.light-has-switched:not(.intro-pulling) .hero-pull {
+  animation: none;
+}
+
+body.light-has-switched .hero-pull {
+  cursor: default;
+}
+
+@keyframes pullSwing {
+  0%, 28% { transform: rotate(0deg); }
+  52% { transform: rotate(-3.5deg); }
+  76% { transform: rotate(2.2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes pullStringStretch {
+  0% { transform: scaleY(1); }
+  28% { transform: scaleY(1.26); }
+  54% { transform: scaleY(.94); }
+  76% { transform: scaleY(1.06); }
+  100% { transform: scaleY(1); }
+}
+
+@keyframes pullKnobDip {
+  0% { transform: translateY(0); }
+  28% { transform: translateY(1.5rem); }
+  54% { transform: translateY(-.4rem); }
+  76% { transform: translateY(.32rem); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes heroPullSway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(5deg); }
+}
+
+.shade::after,
+.lamp .light {
+  transition: opacity .72s ease, background .42s ease, box-shadow .42s ease, transform .55s ease, filter .42s ease;
+}
+
+body.intro-active:not(.light-has-switched) .shade::after {
+  /* Clearly switched-off bulb: dark glass with a faint rim and cool sheen. */
+  background:
+    radial-gradient(circle at 36% 26%, rgba(255, 248, 238, .22), transparent 46%),
+    #34343f;
+  box-shadow:
+    inset 0 -.4rem .35rem rgba(0, 0, 0, .45),
+    0 0 0 2px rgba(255, 248, 238, .28);
+}
+
+body.intro-active:not(.light-has-switched) .lamp .light {
+  opacity: 0;
+  transform: translateX(-50%) scaleY(.08);
+  filter: blur(.4rem);
+}
+
+body.light-has-switched .shade::after {
+  background: #fff7cf;
+  box-shadow: 0 0 1.5rem .32rem rgba(255, 209, 102, .82);
+}
+
+body.light-has-switched .lamp .light {
+  opacity: .9;
+  transform: translateX(-50%) scaleY(1);
+  filter: blur(0);
+}
+
+@media (max-width: 760px) {
+  .hero-pull {
+    top: 13.75rem;
+    left: calc(50% + .65rem);
+    height: 7.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light-intro,
+  .intro-copy,
+  .intro-hint,
+  .hero-pull,
+  .hero-pull::after,
+  .hero-pull-string,
+  .hero-pull-knob,
+  .hero-pull-label,
+  .shade::after,
+  .lamp .light {
+    transition: none;
+    animation: none;
+  }
+}
+
+.cursor-blob {
+  position: fixed;
+  will-change: transform, opacity;
+  left: 0;
+  top: 0;
+  width: 7rem;
+  height: 7rem;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,209,102,.18), rgba(112,215,190,.1) 36%, transparent 70%);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity .25s ease;
+  mix-blend-mode: multiply;
+}
+html[data-theme="night"] .cursor-blob { mix-blend-mode: screen; }
