@@ -186,14 +186,12 @@ body.intro-active:not(.light-has-switched) .hero-illustration .lamp {
 
 
 /* --- Custom featured project cards and case pages --- */
-.securedoc-art,
 .coming-soon-art {
   isolation: isolate;
   background:
     linear-gradient(135deg, rgba(155,44,44,.5), rgba(35,35,41,.42)),
     rgba(255,255,255,.08);
 }
-.securedoc-art::before,
 .coming-soon-art::before {
   content: "";
   position: absolute;
