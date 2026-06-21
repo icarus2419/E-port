@@ -4,6 +4,13 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/project/Secure-Document-Approval/:path*",
+      "destination": "/project/securedoc-combined/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/poker?route=:path*" }
   ]
