@@ -6,6 +6,21 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/project/Secure-Document-Approval/",
+      "destination": "/project/securedoc-combined/",
+      "permanent": true
+    },
+    {
+      "source": "/project/Secure-Document-Approval/demo/",
+      "destination": "/project/securedoc-combined/demo/",
+      "permanent": true
+    },
+    {
+      "source": "/project/Secure-Document-Approval/demo/app/",
+      "destination": "/project/securedoc-combined/demo/app/",
+      "permanent": true
+    },
+    {
       "source": "/project/Secure-Document-Approval/:path*",
       "destination": "/project/securedoc-combined/:path*",
       "permanent": true
