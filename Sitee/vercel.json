@@ -6,7 +6,7 @@
   "cleanUrls": true,
   "functions": {
     "api/poker.py": {
-      "includeFiles": "lib/poker/**"
+      "includeFiles": "poker/lib/**"
     }
   },
   "redirects": [

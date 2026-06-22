@@ -18,7 +18,7 @@ for _root in (
     if _root not in sys.path:
         sys.path.insert(0, _root)
 
-from lib.poker.router import app  # noqa: F401 — Vercel ASGI path
+from poker.lib.router import app  # noqa: F401 — Vercel ASGI path
 
 try:
     from mangum import Mangum
