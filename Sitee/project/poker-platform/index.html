@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-  <title>Modular Multiplayer Poker Platform | Joseph Doyle-Samadi</title>
+  <title>Poker Platform — Python · FastAPI · Redis | Joseph Doyle-Samadi</title>
   <link rel="icon" href="/favicon.ico?v=6" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=6" />
@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=6" />
   <link rel="manifest" href="/site.webmanifest?v=6" />
   <meta name="theme-color" content="#232329" />
-  <meta name="description" content="Case study for Joseph Doyle-Samadi's modular multiplayer poker platform." />
+  <meta name="description" content="Python game engine with FastAPI-style routes, Redis-backed room state, and a polling-first browser client — Joseph Doyle-Samadi." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -53,8 +53,8 @@
         </div>
         <div class="case-body reveal">
           <p class="hand-note small">Project Detail</p>
-          <h1>Modular Multiplayer Poker Platform</h1>
-          <p>A playable poker platform that separates the table engine, variants, human/AI players, lobby, serverless room state, and variance-reduction demos.</p>
+          <h1>Multiplayer Poker Platform</h1>
+          <p>A Python game engine with clean boundaries between variants, players, and state — wired to FastAPI-style Vercel routes, Redis-backed room persistence, and a polling-first browser client.</p>
           <div class="button-row"><a class="button primary" href="../../poker/index.html" target="_blank" rel="noopener noreferrer">Play actual platform</a></div>
         </div>
       </div>
@@ -62,15 +62,6 @@
 
     <section class="case-section">
       <div class="case-grid">
-        <article class="case-box reveal">
-          <h2 style="font-size:clamp(2rem,4vw,3.5rem);">What it shows</h2>
-          <ul>
-            <li>No-Limit Texas Hold’em plus a toy High Card variant.</li>
-            <li>Human and AI player types with legal action generation.</li>
-            <li>Room/lobby flow with browser UI, viewer-specific state, and Vercel API routes.</li>
-            <li>Seeded comparison demo using common random numbers and seat averaging.</li>
-          </ul>
-        </article>
         <article class="case-box reveal">
           <h2 style="font-size:clamp(2rem,4vw,3.5rem);">Tech focus</h2>
           <ul>
@@ -80,12 +71,21 @@
             <li>Browser interface designed around readable, real-time state updates.</li>
           </ul>
         </article>
+        <article class="case-box reveal">
+          <h2 style="font-size:clamp(2rem,4vw,3.5rem);">Engineering highlights</h2>
+          <ul>
+            <li>Game engine: NL Hold’em + High Card variant, legal action generator, AI agents (easy / medium / hard).</li>
+            <li>Room layer: UUID-keyed rooms, creator tokens, seat tokens, per-viewer state projection.</li>
+            <li>Transport: WebSocket with HTTP polling fallback; presence heartbeat; tab-visibility throttle.</li>
+            <li>Stats: seeded variance demo with CRN + seat-swap for tighter agent comparisons.</li>
+          </ul>
+        </article>
       </div>
 
       <div class="demo-panel reveal">
-        <p class="hand-note small">Live-feel demo</p>
-        <h2 style="font-size:clamp(2rem,4vw,3.5rem);">Room state updates</h2>
-        <p>The real playable platform opens from the Play button and runs through Vercel API routes.</p>
+        <p class="hand-note small">API trace</p>
+        <h2 style="font-size:clamp(2rem,4vw,3.5rem);">State machine in action</h2>
+        <p>Each step below mirrors a real route in the Python backend — from room provisioning through action dispatch and Redis persistence.</p>
         <div class="demo-log" id="demoLog">Waiting for demo...</div>
         <div class="button-row"><button class="button primary" id="runDemo" type="button">run demo</button></div>
       </div>
@@ -97,11 +97,14 @@
   <script src="../../assets/poker-transition.js" defer></script>
   <script>
     const steps = [
-      'room: created / variant: no-limit hold\'em',
-      'player_1: connected / seat: button',
-      'player_2: AI joined / stack: 100bb',
-      'websocket: broadcasting viewer-specific legal actions',
-      'engine: hand complete / state saved'
+      'POST /api/rooms/create  →  room_id: AB3F  creator_token issued',
+      'POST /api/join          →  seat_token assigned  viewer_seat: 0',
+      'GET  /api/state         →  engine state serialised per-viewer',
+      'engine.deal()           →  hole cards dealt  legal_actions computed',
+      'POST /api/action        →  { action: "bet", amount: 50 }',
+      'engine.advance()        →  street: flop  pot: 110  state mutated',
+      'redis: HSET room:AB3F   →  state persisted  survives cold start',
+      'poll: 2 100 ms interval →  client receives updated state snapshot'
     ];
     document.getElementById('runDemo')?.addEventListener('click', () => {
       const log = document.getElementById('demoLog');

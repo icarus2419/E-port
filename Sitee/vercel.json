@@ -4,6 +4,12 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "cleanUrls": true,
+  "functions": {
+    "api/poker.py": {
+      "runtime": "python3.12",
+      "includeFiles": "lib/poker/**"
+    }
+  },
   "redirects": [
     {
       "source": "/project/Secure-Document-Approval/",
