@@ -110,7 +110,7 @@ export function initIris() {
     btn.addEventListener('click', (e) => {
       const href = (btn.getAttribute('href') || '').trim();
       const hasRealDestination = href && href !== '#' && !href.startsWith('#');
-      const destination = hasRealDestination ? href : '/3D/INDEX.HTML';
+      const destination = hasRealDestination ? href : '/3D/';
       const isModifiedClick = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1;
 
       if (isModifiedClick && hasRealDestination) return;
