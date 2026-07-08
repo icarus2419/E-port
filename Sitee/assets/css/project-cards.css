@@ -186,6 +186,12 @@ body.intro-active:not(.light-has-switched) .hero-illustration .lamp {
 
 
 /* --- Custom featured project cards and case pages --- */
+.nosite-art svg {
+  width: 8.6rem;
+  height: auto;
+  display: block;
+  filter: drop-shadow(5px 6px 0 rgba(0,0,0,.18));
+}
 .coming-soon-art {
   isolation: isolate;
   background:
@@ -292,6 +298,15 @@ body.intro-active:not(.light-has-switched) .hero-illustration .lamp {
   padding: 8rem clamp(1rem, 5vw, 4rem) 4rem;
   background: linear-gradient(90deg, var(--paper) 0 35%, var(--mint) 35% 100%);
 }
+.case-card {
+  background: color-mix(in srgb, var(--plum) 82%, white);
+  color: #fff8ee;
+  border: 3px solid #fff8ee;
+  border-radius: 1.4rem;
+  box-shadow: 10px 10px 0 rgba(0,0,0,.18);
+  overflow: hidden;
+}
+.case-card .detail-art { background: rgba(255,255,255,.08); }
 .project-detail-wrap {
   max-width: 74rem;
   margin: 0 auto;

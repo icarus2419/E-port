@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>NoSite Leads Helper — Chrome Extension &amp; SaaS Billing Backend | Joseph Doyle-Samadi</title>
+  <link rel="icon" href="/favicon.ico?v=6" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=6" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=6" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=6" />
+  <link rel="manifest" href="/site.webmanifest?v=6" />
+  <meta name="theme-color" content="#232329" />
+  <meta name="description" content="Case study for NoSite Leads Helper, a privacy-first Chrome Manifest V3 extension that turns Google Maps searches into exportable no-website business leads, with a local lead manager and Stripe-backed Premium licensing." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Nunito+Sans:wght@800;900;1000&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/styles.css" />
+  <link rel="stylesheet" href="../../assets/project-transitions.css" />
+  <style>
+    .detail-art.nosite-art svg { width: clamp(9rem, 20vw, 13rem); }
+    .case-shot { max-width: 74rem; margin: 2.5rem auto 0; }
+    .case-shot figure {
+      margin: 0;
+      border: 3px solid #fff8ee;
+      border-radius: 1.4rem;
+      overflow: hidden;
+      box-shadow: 10px 10px 0 rgba(0,0,0,.18);
+      background: color-mix(in srgb, var(--plum) 82%, white);
+    }
+    .case-shot img { display: block; width: 100%; height: auto; }
+    .case-shot figcaption {
+      font-family: var(--mono);
+      font-size: .82rem;
+      letter-spacing: .04em;
+      padding: .85rem 1.15rem;
+      color: #fff8ee;
+      border-top: 3px solid #fff8ee;
+    }
+  </style>
+</head>
+<body class="case-study-page light-has-switched">
+  <header class="site-header solid scrolled" id="siteHeader">
+    <a class="brand" href="../../index.html#home" aria-label="Joseph Doyle-Samadi home"><span class="brand-wordmark">joseph</span><span class="brand-sub">Doyle-Samadi</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation"><a href="../../index.html#projects">projects</a><a href="../../index.html#skills">skills</a><a href="../../index.html#contact">contact</a><button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode"><span class="toggle-dot"></span></button></nav>
+  </header>
+
+  <main>
+    <section class="project-detail-hero">
+      <div class="project-detail-wrap">
+        <div class="case-card reveal visible">
+          <div class="window-top"><span></span><span></span><span></span></div>
+          <div class="project-art nosite-art detail-art" aria-hidden="true">
+            <svg viewBox="0 0 124 110" role="img" aria-hidden="true">
+              <defs>
+                <clipPath id="nosite-lens"><circle cx="83" cy="72" r="17.5" /></clipPath>
+              </defs>
+              <rect x="6" y="42" width="80" height="56" rx="7" fill="#fff8ee" stroke="#9b2c2c" stroke-width="4" />
+              <path d="M32.6 44 V96 M59.3 44 V96" stroke="#9b2c2c" stroke-width="2.5" stroke-linecap="round" opacity=".5" />
+              <path d="M18 88 C30 74 40 82 48 68 S68 60 75 54" fill="none" stroke="#bb4848" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.5 9" />
+              <circle cx="75" cy="53" r="4" fill="#bb4848" />
+              <path d="M41 59 C30 45 26 39 26 30 a15 15 0 1 1 30 0 c0 9 -4 15 -15 29 Z" fill="#9b2c2c" stroke="#fff8ee" stroke-width="4" stroke-linejoin="round" />
+              <circle cx="41" cy="29" r="6.5" fill="#fff8ee" />
+              <circle cx="83" cy="72" r="20" fill="#fff8ee" stroke="#9b2c2c" stroke-width="5" />
+              <g clip-path="url(#nosite-lens)">
+                <rect x="70" y="61" width="26" height="22" rx="3" fill="#fff8ee" stroke="#9b2c2c" stroke-width="2.6" />
+                <path d="M70.5 68.5 H95.5" stroke="#9b2c2c" stroke-width="2.6" />
+                <circle cx="75" cy="64.8" r="1.5" fill="#bb4848" />
+                <circle cx="80.2" cy="64.8" r="1.5" fill="#bb4848" />
+              </g>
+              <line x1="97" y1="86" x2="111" y2="100" stroke="#9b2c2c" stroke-width="8" stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="project-detail-copy reveal visible">
+          <p class="hand-note small">Chrome Extension &amp; SaaS Billing Backend</p>
+          <h1>NoSite Leads Helper</h1>
+          <p>A privacy-first Chrome Manifest V3 extension that turns Google Maps searches into exportable no-website business leads, with a local lead manager and Stripe-backed Premium licensing.</p>
+          <div class="chip-row"><span>JavaScript</span><span>Chrome MV3</span><span>Service Worker</span><span>Stripe</span><span>Supabase</span></div>
+          <div class="button-row"><a class="button primary" href="https://nositeleads.uk/nosite/" target="_blank" rel="noopener noreferrer">Visit site</a></div>
+        </div>
+      </div>
+      <div class="case-shot reveal visible">
+        <figure>
+          <img src="./preview.jpg" alt="NoSite Leads Helper scanning a Google Maps search and listing businesses with no website in its side panel." loading="lazy" width="1200" height="480" />
+          <figcaption>One-click scan of a Google Maps niche — no-website businesses captured straight into the lead panel.</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="project-detail-section">
+      <div class="project-detail-grid">
+        <article class="case-box reveal visible"><p class="tag">Problem</p><h2>What it solves</h2><p>Freelancers, web designers, agencies, and local marketers all need the same prospect: a business with no website. Finding them by hand on Google Maps is slow and easy to lose track of. NoSite scans a niche-and-location search, flags the businesses without a website, and turns them into a managed list of leads.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Main features</p><h2>Feature set</h2><ul><li>One-click Google Maps scanning that auto-scrolls the results and captures ~120 businesses per search.</li><li>Configurable scan targets from 20 to 1000 businesses, stackable across map areas, with duplicate protection.</li><li>Detects “no website” from Maps result data rather than fragile screen scraping.</li><li>Mini lead manager with search, filtering, sorting, editable notes, outreach statuses, CSV export, and JSON backup/restore.</li></ul></article>
+        <article class="case-box reveal visible"><p class="tag">Build</p><h2>Extension engineering</h2><ul><li>Content scripts orchestrate the scan flow on Google Maps pages.</li><li>A MAIN-world injected sniffer intercepts and parses Google Maps result data.</li><li>A service worker uses <code>chrome.webRequest</code> to observe Maps result traffic at the network level, staying reliable when Google changes how results load.</li><li>Leads stay private in <code>chrome.storage.local</code>; anonymous licensing/device state lives in <code>chrome.storage.sync</code>.</li></ul></article>
+        <article class="case-box reveal visible"><p class="tag">Backend</p><h2>Licensing &amp; billing</h2><ul><li>Serverless API endpoints handle plan checks, scan counting, checkout sessions, billing-portal redirects, and verified Stripe webhooks.</li><li>Stripe Checkout runs Premium subscriptions; the Stripe customer portal handles invoices, cards, and cancellation.</li><li>Supabase stores anonymous device records, free-scan usage, Stripe customer IDs, and subscription status.</li><li>The extension holds no Stripe secrets — it only sends an anonymous device token for plan checks.</li></ul></article>
+        <article class="case-box reveal visible"><p class="tag">Reliability</p><h2>Built to survive change</h2><p>Google Maps markup and response structures shift constantly, so parsing is defensive by design with layered fallbacks. Live progress indicators, scan-state persistence, error handling, and recovery paths for cached or stale results keep a long scan trustworthy from start to CSV.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Tech used</p><h2>Stack</h2><p>JavaScript, HTML, and CSS on Chrome Manifest V3 — content scripts, a MAIN-world sniffer, a <code>chrome.webRequest</code> service worker, and <code>chrome.storage</code>. Billing runs on serverless API endpoints with Stripe Checkout, the Stripe customer portal, verified webhooks, and Supabase.</p></article>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>© 2026 Joseph Doyle-Samadi.</p><p><a href="../../index.html#home">Back home</a></p></footer>
+  <script type="module" src="../../assets/js/main.js"></script>
+  <script src="../../assets/project-transitions.js" defer></script>
+</body>
+</html>

@@ -177,17 +177,39 @@
           </div>
         </article>
 
-        <article class="window-card project-card project-card-soon reveal tilt-card">
+        <article class="window-card project-card reveal tilt-card">
           <div class="window-top"><span></span><span></span><span></span></div>
-          <div class="project-art coming-soon-art" aria-hidden="true">
-            <span class="soon-card">next</span>
+          <div class="project-art nosite-art" aria-hidden="true">
+            <svg viewBox="0 0 124 110" role="img" aria-hidden="true">
+              <defs>
+                <clipPath id="nosite-lens"><circle cx="83" cy="72" r="17.5" /></clipPath>
+              </defs>
+              <!-- folded map -->
+              <rect x="6" y="42" width="80" height="56" rx="7" fill="#fff8ee" stroke="#9b2c2c" stroke-width="4" />
+              <path d="M32.6 44 V96 M59.3 44 V96" stroke="#9b2c2c" stroke-width="2.5" stroke-linecap="round" opacity=".5" />
+              <path d="M18 88 C30 74 40 82 48 68 S68 60 75 54" fill="none" stroke="#bb4848" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.5 9" />
+              <circle cx="75" cy="53" r="4" fill="#bb4848" />
+              <!-- location pin -->
+              <path d="M41 59 C30 45 26 39 26 30 a15 15 0 1 1 30 0 c0 9 -4 15 -15 29 Z" fill="#9b2c2c" stroke="#fff8ee" stroke-width="4" stroke-linejoin="round" />
+              <circle cx="41" cy="29" r="6.5" fill="#fff8ee" />
+              <!-- magnifier lens -->
+              <circle cx="83" cy="72" r="20" fill="#fff8ee" stroke="#9b2c2c" stroke-width="5" />
+              <g clip-path="url(#nosite-lens)">
+                <rect x="70" y="61" width="26" height="22" rx="3" fill="#fff8ee" stroke="#9b2c2c" stroke-width="2.6" />
+                <path d="M70.5 68.5 H95.5" stroke="#9b2c2c" stroke-width="2.6" />
+                <circle cx="75" cy="64.8" r="1.5" fill="#bb4848" />
+                <circle cx="80.2" cy="64.8" r="1.5" fill="#bb4848" />
+              </g>
+              <!-- handle -->
+              <line x1="97" y1="86" x2="111" y2="100" stroke="#9b2c2c" stroke-width="8" stroke-linecap="round" />
+            </svg>
           </div>
           <div class="project-content">
-            <p class="tag">Web Application</p>
-            <h3>Project Coming Soon</h3>
-            <p>Another project card ready to be replaced with a case study, live demo, GitHub link, and technical breakdown.</p>
-            <div class="chip-row"><span>TBD</span><span>UI</span><span>Backend</span></div>
-            <div class="project-actions"><span class="text-link disabled-link" aria-disabled="true">Open placeholder →</span></div>
+            <p class="tag">Chrome Extension</p>
+            <h3>NoSite Leads Helper</h3>
+            <p>A privacy-first Chrome Manifest V3 extension that scans Google Maps for no-website businesses, saves them to a local lead manager, and exports them to CSV, with Stripe-backed Premium licensing.</p>
+            <div class="chip-row"><span>JavaScript</span><span>Chrome MV3</span><span>Stripe</span><span>Supabase</span></div>
+            <div class="project-actions"><a class="button primary compact-button" href="https://nositeleads.uk/nosite/" target="_blank" rel="noopener noreferrer">Visit site</a><a class="text-link" href="./project/nosite-leads/" target="_blank" rel="noopener noreferrer">Read case study →</a></div>
           </div>
         </article>
 
@@ -300,7 +322,7 @@
 
   <footer class="site-footer">
     <p>© 2026 Joseph Doyle-Samadi. Portfolio.</p>
-    <p class="footer-links"><a href="https://github.com/">GitHub</a> · <a href="https://linkedin.com/">LinkedIn</a></p>
+    <p class="footer-links"><a href="https://github.com/icarus2419">GitHub</a> · <a href="https://linkedin.com/">LinkedIn</a></p>
   </footer>
 
   <script type="module" src="./assets/js/main.js"></script>
