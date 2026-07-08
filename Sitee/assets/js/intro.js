@@ -183,6 +183,10 @@ export function initIntro() {
   let firstIntroClickAt = 0;
 
   const turnOn = (event) => {
+    /* If the click that switches the light on was aimed at a same-page
+       anchor (e.g. the "projects" nav link), honor that navigation once
+       the intro finishes instead of silently swallowing it. */
+    const anchorHash = event?.target?.closest?.('a[href^="#"]')?.getAttribute('href');
     event?.preventDefault?.();
     event?.stopPropagation?.();
     if (switchedOn) return;
@@ -198,6 +202,11 @@ export function initIntro() {
     }, 180);
     window.setTimeout(() => lightIntro.classList.add('intro-hidden'), 760);
     window.setTimeout(finishIntro, 980);
+    if (anchorHash && anchorHash.length > 1) {
+      window.setTimeout(() => {
+        document.querySelector(anchorHash)?.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+      }, 1040);
+    }
   };
 
   const activateIntroFromAnywhere = (event) => {

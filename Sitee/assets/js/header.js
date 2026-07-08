@@ -91,16 +91,26 @@ export function initHeader() {
 
   window.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(); });
 
+  /* Same-page anchors: drive one explicit scrollTo ourselves. Native
+     fragment navigation ignores clicks when the hash is already in the
+     URL (a dead "View Projects" click after a previous jump), so we
+     compute the exact target position and scroll every time. pushState
+     updates the URL without triggering a competing native scroll. */
+  const anchorScrollOffset = () => {
+    const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
+    return Number.isFinite(padding) ? padding : 96;
+  };
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener('click', (event) => {
       const href = link.getAttribute('href');
-      if (!href || href === '#') return;
+      if (!href || href.length < 2) return;
       const target = document.querySelector(href);
       if (!target) return;
       event.preventDefault();
       closeMenu();
-      target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
-      history.replaceState(null, '', href);
+      if (window.location.hash !== href) history.pushState(null, '', href);
+      const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - anchorScrollOffset());
+      window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
     });
   });
 

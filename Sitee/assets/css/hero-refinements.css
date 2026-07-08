@@ -558,16 +558,46 @@ html[data-theme="day"] .toggle-dot { transform: translateX(-2rem); background: v
   .hero-copy {
     padding-left: clamp(8rem, 14vw, 15.5rem);
     padding-right: clamp(3.5rem, 5vw, 6.5rem);
-    padding-top: clamp(5.9rem, 10.5vh, 6.8rem);
+    padding-top: clamp(4.3rem, 7vh, 6.2rem);
+  }
+  .hero-copy > .hand-note {
+    margin-bottom: clamp(.25rem, 1.1vh, .9rem);
+    font-size: clamp(1.45rem, min(2.7vh, 2.1vw), 2.25rem);
   }
   .cassie-title {
-    font-size: clamp(4.25rem, 5.72vw, 6.35rem);
-    line-height: 1.02;
+    font-size: clamp(3rem, min(12.2vh, 6.8vw), 7.4rem);
+    line-height: .97;
     max-width: 13.2ch;
   }
-  .hero .hero-lead,
-  .hero .button-row {
+  .hero .hero-lead {
     display: none;
+  }
+  /* The 86vh - 8rem slope grows faster with viewport height than a plain
+     vh term but passes through the same size at the shortest viewport we
+     support, so tall windows get a larger pill without overflowing short
+     ones. The CTA row mirrors the same formula so both its edges stay
+     lined up with the pill. */
+  .hero-copy .hero-video {
+    max-width: clamp(21rem, min(37vw, 86vh - 8rem), 45rem);
+    margin: clamp(.4rem, 1.5vh, 1.4rem) 0 0;
+  }
+  .hero .button-row {
+    max-width: clamp(21rem, min(37vw, 86vh - 8rem), 45rem);
+    margin-top: clamp(.9rem, 2.2vh, 2rem);
+    gap: clamp(.9rem, 1.3vw, 1.4rem);
+  }
+  .hero .button {
+    flex: 1 1 0;
+    min-height: clamp(3.4rem, min(4.6vw, 12.7vh - 1.4rem), 5.6rem);
+    padding: clamp(.8rem, min(1.1vw, 2.2vh), 1.3rem) clamp(1.4rem, 1.8vw, 2.4rem);
+    font-size: clamp(1rem, min(1.25vw, 2.6vh), 1.45rem);
+  }
+  .hero .button.primary { box-shadow: 5px 6px 0 rgba(0, 0, 0, .22); }
+  .hero .button.secondary { box-shadow: 5px 6px 0 rgba(0, 0, 0, .13); }
+  .hero .button:hover,
+  .hero .button:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 9px 0 rgba(0, 0, 0, .24);
   }
   .desk-scene {
     width: min(27.5rem, 75%);
@@ -579,7 +609,7 @@ html[data-theme="day"] .toggle-dot { transform: translateX(-2rem); background: v
 }
 
 @media (min-width: 1500px) {
-  .cassie-title { font-size: clamp(5.5rem, 5.55vw, 6.55rem); }
+  .cassie-title { font-size: clamp(3rem, min(12.2vh, 5.9vw), 7.4rem); }
 }
 
 
