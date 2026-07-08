@@ -30,6 +30,7 @@
 
   .hero-copy {
     order: 1;
+    align-self: stretch; /* desktop align-self leaks in and shrink-wraps the bg band otherwise */
     padding: clamp(2.4rem, 8vw, 3.6rem) 1.25rem 4rem;
     background:
       linear-gradient(180deg, var(--hero-purple) 0 5.6rem, var(--hero-left) 5.6rem 100%);

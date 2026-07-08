@@ -506,10 +506,8 @@ h3 { font-size: clamp(1.4rem, 2vw, 2rem); font-weight: 950; }
 }
 
 @media (max-width: 980px) {
-  .hero { grid-template-columns: 1fr; background: linear-gradient(180deg, var(--paper) 0 52%, var(--mint) 52% 100%); }
-  .hero-illustration { min-height: 32rem; padding-top: 2rem; }
+  /* stacked hero layout lives in responsive.css; only the wall-line hide is needed here */
   .wall-line { display: none; }
-  .hero-copy { order: -1; padding-top: clamp(6rem, 16vw, 8rem); padding-bottom: 1rem; }
   .project-grid, .skill-panels { grid-template-columns: 1fr; }
   .project-content { min-height: auto; }
   .project-card:nth-child(n) { margin-top: 0; }

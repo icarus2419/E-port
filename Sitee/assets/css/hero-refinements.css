@@ -129,10 +129,13 @@ html[data-theme="day"] .theme-toggle { background: #e8e2df; color: #25242c; }
 html[data-theme="day"] .toggle-dot { transform: translateX(-2rem); background: var(--sun); }
 
 .hero {
+  /* single source of truth for the illustration/copy seam; the column,
+     gradient, and divider all derive from it so they can't drift apart */
+  --hero-split: max(32rem, 38vw);
   min-height: 100svh;
-  grid-template-columns: minmax(32rem, 38vw) minmax(0, 1fr);
+  grid-template-columns: var(--hero-split) minmax(0, 1fr);
   padding-top: 0;
-  background: linear-gradient(90deg, var(--hero-left) 0 38%, var(--hero-purple) 38% 100%);
+  background: linear-gradient(90deg, var(--hero-left) 0 var(--hero-split), var(--hero-purple) var(--hero-split) 100%);
   color: var(--cream);
   isolation: isolate;
 }
@@ -141,7 +144,7 @@ html[data-theme="day"] .toggle-dot { transform: translateX(-2rem); background: v
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(38% - 2px);
+  left: calc(var(--hero-split) - 2px);
   width: 4px;
   background: rgba(165, 139, 214, .72);
   z-index: 2;
@@ -416,7 +419,8 @@ html[data-theme="day"] .toggle-dot { transform: translateX(-2rem); background: v
   color: var(--cream);
   -webkit-text-stroke: 0;
   text-shadow: none;
-  white-space: nowrap;
+  /* wraps only when the column is too narrow; at full width each line still fits whole */
+  white-space: normal;
 }
 .cassie-title .outline-word {
   display: inline-block;
@@ -466,9 +470,6 @@ html[data-theme="day"] .toggle-dot { transform: translateX(-2rem); background: v
 }
 
 @media (max-width: 1180px) {
-  .hero { grid-template-columns: minmax(27rem, 40vw) minmax(0, 1fr); background: linear-gradient(90deg, var(--hero-left) 0 40%, var(--hero-purple) 40% 100%); }
-  .hero::before { left: calc(40% - 2px); }
-  .cassie-title { font-size: clamp(4rem, 7.4vw, 6.6rem); }
   .desk-scene { width: min(26rem, 82%); margin-left: 9%; }
   .shelf { top: 37%; }
   .wall-art { top: 51%; transform: scale(.92); transform-origin: left center; }
@@ -550,11 +551,7 @@ html[data-theme="day"] .toggle-dot { transform: translateX(-2rem); background: v
 
 /* final desktop tuning: closer to Cassie's hero proportions */
 @media (min-width: 981px) {
-  .hero {
-    grid-template-columns: minmax(29rem, 35vw) minmax(0, 1fr);
-    background: linear-gradient(90deg, var(--hero-left) 0 35%, var(--hero-purple) 35% 100%);
-  }
-  .hero::before { left: calc(35% - 2px); }
+  .hero { --hero-split: max(29rem, 35vw); }
   .hero-copy {
     padding-left: clamp(8rem, 14vw, 15.5rem);
     padding-right: clamp(3.5rem, 5vw, 6.5rem);
@@ -608,8 +605,13 @@ html[data-theme="day"] .toggle-dot { transform: translateX(-2rem); background: v
   .wall-art { top: 56%; }
 }
 
-@media (min-width: 1500px) {
-  .cassie-title { font-size: clamp(3rem, min(12.2vh, 5.9vw), 7.4rem); }
+/* Title type scales with the space its column actually has, so every line
+   always fits on one line and nothing jumps at a breakpoint. 7.55 is the
+   measured width of the longest line ("interactive things") in ems + safety. */
+@media (min-width: 981px) {
+  .cassie-title {
+    font-size: clamp(2.5rem, calc((100vw - var(--hero-split) - clamp(8rem, 14vw, 15.5rem) - clamp(3.5rem, 5vw, 6.5rem)) / 7.55), 7.85rem);
+  }
 }
 
 
