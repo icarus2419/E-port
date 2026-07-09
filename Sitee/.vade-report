@@ -1,38 +1,58 @@
-## Vercel Web Analytics Installation
+# Vercel Web Analytics Installation Report
 
-Successfully installed and configured Vercel Web Analytics for this static portfolio site.
+## Summary
+Successfully installed and configured Vercel Web Analytics for this vanilla HTML/JavaScript portfolio site following the latest official Vercel documentation.
 
-### What was implemented:
+## Changes Made
 
-**Modified files:**
-- `index.html` - Added Vercel Analytics CDN script tag
+### 1. Package Installation
+- **Added**: `@vercel/analytics` v2.0.1 to package.json dependencies
+- **Updated**: package-lock.json with the new dependency
+- Used npm (the project's package manager) to install the package
 
-### Implementation details:
+### 2. Web Analytics Configuration (index.html)
+- **Added**: `window.va` initialization script in the `<head>` section
+  ```html
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  ```
+- **Removed**: Old CDN script `https://cdn.vercel-insights.com/v1/script.js` (replaced by modern approach)
+- **Kept**: Existing `/_vercel/insights/script.js` at the end of body (required for Web Analytics)
 
-This project is a static HTML/JavaScript portfolio site without a build system or framework. After fetching the latest Vercel Analytics documentation from https://vercel.com/docs/analytics/quickstart, I determined the appropriate installation method for this architecture.
+## Implementation Approach
 
-**Approach taken:**
-- Used the CDN script method as recommended for static sites without bundlers
-- Added `<script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>` to the `<head>` section
-- Placed just before the closing `</head>` tag to ensure it loads after other critical resources
-- Used `defer` attribute for optimal page load performance
+After fetching the latest Vercel documentation from https://vercel.com/docs/analytics/quickstart, I determined that for vanilla HTML sites (non-framework), Vercel recommends using the script tag approach rather than the npm package's inject function.
 
-**Why this approach:**
-1. The project has no build system (webpack, vite, etc.) - verified by checking for bundler config files
-2. The existing JavaScript uses native ES6 modules but doesn't bundle npm packages
-3. The CDN method is the official Vercel recommendation for static sites
-4. This approach requires no dependencies or build process changes
-5. The script automatically detects the Vercel deployment context and begins tracking
+The implementation follows Vercel's official pattern for static HTML sites:
+1. Initialize the `window.va` queue function in the head
+2. Load the analytics script via `/_vercel/insights/script.js`
 
-**Testing:**
-- Verified the HTML serves correctly using Python's http.server
-- Confirmed the analytics script tag is properly inserted in the HTML
-- No build process to test as this is a static site served directly
+## Framework Detection
+- **Framework**: Vanilla HTML/JavaScript (no bundler)
+- **Package Manager**: npm v10.9.7
+- **Node.js**: v20.x (as specified in package.json engines)
 
-**Next steps:**
-Once deployed to Vercel, analytics will automatically start tracking:
-- Page views
-- User interactions
-- Web Vitals metrics
+## Verification
+- ✅ Site serves successfully on localhost:3000
+- ✅ HTML structure preserved
+- ✅ No build errors (site uses static HTML, no build step required)
+- ✅ Dependencies installed and lock file updated
 
-The analytics data will be visible in the Vercel Dashboard under the Analytics tab after enabling Web Analytics in the project settings.
+## Files Modified
+1. `index.html` - Added Web Analytics initialization
+2. `package.json` - Added @vercel/analytics dependency
+3. `package-lock.json` - Updated with new dependency (auto-generated)
+
+## Next Steps for User
+After deploying to Vercel:
+1. Enable Web Analytics in the Vercel Dashboard (Analytics section)
+2. The `/_vercel/insights/*` routes will be automatically configured by Vercel
+3. Visit your deployed site to generate initial analytics data
+4. View analytics in your Vercel project dashboard
+
+## Notes
+- The site already had a `/_vercel/insights/script.js` script tag, which is used by Web Analytics
+- Replaced the older `cdn.vercel-insights.com` script with the modern `window.va` initialization approach
+- The @vercel/analytics package was installed to meet the user's requirement, though for vanilla HTML sites the script tag approach is recommended by Vercel
+- No custom events or beforeSend hooks were configured, as they weren't requested
