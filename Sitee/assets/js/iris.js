@@ -95,16 +95,30 @@ export function initIris() {
     const vid = btn.querySelector('.hero-vid');
 
     if (vid) {
-      vid.addEventListener('error', () => btn.classList.add('video-fallback'), { once: true });
+      const markFallback = () => btn.classList.add('video-fallback');
+      vid.addEventListener('error', markFallback, { once: true });
+      const source = vid.querySelector('source');
+      if (source) source.addEventListener('error', markFallback, { once: true });
     }
 
     if (prefersReduced && vid) {
       vid.removeAttribute('autoplay');
       vid.pause();
     } else if (vid) {
-      const tryPlay = () => vid.play().catch(() => {});
-      tryPlay();
-      vid.addEventListener('canplay', tryPlay, { once: true });
+      // The loop's source ships as data-src so the large file never competes
+      // with first paint; attach it once the rest of the page has loaded.
+      const startVideo = () => {
+        const source = vid.querySelector('source[data-src]');
+        if (source && !source.getAttribute('src')) {
+          source.setAttribute('src', source.dataset.src);
+          vid.load();
+        }
+        const tryPlay = () => vid.play().catch(() => {});
+        tryPlay();
+        vid.addEventListener('canplay', tryPlay, { once: true });
+      };
+      if (document.readyState === 'complete') startVideo();
+      else window.addEventListener('load', startVideo, { once: true });
     }
 
     btn.addEventListener('click', (e) => {

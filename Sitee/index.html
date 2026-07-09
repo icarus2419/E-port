@@ -11,12 +11,67 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=6" />
   <link rel="manifest" href="/site.webmanifest?v=6" />
   <meta name="theme-color" content="#232329" />
-  <meta name="description" content="Joseph Doyle-Samadi software engineering ePortfolio featuring projects, skills, experience, and contact details." />
+  <meta name="description" content="Portfolio of Joseph Doyle-Samadi, software engineer — full-stack projects including a multiplayer poker platform, a Chrome extension with Stripe billing, and a secure document approval app." />
+  <link rel="canonical" href="https://josephsamadi.uk/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Joseph Doyle-Samadi" />
+  <meta property="og:title" content="Joseph Doyle-Samadi | Software Engineer" />
+  <meta property="og:description" content="Full-stack projects including a multiplayer poker platform, a Chrome extension with Stripe billing, and a secure document approval app." />
+  <meta property="og:url" content="https://josephsamadi.uk/" />
+  <meta property="og:image" content="https://josephsamadi.uk/assets/og-home.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Illustrated night driving scene from Joseph Doyle-Samadi's portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Joseph Doyle-Samadi | Software Engineer" />
+  <meta name="twitter:description" content="Full-stack projects including a multiplayer poker platform, a Chrome extension with Stripe billing, and a secure document approval app." />
+  <meta name="twitter:image" content="https://josephsamadi.uk/assets/og-home.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://josephsamadi.uk/#person",
+        "name": "Joseph Doyle-Samadi",
+        "alternateName": "Joseph Samadi",
+        "jobTitle": "Software Engineer",
+        "url": "https://josephsamadi.uk/",
+        "email": "mailto:contact@josephsamadi.uk",
+        "image": "https://josephsamadi.uk/assets/og-home.jpg",
+        "sameAs": [
+          "https://github.com/icarus2419",
+          "https://www.linkedin.com/in/joseph-doyle-samadi-015566226/"
+        ],
+        "knowsAbout": ["Python", "JavaScript", "TypeScript", "React", "FastAPI", "PostgreSQL", "WebSockets", "Full-Stack Web Development"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://josephsamadi.uk/#website",
+        "url": "https://josephsamadi.uk/",
+        "name": "Joseph Doyle-Samadi — Software Engineer Portfolio",
+        "publisher": { "@id": "https://josephsamadi.uk/#person" }
+      }
+    ]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="image" href="./assets/drive-loop-poster.jpg" fetchpriority="high" />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Nunito+Sans:wght@800;900;1000&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./assets/styles.css" />
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/intro.css" />
+  <link rel="stylesheet" href="./assets/css/header.css" />
+  <link rel="stylesheet" href="./assets/css/hero.css" />
+  <link rel="stylesheet" href="./assets/css/hero-refinements.css" />
+  <link rel="stylesheet" href="./assets/css/theme.css" />
+  <link rel="stylesheet" href="./assets/css/responsive.css" />
+  <link rel="stylesheet" href="./assets/css/deep-mobile.css" />
+  <link rel="stylesheet" href="./assets/css/timeline.css" />
+  <link rel="stylesheet" href="./assets/css/project-cards.css" />
   <link rel="stylesheet" href="./assets/poker-transition.css" />
   <link rel="stylesheet" href="./assets/project-transitions.css" />
   <noscript><style>.light-intro{display:none}body.intro-active{overflow:auto}body.intro-active:not(.light-has-switched) .lamp .light{opacity:.68;transform:translateX(-50%) scaleY(1);filter:none}body.intro-active:not(.light-has-switched) .shade::after{background:#fff7cf;box-shadow:none}body.intro-active:not(.light-has-switched) .hero-illustration>:not(.lamp),body.intro-active:not(.light-has-switched) .site-header{filter:none}body.intro-active:not(.light-has-switched) .hero-illustration{background:radial-gradient(circle at 42% 72%, rgba(255,255,255,.035), transparent 32%),var(--hero-left)}body.intro-active:not(.light-has-switched) .hero-pull::after{display:none}body.intro-active .hero-pull{animation:none;filter:none}</style></noscript>
@@ -73,7 +128,7 @@
           <span class="cord"></span>
           <span class="shade"></span>
           <span class="light"></span>
-          <button class="hero-pull" id="introPull" type="button" aria-label="Pull the lamp cord to turn on the light">
+          <button class="hero-pull" id="introPull" type="button" aria-label="Pull me — pull the lamp cord to turn on the light">
             <span class="hero-pull-string"></span>
             <span class="hero-pull-knob"></span>
             <span class="hero-pull-label" aria-hidden="true">pull me</span>
@@ -111,6 +166,7 @@
       <div class="hero-copy reveal">
         <p class="hand-note">Hi, my name is Joseph</p>
         <h1 id="hero-title" class="cassie-title">
+          <span class="sr-only">Joseph Doyle-Samadi, Software Engineer — </span>
           <span class="title-line">I build</span>
           <span class="title-line"><span class="outline-word">reliable</span>,</span>
           <span class="title-line">interactive things</span>
@@ -119,12 +175,12 @@
 
         <!-- Featured 3D portfolio preview button. -->
         <a class="hero-video reveal" href="./3D/" aria-label="Explore my 3D portfolio">
-          <video class="hero-vid" autoplay muted loop playsinline preload="auto" poster="./assets/drive-loop-poster.jpg" aria-hidden="true">
-            <source src="./assets/drive-loop.mp4" type="video/mp4" />
+          <video class="hero-vid" muted loop playsinline preload="none" poster="./assets/drive-loop-poster.jpg" aria-hidden="true">
+            <source data-src="./assets/drive-loop.mp4" type="video/mp4" />
           </video>
           <span class="hero-scene" aria-hidden="true">
-            <img class="hero-bg" src="./assets/scene.png" alt="" />
-            <img class="hero-car" src="./assets/car.png" alt="" />
+            <img class="hero-bg" src="./assets/scene.webp" alt="" width="2091" height="752" />
+            <img class="hero-car" src="./assets/car.webp" alt="" width="1226" height="820" />
           </span>
           <span class="hero-video-overlay">
             <span class="hero-video-play" aria-hidden="true">→</span>
@@ -152,14 +208,14 @@
           <div class="window-top"><span></span><span></span><span></span></div>
           <div class="project-art poker-art" aria-hidden="true">
             <span>A♦</span><span>K♥</span><span>Q♦</span>
-            <button class="deal-button" type="button">deal</button>
+            <button class="deal-button" type="button" tabindex="-1">deal</button>
           </div>
           <div class="project-content">
             <p class="tag">Full-Stack Platform</p>
             <h3>Modular Multiplayer Poker Platform</h3>
             <p>A Python/FastAPI poker platform separating the table engine, variants, human/AI players, lobby, WebSocket updates, and variance-reduction demos.</p>
             <div class="chip-row"><span>Python</span><span>FastAPI</span><span>WebSockets</span><span>Postgres</span></div>
-            <div class="project-actions"><a class="button primary compact-button" href="./poker/index.html" target="_blank" rel="noopener noreferrer">Play poker</a><a class="text-link" href="./project/poker-platform/" target="_blank" rel="noopener noreferrer">Read case study →</a></div>
+            <div class="project-actions"><a class="button primary compact-button" href="./poker/" target="_blank" rel="noopener noreferrer">Play poker</a><a class="text-link" href="./project/poker-platform/" target="_blank" rel="noopener noreferrer">Read case study →</a></div>
           </div>
         </article>
 
@@ -322,7 +378,7 @@
 
   <footer class="site-footer">
     <p>© 2026 Joseph Doyle-Samadi. Portfolio.</p>
-    <p class="footer-links"><a href="https://github.com/icarus2419">GitHub</a> · <a href="https://linkedin.com/">LinkedIn</a></p>
+    <p class="footer-links"><a href="https://github.com/icarus2419" rel="me">GitHub</a> · <a href="https://www.linkedin.com/in/joseph-doyle-samadi-015566226/" rel="me">LinkedIn</a></p>
   </footer>
 
   <script type="module" src="./assets/js/main.js"></script>

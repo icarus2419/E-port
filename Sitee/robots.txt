@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://josephsamadi.uk/sitemap.xml

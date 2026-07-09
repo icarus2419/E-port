@@ -1,0 +1,33 @@
+# Joseph Doyle-Samadi — Software Engineer Portfolio
+
+> Personal portfolio of Joseph Doyle-Samadi, a software engineer building
+> full-stack web applications. Contact: contact@josephsamadi.uk.
+> GitHub: https://github.com/icarus2419 ·
+> LinkedIn: https://www.linkedin.com/in/joseph-doyle-samadi-015566226/
+
+Joseph builds reliable, interactive software with a focus on Python,
+JavaScript/TypeScript, React, FastAPI, PostgreSQL, and WebSockets.
+
+## Projects
+
+- [Modular Multiplayer Poker Platform](https://josephsamadi.uk/project/poker-platform/):
+  Python game engine with FastAPI-style routes, Redis-backed room state, and a
+  polling-first browser client. Playable at https://josephsamadi.uk/poker/.
+- [NoSite Leads Helper](https://josephsamadi.uk/project/nosite-leads/):
+  Privacy-first Chrome Manifest V3 extension that finds businesses without
+  websites on Google Maps, with a local lead manager and Stripe-backed Premium
+  licensing.
+- [SecureDoc Document Approval](https://josephsamadi.uk/project/securedoc-combined/):
+  Role-based document approval workflow with SHA-256 evidence, approval
+  receipts, and audit trails. Node.js/Express.
+
+## Experience
+
+- Freelance client website builds (Sep 2025–present).
+- Software Engineer at Heaven Estate Agent (Dec 2024–Sep 2025): frontend
+  modernization, SEO improvements, legacy booking system uplift.
+
+## Other pages
+
+- [Interactive 3D portfolio](https://josephsamadi.uk/3D/): explorable
+  Three.js driving scene version of this portfolio.
