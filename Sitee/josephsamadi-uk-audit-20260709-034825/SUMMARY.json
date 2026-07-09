@@ -1,0 +1,67 @@
+{
+  "cache_type": "audit-scores",
+  "analyzed_at": "2026-07-09T03:51:01Z",
+  "domain": "josephsamadi.uk",
+  "business_type": "generic website",
+  "industry": "general business",
+  "overall_score": 72,
+  "category_scores": {
+    "technical": 85,
+    "content": 46,
+    "on_page": 87,
+    "schema": 84,
+    "performance": 65,
+    "geo": 58,
+    "images": 86
+  },
+  "priority_issues": [
+    {
+      "severity": "critical",
+      "issue": "Content: Author or expert attribution signals are limited or absent in the visible content."
+    },
+    {
+      "severity": "critical",
+      "issue": "Geo: Author/date attribution is weak in the visible content."
+    },
+    {
+      "severity": "critical",
+      "issue": "Geo: No strong 134-167 word self-contained answer block was detected."
+    },
+    {
+      "severity": "critical",
+      "issue": "Geo: Server-rendered content confirmation is weak without technical-cache support."
+    },
+    {
+      "severity": "high",
+      "issue": "Images: 2 image(s) use weak or filename-like alt text."
+    },
+    {
+      "severity": "high",
+      "issue": "Schema: Recommended schema type(s) are missing: WebPage, Organization."
+    },
+    {
+      "severity": "high",
+      "issue": "Technical: Important security headers are missing: content-security-policy, x-frame-options, x-content-type-options, referrer-policy."
+    },
+    {
+      "severity": "high",
+      "issue": "Technical: IndexNow support was not detected."
+    },
+    {
+      "severity": "medium",
+      "issue": "Images: 1 below-the-fold sampled image(s) are not lazy loaded."
+    },
+    {
+      "severity": "medium",
+      "issue": "On_Page: 2 page(s) have title tags longer than 60 characters."
+    },
+    {
+      "severity": "medium",
+      "issue": "On_Page: 4 page(s) have meta descriptions longer than 160 characters."
+    },
+    {
+      "severity": "medium",
+      "issue": "On_Page: Meta description length (189) is outside the typical range."
+    }
+  ]
+}

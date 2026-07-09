@@ -1,0 +1,193 @@
+{
+  "title": "Joseph Doyle-Samadi | Software Engineer",
+  "meta_description": "Portfolio of Joseph Doyle-Samadi, software engineer \u2014 full-stack projects including a multiplayer poker platform, a Chrome extension with Stripe billing, and a secure document approval app.",
+  "meta_robots": null,
+  "canonical": "https://josephsamadi.uk/",
+  "h1": [
+    "Joseph Doyle-Samadi, Software Engineer \u2014 I build reliable , interactive things with code."
+  ],
+  "h2": [
+    "Projects.",
+    "Skills.",
+    "I like turning messy ideas into working software.",
+    "Experience.",
+    "Looking for a software engineer?"
+  ],
+  "h3": [
+    "Modular Multiplayer Poker Platform",
+    "NoSite Leads Helper",
+    "SecureDoc Document Approval",
+    "Full-Stack Development",
+    "Backend APIs",
+    "Frontend Interfaces",
+    "Client Website Builds \u2014 Freelance",
+    "Software Engineer \u2014 Heaven Estate Agent",
+    "Customer-Facing Roles"
+  ],
+  "images": [
+    {
+      "src": "https://josephsamadi.uk/assets/scene.webp",
+      "alt": "",
+      "width": "2091",
+      "height": "752",
+      "loading": null
+    },
+    {
+      "src": "https://josephsamadi.uk/assets/car.webp",
+      "alt": "",
+      "width": "1226",
+      "height": "820",
+      "loading": null
+    }
+  ],
+  "links": {
+    "internal": [
+      {
+        "href": "https://josephsamadi.uk/3D/",
+        "text": "\u2192 Explore my 3D portfolio",
+        "rel": []
+      },
+      {
+        "href": "https://josephsamadi.uk/poker/",
+        "text": "Play poker",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://josephsamadi.uk/project/poker-platform/",
+        "text": "Read case study \u2192",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://josephsamadi.uk/project/nosite-leads/",
+        "text": "Read case study \u2192",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://josephsamadi.uk/project/securedoc-combined/demo/",
+        "text": "Demo",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://josephsamadi.uk/project/securedoc-combined/",
+        "text": "Read case study \u2192",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      }
+    ],
+    "external": [
+      {
+        "href": "https://github.com/icarus2419",
+        "text": "GitHub",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "https://nositeleads.uk/nosite/",
+        "text": "Visit site",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      {
+        "href": "mailto:contact@josephsamadi.uk",
+        "text": "contact@josephsamadi.uk",
+        "rel": []
+      },
+      {
+        "href": "mailto:contact@josephsamadi.uk",
+        "text": "Email Me",
+        "rel": []
+      },
+      {
+        "href": "https://github.com/icarus2419",
+        "text": "GitHub",
+        "rel": [
+          "me"
+        ]
+      },
+      {
+        "href": "https://www.linkedin.com/in/joseph-doyle-samadi-015566226/",
+        "text": "LinkedIn",
+        "rel": [
+          "me"
+        ]
+      }
+    ]
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://josephsamadi.uk/#person",
+          "name": "Joseph Doyle-Samadi",
+          "alternateName": "Joseph Samadi",
+          "jobTitle": "Software Engineer",
+          "url": "https://josephsamadi.uk/",
+          "email": "mailto:contact@josephsamadi.uk",
+          "image": "https://josephsamadi.uk/assets/og-home.jpg",
+          "sameAs": [
+            "https://github.com/icarus2419",
+            "https://www.linkedin.com/in/joseph-doyle-samadi-015566226/"
+          ],
+          "knowsAbout": [
+            "Python",
+            "JavaScript",
+            "TypeScript",
+            "React",
+            "FastAPI",
+            "PostgreSQL",
+            "WebSockets",
+            "Full-Stack Web Development"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://josephsamadi.uk/#website",
+          "url": "https://josephsamadi.uk/",
+          "name": "Joseph Doyle-Samadi \u2014 Software Engineer Portfolio",
+          "publisher": {
+            "@id": "https://josephsamadi.uk/#person"
+          }
+        }
+      ]
+    }
+  ],
+  "open_graph": {
+    "og:type": "website",
+    "og:site_name": "Joseph Doyle-Samadi",
+    "og:title": "Joseph Doyle-Samadi | Software Engineer",
+    "og:description": "Full-stack projects including a multiplayer poker platform, a Chrome extension with Stripe billing, and a secure document approval app.",
+    "og:url": "https://josephsamadi.uk/",
+    "og:image": "https://josephsamadi.uk/assets/og-home.jpg",
+    "og:image:width": "1200",
+    "og:image:height": "630",
+    "og:image:alt": "Illustrated night driving scene from Joseph Doyle-Samadi's portfolio"
+  },
+  "twitter_card": {
+    "twitter:card": "summary_large_image",
+    "twitter:title": "Joseph Doyle-Samadi | Software Engineer",
+    "twitter:description": "Full-stack projects including a multiplayer poker platform, a Chrome extension with Stripe billing, and a secure document approval app.",
+    "twitter:image": "https://josephsamadi.uk/assets/og-home.jpg"
+  },
+  "word_count": 550,
+  "hreflang": []
+}

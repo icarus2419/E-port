@@ -1,0 +1,138 @@
+{
+  "url": "https://josephsamadi.uk/",
+  "above_fold": {
+    "h1_visible": true,
+    "cta_visible": true,
+    "hero_image": "./assets/scene.webp"
+  },
+  "mobile": {
+    "viewport_meta": true,
+    "horizontal_scroll": false,
+    "touch_targets_ok": false,
+    "undersized_touch_targets": [
+      {
+        "tag": "a",
+        "label": "joseph",
+        "width": 71.2,
+        "height": 26.9
+      },
+      {
+        "tag": "button",
+        "label": "pull me",
+        "width": 30.6,
+        "height": 79.7
+      }
+    ]
+  },
+  "layout": {
+    "overlapping_elements": [
+      {
+        "fixed_element": "OFF pull the lamp cord to turn on the light",
+        "covered_element": "joseph"
+      },
+      {
+        "fixed_element": "OFF pull the lamp cord to turn on the light",
+        "covered_element": "pull me"
+      },
+      {
+        "fixed_element": "OFF pull the lamp cord to turn on the light",
+        "covered_element": "const developer = {"
+      },
+      {
+        "fixed_element": "OFF pull the lamp cord to turn on the light",
+        "covered_element": "name: \"Joseph\","
+      },
+      {
+        "fixed_element": "OFF pull the lamp cord to turn on the light",
+        "covered_element": "focus: [\"Web\", \"APIs\", \"UX\"]"
+      },
+      {
+        "fixed_element": "OFF pull the lamp cord to turn on the light",
+        "covered_element": "ships: \"polished\""
+      },
+      {
+        "fixed_element": "OFF pull the lamp cord to turn on the light",
+        "covered_element": "}"
+      },
+      {
+        "fixed_element": "OFF pull the lamp cord to turn on the light",
+        "covered_element": "Hi, my name is Joseph"
+      },
+      {
+        "fixed_element": "OFF pull the lamp cord to turn on the light",
+        "covered_element": "Joseph Doyle-Samadi, Software Engineer \u2014 I build reliable, interactive things wi"
+      },
+      {
+        "fixed_element": "OFF pull the lamp cord to turn on the light",
+        "covered_element": "Software Engineer focused on modern, responsive, and user-focused web applicatio"
+      }
+    ],
+    "text_overflow": [
+      {
+        "tag": "a",
+        "text": "joseph",
+        "overflow_x": false,
+        "overflow_y": true
+      },
+      {
+        "tag": "span",
+        "text": "joseph",
+        "overflow_x": false,
+        "overflow_y": true
+      },
+      {
+        "tag": "div",
+        "text": "pull me const developer = { name: \"Joseph\", focus: [\"Web\", \"APIs\", \"UX\"] ships: ",
+        "overflow_x": true,
+        "overflow_y": false
+      },
+      {
+        "tag": "div",
+        "text": "pull me",
+        "overflow_x": true,
+        "overflow_y": true
+      },
+      {
+        "tag": "button",
+        "text": "pull me",
+        "overflow_x": true,
+        "overflow_y": true
+      },
+      {
+        "tag": "span",
+        "text": "pull me",
+        "overflow_x": false,
+        "overflow_y": true
+      },
+      {
+        "tag": "div",
+        "text": "const developer = { name: \"Joseph\", focus: [\"Web\", \"APIs\", \"UX\"] ships: \"polishe",
+        "overflow_x": true,
+        "overflow_y": false
+      },
+      {
+        "tag": "h1",
+        "text": "Joseph Doyle-Samadi, Software Engineer \u2014 I build reliable, interactive things wi",
+        "overflow_x": false,
+        "overflow_y": true
+      },
+      {
+        "tag": "span",
+        "text": "Joseph Doyle-Samadi, Software Engineer \u2014",
+        "overflow_x": true,
+        "overflow_y": true
+      },
+      {
+        "tag": "span",
+        "text": "I build",
+        "overflow_x": false,
+        "overflow_y": true
+      }
+    ]
+  },
+  "fonts": {
+    "base_size": 16,
+    "readable": true
+  },
+  "error": null
+}

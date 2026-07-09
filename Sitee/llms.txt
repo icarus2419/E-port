@@ -8,6 +8,16 @@
 Joseph builds reliable, interactive software with a focus on Python,
 JavaScript/TypeScript, React, FastAPI, PostgreSQL, and WebSockets.
 
+## Key facts
+
+- Author and maintainer: Joseph Doyle-Samadi.
+- Site purpose: software engineering portfolio and project case studies.
+- Primary contact: contact@josephsamadi.uk.
+- Main technologies shown: Python, JavaScript, TypeScript, React, FastAPI,
+  Redis, PostgreSQL, WebSockets, Chrome Manifest V3, Stripe, Supabase, Node.js,
+  Express, HTML, CSS, Three.js, and Vercel.
+- Last updated: July 2026.
+
 ## Projects
 
 - [Modular Multiplayer Poker Platform](https://josephsamadi.uk/project/poker-platform/):

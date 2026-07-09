@@ -1,0 +1,32 @@
+{
+  "screenshots": [
+    {
+      "url": "https://josephsamadi.uk/",
+      "output": "/Users/joseph/Documents/GitHub/E-port/Sitee/josephsamadi-uk-audit-20260709-034825/screenshots/josephsamadi-uk-desktop.png",
+      "viewport": "desktop",
+      "success": true,
+      "error": null
+    },
+    {
+      "url": "https://josephsamadi.uk/",
+      "output": "/Users/joseph/Documents/GitHub/E-port/Sitee/josephsamadi-uk-audit-20260709-034825/screenshots/josephsamadi-uk-laptop.png",
+      "viewport": "laptop",
+      "success": true,
+      "error": null
+    },
+    {
+      "url": "https://josephsamadi.uk/",
+      "output": "/Users/joseph/Documents/GitHub/E-port/Sitee/josephsamadi-uk-audit-20260709-034825/screenshots/josephsamadi-uk-tablet.png",
+      "viewport": "tablet",
+      "success": true,
+      "error": null
+    },
+    {
+      "url": "https://josephsamadi.uk/",
+      "output": "/Users/joseph/Documents/GitHub/E-port/Sitee/josephsamadi-uk-audit-20260709-034825/screenshots/josephsamadi-uk-mobile.png",
+      "viewport": "mobile",
+      "success": true,
+      "error": null
+    }
+  ]
+}

@@ -480,12 +480,20 @@ h3 { font-size: clamp(1.4rem, 2vw, 2rem); font-weight: 950; }
   justify-content: space-between;
   gap: 1rem;
   padding: 1.3rem clamp(1.25rem, 5vw, 4rem);
-  background: var(--ink);
-  color: var(--paper);
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--plum-deep) 82%, #17131f),
+      color-mix(in srgb, var(--paper-soft) 18%, #1f1a2a));
+  color: #f7efe5;
+  border-top: 1px solid color-mix(in srgb, var(--lavender) 28%, transparent);
   font-weight: 800;
 }
-.site-footer p { margin: 0; }
-.footer-links a { color: inherit; }
+.site-footer p { margin: 0; opacity: .9; }
+.footer-links a {
+  color: #fff8ee;
+  text-decoration-color: rgba(255, 248, 238, .45);
+  text-underline-offset: .18em;
+}
 
 .reveal {
   opacity: 0;
