@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>NoSite Leads Helper | Chrome Extension Case Study</title>
+  <title>NoSite Leads | Full-Stack SaaS Case Study</title>
   <link rel="icon" href="/favicon.ico?v=6" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=6" />
@@ -11,13 +11,13 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=6" />
   <link rel="manifest" href="/site.webmanifest?v=6" />
   <meta name="theme-color" content="#232329" />
-  <meta name="description" content="NoSite Leads Helper turns Google Maps searches into no-website business leads with a private Chrome extension, lead manager, CSV export, and Stripe billing." />
+  <meta name="description" content="NoSite Leads is a full-stack SaaS that uses the official Google Places API to find local businesses with no website listed and deliver private, exportable lead results." />
   <link rel="canonical" href="https://josephsamadi.uk/project/nosite-leads/" />
 
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Joseph Doyle-Samadi" />
-  <meta property="og:title" content="NoSite Leads Helper | Chrome Extension Case Study" />
-  <meta property="og:description" content="NoSite Leads Helper turns Google Maps searches into no-website business leads with a private Chrome extension, lead manager, CSV export, and Stripe billing." />
+  <meta property="og:title" content="NoSite Leads | Full-Stack SaaS Case Study" />
+  <meta property="og:description" content="NoSite Leads uses official Google Places data to find local businesses with no website listed and deliver private, exportable lead results." />
   <meta property="og:url" content="https://josephsamadi.uk/project/nosite-leads/" />
   <meta property="og:image" content="https://josephsamadi.uk/project/nosite-leads/preview.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -86,28 +86,28 @@
           </div>
         </div>
         <div class="project-detail-copy reveal visible">
-          <p class="hand-note small">Chrome Extension &amp; SaaS Billing Backend</p>
-          <h1>NoSite Leads Helper</h1>
-          <p>A privacy-first Chrome Manifest V3 extension that turns Google Maps searches into exportable no-website business leads, with a local lead manager and Stripe-backed Premium licensing.</p>
-          <div class="chip-row"><span>JavaScript</span><span>Chrome MV3</span><span>Service Worker</span><span>Stripe</span><span>Supabase</span></div>
-          <div class="button-row"><a class="button primary" href="https://nositeleads.uk/nosite/" target="_blank" rel="noopener noreferrer">Visit site</a></div>
+          <p class="hand-note small">Full-Stack Lead Generation SaaS</p>
+          <h1>NoSite Leads</h1>
+          <p>A web app that searches official Google Places data for local businesses with no website listed, then delivers private results with a map view, filtering, and CSV export.</p>
+          <div class="chip-row"><span>Next.js</span><span>TypeScript</span><span>Cloudflare Workers</span><span>Google Places API</span><span>Stripe</span><span>Supabase</span></div>
+          <div class="button-row"><a class="button primary" href="https://nositeleads.uk/" target="_blank" rel="noopener noreferrer">Visit site</a></div>
         </div>
       </div>
       <div class="case-shot reveal visible">
         <figure>
-          <img src="./preview.jpg" alt="NoSite Leads Helper scanning a Google Maps search and listing businesses with no website in its side panel." loading="lazy" width="1200" height="480" />
-          <figcaption>One-click scan of a Google Maps niche — no-website businesses captured straight into the lead panel.</figcaption>
+          <img src="./preview.jpg" alt="An earlier NoSite Leads interface from the product's first Chrome extension version." loading="lazy" width="1200" height="480" />
+          <figcaption>NoSite began as a Chrome extension before being rebuilt as the current API-powered web app.</figcaption>
         </figure>
       </div>
     </section>
     <section class="project-detail-section">
       <div class="project-detail-grid">
-        <article class="case-box reveal visible"><p class="tag">Problem</p><h2>What it solves</h2><p>Freelancers, web designers, agencies, and local marketers all need the same prospect: a business with no website. Finding them by hand on Google Maps is slow and easy to lose track of. NoSite scans a niche-and-location search, flags the businesses without a website, and turns them into a managed list of leads.</p></article>
-        <article class="case-box reveal visible"><p class="tag">Main features</p><h2>Feature set</h2><ul><li>One-click Google Maps scanning that auto-scrolls the results and captures ~120 businesses per search.</li><li>Configurable scan targets from 20 to 1000 businesses, stackable across map areas, with duplicate protection.</li><li>Detects “no website” from Maps result data rather than fragile screen scraping.</li><li>Mini lead manager with search, filtering, sorting, editable notes, outreach statuses, CSV export, and JSON backup/restore.</li></ul></article>
-        <article class="case-box reveal visible"><p class="tag">Build</p><h2>Extension engineering</h2><ul><li>Content scripts orchestrate the scan flow on Google Maps pages.</li><li>A MAIN-world injected sniffer intercepts and parses Google Maps result data.</li><li>A service worker uses <code>chrome.webRequest</code> to observe Maps result traffic at the network level, staying reliable when Google changes how results load.</li><li>Leads stay private in <code>chrome.storage.local</code>; anonymous licensing/device state lives in <code>chrome.storage.sync</code>.</li></ul></article>
-        <article class="case-box reveal visible"><p class="tag">Backend</p><h2>Licensing &amp; billing</h2><ul><li>Serverless API endpoints handle plan checks, scan counting, checkout sessions, billing-portal redirects, and verified Stripe webhooks.</li><li>Stripe Checkout runs Premium subscriptions; the Stripe customer portal handles invoices, cards, and cancellation.</li><li>Supabase stores anonymous device records, free-scan usage, Stripe customer IDs, and subscription status.</li><li>The extension holds no Stripe secrets — it only sends an anonymous device token for plan checks.</li></ul></article>
-        <article class="case-box reveal visible"><p class="tag">Reliability</p><h2>Built to survive change</h2><p>Google Maps markup and response structures shift constantly, so parsing is defensive by design with layered fallbacks. Live progress indicators, scan-state persistence, error handling, and recovery paths for cached or stale results keep a long scan trustworthy from start to CSV.</p></article>
-        <article class="case-box reveal visible"><p class="tag">Tech used</p><h2>Stack</h2><p>JavaScript, HTML, and CSS on Chrome Manifest V3 — content scripts, a MAIN-world sniffer, a <code>chrome.webRequest</code> service worker, and <code>chrome.storage</code>. Billing runs on serverless API endpoints with Stripe Checkout, the Stripe customer portal, verified webhooks, and Supabase.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Problem</p><h2>What it solves</h2><p>Freelancers, web designers, agencies, and local marketers need a reliable way to find businesses with no website listed. NoSite turns an area, radius, and set of business categories into an outreach-ready lead list without requiring users to search listings by hand.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Main features</p><h2>Feature set</h2><ul><li>Location, radius, category, and scan-size controls with a clear price before checkout.</li><li>Official Google Places searches across a hex grid, with deduplication and honest result classification.</li><li>Private results links with lead counts, filters, map view, and one-click CSV export.</li><li>Pay-as-you-go scans, credit packs, and monthly plans through Stripe Checkout.</li></ul></article>
+        <article class="case-box reveal visible"><p class="tag">Evolution</p><h2>From extension to SaaS</h2><p>NoSite started as a local Chrome extension that read Google Maps results. After the Chrome Web Store rejected that data-access approach as scraping, I rebuilt the product around the official Google Places API. The current version works on any device and no longer depends on browser-extension APIs or Google Maps page structure.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Backend</p><h2>Scanning &amp; billing</h2><ul><li>Stripe Checkout starts paid scans, with signature-verified and idempotent webhook handling.</li><li>Supabase stores scans, results, pricing configuration, and job state.</li><li>Atomic lease claiming, request-time drivers, status polling, and a scheduled sweep allow interrupted scan jobs to recover.</li><li>Server-side price checks and per-scan provider-cost fuses protect the payment and scanning flow.</li></ul></article>
+        <article class="case-box reveal visible"><p class="tag">Reliability</p><h2>Built for long-running work</h2><p>The scanner splits searches into recoverable chunks, deduplicates Places results, caps provider requests, and classifies ambiguous social-only listings for verification. Automated tests cover pricing, webhook signatures, authorization, CSV export, deduplication, and the scan state machine.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Tech used</p><h2>Stack</h2><p>Next.js 15, React 19, TypeScript, and Tailwind CSS on Cloudflare Workers through OpenNext. The application uses Google Places API (New) and Geocoding API for listing data, Stripe for payments, and Supabase Postgres for scans, results, configuration, and durable job state.</p></article>
       </div>
     </section>
   </main>
