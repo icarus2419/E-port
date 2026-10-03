@@ -11,6 +11,6 @@
     "check:all": "node ./tests/poker-api-smoke.js && node ./tests/multiplayer-deep-audit.js && node ./tests/multiplayer-race-audit.js && node ./tests/presence-timeout-audit.js && node ./tests/game-winner-audit.js"
   },
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   }
 }
