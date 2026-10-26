@@ -242,7 +242,7 @@ The poker client sends a lightweight presence heartbeat every 30 minutes while s
 
 ## Search visibility
 
-The homepage, `/3D/`, and the four project case studies present Joseph
+The homepage, `/3D/`, and the five project case studies present Joseph
 Doyle-Samadi (Joseph Samadi) as a London-based software engineer. Titles,
 descriptions, visible skills, project authorship, and links to the hiring contact
 section support that purpose. The homepage uses `ProfilePage` and `Person`
@@ -273,7 +273,7 @@ After deploying these changes:
 1. Submit `https://josephsamadi.uk/sitemap.xml` in Google Search Console and Bing
    Webmaster Tools.
 2. Use Search Console's URL Inspection to request indexing for `/`, `/client`,
-   `/3D/`, and the four case studies. Confirm that `/client` no longer reports a
+   `/3D/`, and the five case studies. Confirm that `/client` no longer reports a
    `noindex` exclusion and that `/project/skillhanger/` returns 200.
 3. Check `/3d` redirects to `/3D/` and the final page returns 200.
 4. Tell IndexNow (Bing, Yandex and others) about the changed URLs:

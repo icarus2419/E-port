@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Knockround: React &amp; Cloudflare SaaS | Joseph Doyle-Samadi</title>
+  <meta property="og:image:alt" content="The Knockround website: take card and Apple Pay on every job." />
+  <meta property="og:locale" content="en_GB" />
+  <meta name="twitter:image:alt" content="The Knockround website: take card and Apple Pay on every job." />
+  <meta name="twitter:description" content="Knockround case study by Joseph Doyle-Samadi: a live jobs and card payments app for UK tradespeople, built with React, TypeScript, Cloudflare Workers, D1 and Stripe Connect." />
+  <meta name="twitter:title" content="Knockround: React &amp; Cloudflare SaaS | Joseph Doyle-Samadi" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Joseph Doyle-Samadi" />
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="/favicon.ico?v=sunshine-1" />
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg?v=sunshine-1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=sunshine-1" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=sunshine-1" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=sunshine-1" />
+  <link rel="manifest" href="/site.webmanifest?v=sunshine-1" />
+  <meta name="theme-color" content="#232329" />
+  <meta name="description" content="Knockround case study by Joseph Doyle-Samadi: a live jobs and card payments app for UK tradespeople, built with React, TypeScript, Cloudflare Workers, D1 and Stripe Connect." />
+  <link rel="canonical" href="https://josephsamadi.uk/project/knockround/" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Joseph Doyle-Samadi" />
+  <meta property="og:title" content="Knockround: React &amp; Cloudflare SaaS | Joseph Doyle-Samadi" />
+  <meta property="og:description" content="Knockround case study by Joseph Doyle-Samadi: a live jobs and card payments app for UK tradespeople, built with React, TypeScript, Cloudflare Workers, D1 and Stripe Connect." />
+  <meta property="og:url" content="https://josephsamadi.uk/project/knockround/" />
+  <meta property="og:image" content="https://josephsamadi.uk/project/knockround/site.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://josephsamadi.uk/project/knockround/site.webp" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Nunito+Sans:wght@800;900;1000&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/header.css" />
+  <link rel="stylesheet" href="../../assets/css/hero.css" />
+  <link rel="stylesheet" href="../../assets/css/hero-refinements.css" />
+  <link rel="stylesheet" href="../../assets/css/theme.css" />
+  <link rel="stylesheet" href="../../assets/css/responsive.css" />
+  <link rel="stylesheet" href="../../assets/css/deep-mobile.css" />
+  <link rel="stylesheet" href="../../assets/css/project-cards.css" />
+  <link rel="stylesheet" href="../../assets/css/project-carousel.css" />
+  <script defer src="/_vercel/insights/script.js"></script>
+  <style>
+    .detail-art.knockround-art img { width: clamp(8rem, 18vw, 11.5rem); height: auto; filter: drop-shadow(6px 7px 0 rgba(0,0,0,.18)); }
+    .case-shot { max-width: 74rem; margin: 2.5rem auto 0; }
+    .case-shot figure {
+      margin: 0;
+      border: 3px solid #fff8ee;
+      border-radius: 1.4rem;
+      overflow: hidden;
+      box-shadow: 10px 10px 0 rgba(0,0,0,.18);
+      background: color-mix(in srgb, var(--plum) 82%, white);
+    }
+    .case-shot img { display: block; width: 100%; height: auto; }
+    .case-shot figcaption {
+      font-family: var(--mono);
+      font-size: .82rem;
+      letter-spacing: .04em;
+      line-height: 1.6;
+      padding: .85rem 1.15rem;
+      color: #fff8ee;
+      border-top: 3px solid #fff8ee;
+    }
+    .phone-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(.75rem, 3vw, 2rem); align-items: start; padding: clamp(1rem, 4vw, 2.5rem); background: #f3eefe; }
+    .phone-pair img { border-radius: 1.1rem; box-shadow: 0 10px 30px rgba(43, 25, 98, .18); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://josephsamadi.uk/#person",
+      "name": "Joseph Doyle-Samadi",
+      "alternateName": "Joseph Samadi",
+      "jobTitle": "Software Engineer",
+      "url": "https://josephsamadi.uk/",
+      "sameAs": [
+        "https://github.com/icarus2419",
+        "https://www.linkedin.com/in/josephsamadi/"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://josephsamadi.uk/project/knockround/#webpage",
+      "url": "https://josephsamadi.uk/project/knockround/",
+      "name": "Knockround: React & Cloudflare SaaS | Joseph Doyle-Samadi",
+      "description": "Knockround case study by Joseph Doyle-Samadi: a live jobs and card payments app for UK tradespeople, built with React, TypeScript, Cloudflare Workers, D1 and Stripe Connect.",
+      "isPartOf": {
+        "@id": "https://josephsamadi.uk/#website"
+      },
+      "author": {
+        "@id": "https://josephsamadi.uk/#person"
+      },
+      "mainEntity": {
+        "@id": "https://josephsamadi.uk/project/knockround/#project"
+      },
+      "breadcrumb": {
+        "@id": "https://josephsamadi.uk/project/knockround/#breadcrumbs"
+      },
+      "primaryImageOfPage": "https://josephsamadi.uk/project/knockround/site.webp",
+      "datePublished": "2026-10-26",
+      "dateModified": "2026-10-26",
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://josephsamadi.uk/project/knockround/#project",
+      "name": "Knockround",
+      "url": "https://josephsamadi.uk/project/knockround/",
+      "description": "A live jobs, quotes, rounds and card payments app for UK tradespeople, built with React, TypeScript, Hono on Cloudflare Workers, D1 and Stripe Connect.",
+      "creator": {
+        "@id": "https://josephsamadi.uk/#person"
+      },
+      "about": {
+        "@type": "SoftwareApplication",
+        "name": "Knockround",
+        "url": "https://knockround.co.uk/",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web"
+      },
+      "keywords": [
+        "React",
+        "TypeScript",
+        "Hono",
+        "Cloudflare Workers",
+        "Cloudflare D1",
+        "Stripe Connect",
+        "Service Worker",
+        "Full-Stack Development"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://josephsamadi.uk/project/knockround/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Joseph Doyle-Samadi — Software Engineer",
+          "item": "https://josephsamadi.uk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Knockround",
+          "item": "https://josephsamadi.uk/project/knockround/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+</head>
+<body class="case-study-page light-has-switched">
+  <header class="site-header solid scrolled" id="siteHeader">
+    <a class="brand" href="/#home" aria-label="Joseph Doyle-Samadi home"><span class="brand-wordmark">joseph</span><span class="brand-sub">Doyle-Samadi</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation"><a href="/#projects">projects</a><a href="/#skills">skills</a><a href="/#contact">contact</a><button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode"><span class="toggle-dot"></span></button></nav>
+  </header>
+
+  <main>
+    <section class="project-detail-hero">
+      <div class="project-detail-wrap">
+        <div class="case-card reveal visible">
+          <div class="window-top"><span></span><span></span><span></span></div>
+          <div class="project-art knockround-art detail-art" aria-hidden="true">
+            <img src="../../assets/projects/knockround-icon.png" alt="" width="240" height="240" />
+          </div>
+        </div>
+        <div class="project-detail-copy reveal visible">
+          <p class="hand-note small">Full-Stack SaaS · Joseph Doyle-Samadi</p>
+          <h1>Knockround</h1>
+          <p>A live app for UK tradespeople that runs jobs, quotes and repeat customers, then sends invoices customers pay by Apple Pay, Google Pay or card. I built it with a business partner, and it has been live at app.knockround.co.uk since October 2026. The source is private.</p>
+          <div class="chip-row"><span>React</span><span>TypeScript</span><span>Hono</span><span>Cloudflare Workers</span><span>D1</span><span>Stripe Connect</span></div>
+          <div class="button-row"><a class="button primary" href="https://knockround.co.uk/" target="_blank" rel="noopener noreferrer">Visit site</a><a class="button secondary" href="https://app.knockround.co.uk/" target="_blank" rel="noopener noreferrer">Open the app</a></div>
+        </div>
+      </div>
+      <div class="case-shot reveal visible">
+        <figure>
+          <img src="./site.webp" alt="The Knockround home page: take card and Apple Pay on every job, beside a Scan to pay screen for an £85 invoice." width="1360" height="900" />
+          <figcaption>knockround.co.uk, the marketing site I built. The hero shows the same Scan to pay screen the app shows on the doorstep.</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="project-detail-section">
+      <div class="project-detail-grid">
+        <article class="case-box reveal visible"><p class="tag">Problem</p><h2>What it solves</h2><p>Tradespeople run their work from WhatsApp chats, notes and a banking app. Knockround keeps the next job, the next quote and the next payment in one place on the phone, for quoted work and for customers who come back on a cycle. It covers 39 trades and costs £19.99 a month after a 7-day free trial.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Main features</p><h2>Feature set</h2><ul><li>A jobs board from enquiry to quote, booked, done and paid, with quotes customers accept on a public page.</li><li>Repeat customers at their own interval, a four-week calendar and the day's stops in route order on a map.</li><li>Numbered invoices with a Pay button, sent by WhatsApp, text or email, or shown as a QR code to scan.</li><li>Team logins where workers see the round but never prices or payments.</li><li>Spreadsheet import and export, reports, a price-rise tool and bank statement matching.</li></ul></article>
+        <article class="case-box reveal visible"><p class="tag">My part</p><h2>Who built what</h2><p>My business partner set up the monorepo, email-code sign-in, subscription billing, CI and the first version of the core screens. I designed the app and rebuilt every screen in that design, then built card payments with Stripe Connect, the offline mode, Google sign-in, onboarding across 39 trades, invoices with QR codes, referrals, the EU deployment and the security hardening.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Backend</p><h2>One Worker, one deploy</h2><ul><li>A single Cloudflare Worker running Hono serves the API, the customer-facing quote and invoice pages and the built React app, so there's one deploy and no CORS.</li><li>Cloudflare D1 in the EU jurisdiction. Every table carries the owner's id and every query filters on it, and API routes need a signed-in user with an active or trialing subscription.</li><li>Stripe Checkout for subscriptions and Stripe Connect for tradespeople's own card payments. A verified webhook marks a paid invoice's visits paid in one transaction.</li><li>Every push to main runs type checks and the build, applies D1 migrations and deploys through GitHub Actions.</li></ul></article>
+        <article class="case-box reveal visible"><p class="tag">Reliability</p><h2>Works with no signal</h2><p>A service worker opens the app with what it last loaded. Visits ticked off with no signal wait on the phone, then go once when the signal is back. Sign-in codes are hashed and rate-limited, customer pages run no scripts, and payment links are compared in constant time.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Tech used</p><h2>Stack</h2><p>React, TypeScript and Vite on the front end, Hono on Cloudflare Workers with D1 and R2 in the EU and an hourly Cron Trigger that sends reminders in batches, Better Auth for sign-in, Stripe Checkout and Connect for payments, Resend for email, and pnpm workspaces with GitHub Actions. The marketing site is a static site on its own Worker, with 22 search pages generated from Python, structured data and IndexNow, and Lighthouse mobile scores of 98 or more in every category.</p></article>
+      </div>
+      <div class="case-shot reveal visible">
+        <figure>
+          <div class="phone-pair">
+            <img src="./invoice.webp" alt="A Knockround invoice on a phone: Invoice 1001 from Dave's Plumbing for an £85 annual boiler service, with a Pay £85.00 button and Apple Pay, Google Pay and card marks." width="780" height="952" loading="lazy" />
+            <img src="./qr.webp" alt="The Knockround Scan to pay screen: a QR code for £85, invoice 1001, which the customer scans to open the invoice and pay." width="780" height="1380" loading="lazy" />
+          </div>
+          <figcaption>Real app screens: an invoice with its Pay button, and the QR code a customer scans to pay. The business and customer are made up.</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>© 2026 Joseph Doyle-Samadi.</p><p><a href="/#projects">More software engineering projects</a> · <a href="/#contact">Discuss a software engineering role</a></p></footer>
+  <script type="module" src="../../assets/js/case-study.js"></script>
+</body>
+</html>

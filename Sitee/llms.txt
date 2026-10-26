@@ -22,11 +22,11 @@ JavaScript/TypeScript, React, FastAPI, PostgreSQL, and WebSockets.
 
 ## Projects
 
-- [Knockround](https://knockround.co.uk/): job planning, quotes, rounds and
+- [Knockround](https://josephsamadi.uk/project/knockround/): job planning, quotes, rounds and
   payments for UK tradespeople. Bills customers can pay by card, Apple Pay or
   Google Pay, and an offline mode for working with no signal. React and
   TypeScript on Cloudflare Workers (Hono, D1, R2) with Stripe Connect.
-  App: https://app.knockround.co.uk/.
+  Built with a business partner. Site: https://knockround.co.uk/. App: https://app.knockround.co.uk/.
 - [SkillHanger](https://josephsamadi.uk/project/skillhanger/):
   Free, open-source native macOS app built with SwiftUI and AppKit for
   discovering and managing Codex and Claude Code skills and plugins,
@@ -46,7 +46,11 @@ JavaScript/TypeScript, React, FastAPI, PostgreSQL, and WebSockets.
 
 ## Experience
 
-- Freelance client website builds (Sep 2025–present).
+- Freelance client website builds (Sep 2025–present). Live examples:
+  [Limitless Lab](https://limitlesslab.uk/) (kids' football coaching,
+  Wandsworth), [Smiths Dog & Cat Grooming](https://smithsgrooming.co.uk/)
+  (Brentwood) and [Diamond Detailing](https://www.diamonddetailingni.com/)
+  (ceramic coatings, Belfast).
 - Software Engineer at Heaven Estate Agent (Dec 2024–Sep 2025): frontend
   modernization, SEO improvements, legacy booking system uplift.
 
