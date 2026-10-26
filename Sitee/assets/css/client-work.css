@@ -1,0 +1,160 @@
+/* Client sites: three live websites built for small businesses.
+   Three across on desktop; a swipe row with the next card peeking on smaller screens. */
+.client-work-section {
+  --client-pad: clamp(1.25rem, 5vw, 4rem);
+  background: var(--paper);
+}
+
+.client-sites {
+  max-width: 75rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.client-site {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.client-site .window-top b {
+  margin-left: .45rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 700 .74rem/1 var(--mono);
+  letter-spacing: .02em;
+  opacity: .85;
+}
+
+.client-shot {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 3px solid currentColor;
+  background: rgba(0, 0, 0, .2);
+}
+
+.client-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform .45s cubic-bezier(.22, 1, .36, 1);
+}
+
+.client-site-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 1.1rem 1.25rem 1.25rem;
+}
+
+.client-site-body .tag { margin-bottom: .55rem; }
+
+.client-site h3 {
+  margin: 0 0 .9rem;
+  font-size: clamp(1.3rem, 1.7vw, 1.65rem);
+}
+
+.client-site h3 a { text-decoration: none; }
+
+/* The heading link covers the whole card. */
+.client-site h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1.4rem;
+}
+
+.client-site-visit {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  margin-top: auto;
+  font-weight: 950;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+.client-work-more svg {
+  display: inline-block;
+  margin-left: .3rem;
+  vertical-align: -.12em;
+}
+
+.client-site-visit svg,
+.client-work-more svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: none;
+}
+
+@supports selector(:has(*)) {
+  .client-site h3 a:focus-visible { outline: none; }
+  .client-site:has(a:focus-visible) {
+    outline: 3px solid var(--sun);
+    outline-offset: 4px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .client-site:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 14px 14px 0 rgba(0, 0, 0, .2);
+  }
+  .client-site:hover .client-shot img { transform: scale(1.03); }
+}
+
+.client-work-more {
+  max-width: 75rem;
+  margin: clamp(1.8rem, 4vw, 2.6rem) auto 0;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.client-work-more a {
+  font-weight: 950;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 899px) {
+  .client-sites {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(80%, 21rem);
+    gap: 1rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--client-pad);
+    scrollbar-width: none;
+    margin-inline: calc(var(--client-pad) * -1);
+    padding: .25rem var(--client-pad) 1.25rem;
+  }
+  .client-sites::-webkit-scrollbar { display: none; }
+  .client-site {
+    scroll-snap-align: start;
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, .18);
+  }
+}
+
+/* deep-mobile.css sets the section side padding to 1rem at this width. */
+@media (max-width: 760px) {
+  .client-work-section { --client-pad: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .client-shot img { transition: none; }
+}
