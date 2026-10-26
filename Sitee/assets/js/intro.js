@@ -36,6 +36,10 @@ const shouldSkipIntroLock = () => {
   );
 };
 
+/* Viewport centre of the lamp, kept in sync by positionIntroSpotlight so the
+   camera push can zoom toward the bulb rather than the middle of the page. */
+let lampCentre = null;
+
 const positionIntroSpotlight = () => {
   if (!lightIntro || !heroLamp) return;
   if (document.body.classList.contains('light-has-switched')) return;
@@ -56,10 +60,33 @@ const positionIntroSpotlight = () => {
   const cy = (top + bottom) / 2;
   const rx = Math.max(95, (right - left) / 2 + 26) / 0.84;
   const ry = Math.max(130, (bottom - top) / 2 + 26) / 0.84;
+  lampCentre = { x: cx, y: cy };
   lightIntro.style.setProperty('--lamp-x', `${cx.toFixed(1)}px`);
   lightIntro.style.setProperty('--lamp-y', `${cy.toFixed(1)}px`);
   lightIntro.style.setProperty('--lamp-rx', `${rx.toFixed(1)}px`);
   lightIntro.style.setProperty('--lamp-ry', `${ry.toFixed(1)}px`);
+};
+
+/* Push the scene toward the bulb for one beat as the light snaps on. The
+   overlay is transformed alongside the page so the dark cutout stays locked
+   to the lamp. Body keeps the class only for the length of the animation:
+   a lingering transform would turn the fixed header into a scrolling one. */
+const CAMERA_PUSH_MS = 1500;
+
+const runCameraPush = () => {
+  if (prefersReduced) return;
+  positionIntroSpotlight();
+  const { x, y } = lampCentre || {};
+  if (Number.isFinite(x) && Number.isFinite(y)) {
+    document.body.style.setProperty('--intro-zoom-x', `${x.toFixed(1)}px`);
+    document.body.style.setProperty('--intro-zoom-y', `${y.toFixed(1)}px`);
+  }
+  document.body.classList.add('intro-zoom');
+  window.setTimeout(() => {
+    document.body.classList.remove('intro-zoom');
+    document.body.style.removeProperty('--intro-zoom-x');
+    document.body.style.removeProperty('--intro-zoom-y');
+  }, CAMERA_PUSH_MS + 60);
 };
 
 const unlockIntroScroll = () => {
@@ -196,6 +223,7 @@ export function initIntro() {
     playSwitchSound();
     unlockIntroScroll();
     document.body.classList.add('intro-pulling');
+    runCameraPush();
     window.setTimeout(() => {
       document.body.classList.add('light-has-switched');
       lightIntro.classList.add('light-on');

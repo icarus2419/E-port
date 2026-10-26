@@ -3,22 +3,35 @@
 > Personal portfolio of Joseph Doyle-Samadi, a software engineer building
 > full-stack web applications. Contact: contact@josephsamadi.uk.
 > GitHub: https://github.com/icarus2419 ·
-> LinkedIn: https://www.linkedin.com/in/joseph-doyle-samadi-015566226/
+> LinkedIn: https://www.linkedin.com/in/josephsamadi/
 
-Joseph builds reliable, interactive software with a focus on Python,
+Based in Streatham, London, Joseph builds reliable, interactive software with a focus on Python,
 JavaScript/TypeScript, React, FastAPI, PostgreSQL, and WebSockets.
 
 ## Key facts
 
 - Author and maintainer: Joseph Doyle-Samadi.
+- Location: Streatham, London, United Kingdom.
+- Education: BSc in Computer Science, University of Liverpool.
 - Site purpose: software engineering portfolio and project case studies.
 - Primary contact: contact@josephsamadi.uk.
 - Main technologies shown: Python, JavaScript, TypeScript, React, FastAPI,
-  Redis, PostgreSQL, WebSockets, Chrome Manifest V3, Stripe, Supabase, Node.js,
-  Express, HTML, CSS, Three.js, and Vercel.
-- Last updated: July 2026.
+  Redis, PostgreSQL, WebSockets, Swift, SwiftUI, AppKit, IOKit, Stripe, Supabase,
+  Cloudflare Workers, Node.js, Express, HTML, CSS, Three.js, and Vercel.
+- Last updated: October 2026.
 
 ## Projects
+
+- [Knockround](https://knockround.co.uk/): job planning, quotes, rounds and
+  payments for UK tradespeople. Bills customers can pay by card, Apple Pay or
+  Google Pay, and an offline mode for working with no signal. React and
+  TypeScript on Cloudflare Workers (Hono, D1, R2) with Stripe Connect.
+  App: https://app.knockround.co.uk/.
+- [SkillHanger](https://josephsamadi.uk/project/skillhanger/):
+  Free, open-source native macOS app built with SwiftUI and AppKit for
+  discovering and managing Codex and Claude Code skills and plugins,
+  viewing usage limits, and monitoring tasks with optional idle-sleep protection.
+  Source: https://github.com/icarus2419/SkillHanger.
 
 - [Modular Multiplayer Poker Platform](https://josephsamadi.uk/project/poker-platform/):
   Python game engine with FastAPI-style routes, Redis-backed room state, and a
@@ -41,3 +54,19 @@ JavaScript/TypeScript, React, FastAPI, PostgreSQL, and WebSockets.
 
 - [Interactive 3D portfolio](https://josephsamadi.uk/3D/): explorable
   Three.js driving scene version of this portfolio.
+
+## Hiring
+
+Joseph is open to software engineer, full-stack developer, frontend developer
+and backend developer opportunities. Review the project case studies for the
+implementation details and contact Joseph at contact@josephsamadi.uk or on LinkedIn.
+The interactive portfolio also contains a readable Profile & projects panel.
+
+## Website services
+
+- [Small business web design](https://josephsamadi.uk/client):
+  Freelance website design and development for UK small businesses, with
+  mobile-friendly pages, business details and contact buttons. A free working
+  preview comes before a one-off payment. This service page is for website
+  clients; the homepage and engineering case studies present Joseph's work
+  to recruiters and hiring managers.

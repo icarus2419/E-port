@@ -1,0 +1,112 @@
+/* Project carousel: whole cards only (3 / 2 / 1 across), arrows and dots below. */
+.project-carousel { max-width: 75rem; margin: 0 auto; }
+.project-carousel.is-carousel .project-grid {
+  --carousel-columns: 3;
+  --carousel-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: none !important;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--carousel-columns) - 1) * var(--carousel-gap)) / var(--carousel-columns));
+  gap: var(--carousel-gap) !important;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: .25rem;
+  scrollbar-width: none;
+  /* Room for the hard shadow and hover lift. Less than the gap, so the next
+     card never shows as a sliver. */
+  padding: .5rem 1rem 1.5rem .25rem;
+  margin: -.5rem -1rem 0 -.25rem;
+  max-width: none;
+}
+.project-carousel .project-grid::-webkit-scrollbar { display: none; }
+.project-carousel.is-carousel .project-card {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-width: 0;
+}
+.knockround-art img {
+  display: block;
+  width: 7.25rem;
+  height: auto;
+  filter: drop-shadow(5px 6px 0 rgba(0,0,0,.18));
+}
+.skillhanger-art img { display: block; width: 8.6rem; height: auto; }
+.skillhanger-shot-light { display: none !important; }
+html[data-theme="day"] .skillhanger-shot-dark { display: none !important; }
+html[data-theme="day"] .skillhanger-shot-light { display: block !important; }
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  margin-top: .75rem;
+  color: #fff8ee;
+}
+.carousel-controls[hidden] { display: none; }
+.carousel-arrow {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 3px solid #fff8ee;
+  border-radius: 50%;
+  background: var(--sun);
+  color: #25242c;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .18);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+.carousel-arrow svg { width: 1.2rem; height: 1.2rem; fill: none; stroke: currentColor; stroke-width: 2.75; stroke-linecap: round; stroke-linejoin: round; }
+.carousel-arrow:hover:enabled { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 rgba(0, 0, 0, .18); }
+.carousel-arrow:active:enabled { transform: translate(1px, 1px); box-shadow: 1px 1px 0 rgba(0, 0, 0, .18); }
+.carousel-arrow:disabled { background: transparent; color: #fff8ee; opacity: .4; cursor: default; box-shadow: none; }
+.carousel-dots { display: flex; align-items: center; gap: .3rem; }
+/* The dot is drawn inside a 1.5rem button so it stays easy to tap. */
+.carousel-dot {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: width .25s ease;
+}
+.carousel-dot::before {
+  content: "";
+  width: .7rem;
+  height: .7rem;
+  border: 2px solid #fff8ee;
+  border-radius: 999px;
+  transition: width .25s ease, background-color .25s ease;
+}
+.carousel-dot:hover::before { background: rgba(255, 248, 238, .35); }
+.carousel-dot[aria-current="true"] { width: 2.4rem; }
+.carousel-dot[aria-current="true"]::before { width: 2rem; background: var(--sun); border-color: var(--sun); }
+.carousel-dot:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; border-radius: 999px; }
+
+.project-screenshot { margin: 0; }
+.project-screenshot img { display: block; width: 100%; height: auto; }
+.project-screenshot figcaption { padding: 1rem 1.25rem; font-size: .85rem; line-height: 1.5; color: #fff8ee; background: var(--plum-deep); }
+.case-study-page .case-shot figcaption { background: var(--plum-deep); }
+html[data-theme="day"] .case-study-page .case-box .tag { color: var(--plum-deep); }
+.case-gallery { max-width: 74rem; margin: 2rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.skillhanger-case .project-detail-copy h1 { max-width: none; font-size: clamp(2.5rem, 6vw, 5.5rem); overflow-wrap: anywhere; }
+
+@media (max-width: 1100px) {
+  .project-carousel.is-carousel .project-grid { --carousel-columns: 2; --carousel-gap: 1.2rem; }
+}
+@media (max-width: 700px) {
+  .project-carousel.is-carousel .project-grid { --carousel-columns: 1; --carousel-gap: 1rem; }
+}
+@media (max-width: 767px) {
+  .case-gallery { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-carousel .project-grid { scroll-behavior: auto; }
+  .carousel-arrow, .carousel-dot, .carousel-dot::before { transition: none; }
+}

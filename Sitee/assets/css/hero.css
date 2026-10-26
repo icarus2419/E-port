@@ -473,7 +473,50 @@ h3 { font-size: clamp(1.4rem, 2vw, 2rem); font-weight: 950; }
   text-decoration-thickness: 4px;
   text-underline-offset: 6px;
 }
-.contact-window .button-row { margin-bottom: 2.5rem; }
+.contact-window .button-row { margin-bottom: 1.75rem; }
+/* LinkedIn card: same ink border, hard shadow and lift as .button;
+   the icon tile is a .panel-icon and the CTA a .text-link. */
+.linkedin-card {
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 1rem;
+  vertical-align: top;
+  margin-bottom: 2.5rem;
+  padding: .8rem 1.35rem .8rem .8rem;
+  text-align: left;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--paper-soft);
+  border: 3px solid var(--ink);
+  border-radius: 1.4rem;
+  box-shadow: 5px 5px 0 rgba(0,0,0,.18);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.linkedin-card:hover,
+.linkedin-card:focus-visible { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 rgba(0,0,0,.18); }
+.linkedin-card .panel-icon {
+  margin: 0;
+  background: #0a66c2;
+  border-color: var(--ink);
+  color: #fff;
+  transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .24s ease;
+}
+.linkedin-card .panel-icon svg { width: 1.3rem; height: 1.3rem; fill: currentColor; }
+.linkedin-card:hover .panel-icon,
+.linkedin-card:focus-visible .panel-icon { transform: rotate(-4deg) scale(1.05); box-shadow: 4px 4px 0 rgba(0,0,0,.18); }
+.linkedin-card-body { display: grid; gap: .2rem; }
+.linkedin-card-label {
+  font-family: var(--mono);
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  opacity: .8;
+}
+.linkedin-card-name { font-size: 1.2rem; font-weight: 950; letter-spacing: -.03em; line-height: 1.1; }
+.linkedin-card-name span { white-space: nowrap; } /* narrow phones wrap at the space, not the hyphen */
+.linkedin-card-role { font-size: .92rem; font-weight: 650; opacity: .8; }
+.linkedin-card .text-link { margin: 0 0 0 .6rem; text-decoration-line: underline; white-space: nowrap; }
 
 .site-footer {
   display: flex;
@@ -558,12 +601,18 @@ h3 { font-size: clamp(1.4rem, 2vw, 2rem); font-weight: 950; }
   .button { width: 100%; }
   .centered .button { width: auto; }
   .section { padding-left: 1rem; padding-right: 1rem; }
+  .contact-window .button-row { width: auto; }
   .contact-window .button-row .button { width: 100%; }
+  .linkedin-card { display: grid; border-width: 2.5px; border-radius: 1rem; box-shadow: 4px 4px 0 rgba(0,0,0,.18); }
   .timeline-item { grid-template-columns: 1fr; gap: .6rem; }
   .site-footer { flex-direction: column; text-align: center; }
 }
 
-
+/* below this the name and CTA no longer share a row */
+@media (max-width: 560px) {
+  .linkedin-card { grid-template-columns: auto minmax(0, 1fr); column-gap: .85rem; padding: .85rem 1rem .9rem .85rem; }
+  .linkedin-card .text-link { grid-column: 2; justify-self: start; margin: .55rem 0 0; }
+}
 
 @media (max-width: 430px) {
   .site-header { padding: .75rem 1rem; }

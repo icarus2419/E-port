@@ -3,31 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>NoSite Leads | Full-Stack SaaS Case Study</title>
-  <link rel="icon" href="/favicon.ico?v=6" sizes="any" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=6" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=6" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=6" />
-  <link rel="manifest" href="/site.webmanifest?v=6" />
+  <title>NoSite Leads: Next.js SaaS | Joseph Doyle-Samadi</title>
+  <meta property="og:image:alt" content="NoSite Leads software engineering project by Joseph Doyle-Samadi." />
+  <meta property="og:locale" content="en_GB" />
+  <meta name="twitter:image:alt" content="NoSite Leads software engineering project by Joseph Doyle-Samadi." />
+  <meta name="twitter:description" content="Joseph Doyle-Samadi’s full-stack SaaS case study: Next.js, TypeScript, Cloudflare Workers, Supabase, Stripe payments and Google Places API integration." />
+  <meta name="twitter:title" content="NoSite Leads: Next.js SaaS | Joseph Doyle-Samadi" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Joseph Doyle-Samadi" />
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="/favicon.ico?v=sunshine-1" />
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg?v=sunshine-1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=sunshine-1" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=sunshine-1" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=sunshine-1" />
+  <link rel="manifest" href="/site.webmanifest?v=sunshine-1" />
   <meta name="theme-color" content="#232329" />
-  <meta name="description" content="NoSite Leads is a full-stack SaaS that uses the official Google Places API to find local businesses with no website listed and deliver private, exportable lead results." />
+  <meta name="description" content="Joseph Doyle-Samadi’s full-stack SaaS case study: Next.js, TypeScript, Cloudflare Workers, Supabase, Stripe payments and Google Places API integration." />
   <link rel="canonical" href="https://josephsamadi.uk/project/nosite-leads/" />
 
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Joseph Doyle-Samadi" />
-  <meta property="og:title" content="NoSite Leads | Full-Stack SaaS Case Study" />
-  <meta property="og:description" content="NoSite Leads uses official Google Places data to find local businesses with no website listed and deliver private, exportable lead results." />
+  <meta property="og:title" content="NoSite Leads: Next.js SaaS | Joseph Doyle-Samadi" />
+  <meta property="og:description" content="Joseph Doyle-Samadi’s full-stack SaaS case study: Next.js, TypeScript, Cloudflare Workers, Supabase, Stripe payments and Google Places API integration." />
   <meta property="og:url" content="https://josephsamadi.uk/project/nosite-leads/" />
-  <meta property="og:image" content="https://josephsamadi.uk/project/nosite-leads/preview.jpg" />
+  <meta property="og:image" content="https://josephsamadi.uk/project/nosite-leads/home-hero.webp" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://josephsamadi.uk/project/nosite-leads/preview.jpg" />
+  <meta name="twitter:image" content="https://josephsamadi.uk/project/nosite-leads/home-hero.webp" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Nunito+Sans:wght@800;900;1000&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../../assets/styles.css" />
-  <link rel="stylesheet" href="../../assets/project-transitions.css" />
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/header.css" />
+  <link rel="stylesheet" href="../../assets/css/hero.css" />
+  <link rel="stylesheet" href="../../assets/css/hero-refinements.css" />
+  <link rel="stylesheet" href="../../assets/css/theme.css" />
+  <link rel="stylesheet" href="../../assets/css/responsive.css" />
+  <link rel="stylesheet" href="../../assets/css/deep-mobile.css" />
+  <link rel="stylesheet" href="../../assets/css/project-cards.css" />
+  <link rel="stylesheet" href="../../assets/css/project-carousel.css" />
   <script defer src="/_vercel/insights/script.js"></script>
   <style>
     .detail-art.nosite-art svg { width: clamp(9rem, 20vw, 13rem); }
@@ -50,12 +64,90 @@
       border-top: 3px solid #fff8ee;
     }
   </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://josephsamadi.uk/#person",
+      "name": "Joseph Doyle-Samadi",
+      "alternateName": "Joseph Samadi",
+      "jobTitle": "Software Engineer",
+      "url": "https://josephsamadi.uk/",
+      "sameAs": [
+        "https://github.com/icarus2419",
+        "https://www.linkedin.com/in/josephsamadi/"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://josephsamadi.uk/project/nosite-leads/#webpage",
+      "url": "https://josephsamadi.uk/project/nosite-leads/",
+      "name": "NoSite Leads: Next.js SaaS | Joseph Doyle-Samadi",
+      "description": "Joseph Doyle-Samadi’s full-stack SaaS case study: Next.js, TypeScript, Cloudflare Workers, Supabase, Stripe payments and Google Places API integration.",
+      "isPartOf": {
+        "@id": "https://josephsamadi.uk/#website"
+      },
+      "author": {
+        "@id": "https://josephsamadi.uk/#person"
+      },
+      "mainEntity": {
+        "@id": "https://josephsamadi.uk/project/nosite-leads/#project"
+      },
+      "breadcrumb": {
+        "@id": "https://josephsamadi.uk/project/nosite-leads/#breadcrumbs"
+      },
+      "dateModified": "2026-10-25",
+      "inLanguage": "en-GB"
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://josephsamadi.uk/project/nosite-leads/#project",
+      "name": "NoSite Leads",
+      "url": "https://josephsamadi.uk/project/nosite-leads/",
+      "description": "Joseph Doyle-Samadi’s full-stack SaaS case study: Next.js, TypeScript, Cloudflare Workers, Supabase, Stripe payments and Google Places API integration.",
+      "creator": {
+        "@id": "https://josephsamadi.uk/#person"
+      },
+      "keywords": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Cloudflare Workers",
+        "Supabase",
+        "Stripe",
+        "Full-Stack Development"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://josephsamadi.uk/project/nosite-leads/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Joseph Doyle-Samadi — Software Engineer",
+          "item": "https://josephsamadi.uk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "NoSite Leads",
+          "item": "https://josephsamadi.uk/project/nosite-leads/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
 </head>
 <body class="case-study-page light-has-switched">
   <header class="site-header solid scrolled" id="siteHeader">
-    <a class="brand" href="../../index.html#home" aria-label="Joseph Doyle-Samadi home"><span class="brand-wordmark">joseph</span><span class="brand-sub">Doyle-Samadi</span></a>
+    <a class="brand" href="/#home" aria-label="Joseph Doyle-Samadi home"><span class="brand-wordmark">joseph</span><span class="brand-sub">Doyle-Samadi</span></a>
     <button class="menu-toggle" id="menuToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
-    <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation"><a href="../../index.html#projects">projects</a><a href="../../index.html#skills">skills</a><a href="../../index.html#contact">contact</a><button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode"><span class="toggle-dot"></span></button></nav>
+    <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation"><a href="/#projects">projects</a><a href="/#skills">skills</a><a href="/#contact">contact</a><button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode"><span class="toggle-dot"></span></button></nav>
   </header>
 
   <main>
@@ -86,7 +178,7 @@
           </div>
         </div>
         <div class="project-detail-copy reveal visible">
-          <p class="hand-note small">Full-Stack Lead Generation SaaS</p>
+          <p class="hand-note small">Full-Stack SaaS · Joseph Doyle-Samadi</p>
           <h1>NoSite Leads</h1>
           <p>A web app that searches official Google Places data for local businesses with no website listed, then delivers private results with a map view, filtering, and CSV export.</p>
           <div class="chip-row"><span>Next.js</span><span>TypeScript</span><span>Cloudflare Workers</span><span>Google Places API</span><span>Stripe</span><span>Supabase</span></div>
@@ -95,24 +187,23 @@
       </div>
       <div class="case-shot reveal visible">
         <figure>
-          <img src="./preview.jpg" alt="An earlier NoSite Leads interface from the product's first Chrome extension version." loading="lazy" width="1200" height="480" />
-          <figcaption>NoSite began as a Chrome extension before being rebuilt as the current API-powered web app.</figcaption>
+          <img src="./scan-form.webp" alt="The current NoSite Leads web app: scan builder with area, business count, radius, categories, and a price estimate." loading="lazy" width="1360" height="900" />
+          <figcaption>The current API-powered web app. Users choose an area and scan size, with pricing shown before checkout.</figcaption>
         </figure>
       </div>
     </section>
     <section class="project-detail-section">
       <div class="project-detail-grid">
-        <article class="case-box reveal visible"><p class="tag">Problem</p><h2>What it solves</h2><p>Freelancers, web designers, agencies, and local marketers need a reliable way to find businesses with no website listed. NoSite turns an area, radius, and set of business categories into an outreach-ready lead list without requiring users to search listings by hand.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Problem</p><h2>What it solves</h2><p>Freelancers, web designers, agencies, and local marketers need a reliable way to find businesses with no website listed. NoSite turns an area, radius, and set of business categories into an exportable lead list. “No website listed” describes the provider data, rather than proving that a business has no website. Results need verification before outreach.</p></article>
         <article class="case-box reveal visible"><p class="tag">Main features</p><h2>Feature set</h2><ul><li>Location, radius, category, and scan-size controls with a clear price before checkout.</li><li>Official Google Places searches across a hex grid, with deduplication and honest result classification.</li><li>Private results links with lead counts, filters, map view, and one-click CSV export.</li><li>Pay-as-you-go scans, credit packs, and monthly plans through Stripe Checkout.</li></ul></article>
-        <article class="case-box reveal visible"><p class="tag">Evolution</p><h2>From extension to SaaS</h2><p>NoSite started as a local Chrome extension that read Google Maps results. After the Chrome Web Store rejected that data-access approach as scraping, I rebuilt the product around the official Google Places API. The current version works on any device and no longer depends on browser-extension APIs or Google Maps page structure.</p></article>
+        <article class="case-box reveal visible"><p class="tag">Evolution</p><h2>From extension to SaaS</h2><p>NoSite started as a local Chrome extension that read Google Maps results. After the Chrome Web Store removed that version over its data-access approach, I rebuilt the product around the official Google Places API. The current version works on any device and no longer depends on browser-extension APIs or Google Maps page structure.</p></article>
         <article class="case-box reveal visible"><p class="tag">Backend</p><h2>Scanning &amp; billing</h2><ul><li>Stripe Checkout starts paid scans, with signature-verified and idempotent webhook handling.</li><li>Supabase stores scans, results, pricing configuration, and job state.</li><li>Atomic lease claiming, request-time drivers, status polling, and a scheduled sweep allow interrupted scan jobs to recover.</li><li>Server-side price checks and per-scan provider-cost fuses protect the payment and scanning flow.</li></ul></article>
         <article class="case-box reveal visible"><p class="tag">Reliability</p><h2>Built for long-running work</h2><p>The scanner splits searches into recoverable chunks, deduplicates Places results, caps provider requests, and classifies ambiguous social-only listings for verification. Automated tests cover pricing, webhook signatures, authorization, CSV export, deduplication, and the scan state machine.</p></article>
         <article class="case-box reveal visible"><p class="tag">Tech used</p><h2>Stack</h2><p>Next.js 15, React 19, TypeScript, and Tailwind CSS on Cloudflare Workers through OpenNext. The application uses Google Places API (New) and Geocoding API for listing data, Stripe for payments, and Supabase Postgres for scans, results, configuration, and durable job state.</p></article>
       </div>
     </section>
   </main>
-  <footer class="site-footer"><p>© 2026 Joseph Doyle-Samadi.</p><p><a href="../../index.html#home">Back home</a></p></footer>
-  <script type="module" src="../../assets/js/main.js"></script>
-  <script src="../../assets/project-transitions.js" defer></script>
+  <footer class="site-footer"><p>© 2026 Joseph Doyle-Samadi.</p><p><a href="/#projects">More software engineering projects</a> · <a href="/#contact">Discuss a software engineering role</a></p></footer>
+  <script type="module" src="../../assets/js/case-study.js"></script>
 </body>
 </html>

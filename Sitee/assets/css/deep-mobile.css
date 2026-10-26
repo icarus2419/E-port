@@ -27,7 +27,9 @@ body {
   .button:hover,
   .skill-cloud span:hover,
   .window-card:hover,
-  .project-card:hover {
+  .project-card:hover,
+  .linkedin-card:hover,
+  .linkedin-card:hover .panel-icon {
     transform: none !important;
   }
 

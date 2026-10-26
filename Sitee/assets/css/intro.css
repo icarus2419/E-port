@@ -463,3 +463,65 @@ body.light-has-switched .lamp .light {
   mix-blend-mode: multiply;
 }
 html[data-theme="night"] .cursor-blob { mix-blend-mode: screen; }
+
+/* --- Camera push: the room lunges toward the lamp as the light snaps on ---
+   Pulling the cord should feel like a physical event, not a fade. On the tug
+   the whole scene pushes in ~7% toward the bulb, peaking exactly on the
+   switch-on flick, then eases back to rest while the darkness recedes. The
+   overlay is pushed with the page so the dark cutout stays locked to the
+   lamp instead of sliding off it. */
+body.intro-zoom > main,
+body.intro-zoom > .site-header,
+body.intro-zoom > .light-intro {
+  transform-origin: var(--intro-zoom-x, 24%) var(--intro-zoom-y, 36%);
+  animation: introCameraPush 1.5s both;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@keyframes introCameraPush {
+  0% {
+    transform: scale(1);
+    /* Eased in, not snapped: the push should be felt rather than seen, so it
+       reads as a camera settling toward the lamp instead of a jolt. */
+    animation-timing-function: cubic-bezier(.33, .18, .3, 1);
+  }
+  38% {
+    transform: scale(1.025);
+    /* Long, soft release back to rest, overlapping the light spread. */
+    animation-timing-function: cubic-bezier(.3, .5, .2, 1);
+  }
+  100% { transform: scale(1); }
+}
+
+/* The filament blooms hot for a beat before settling to its steady glow.
+   `forwards` only — during the .18s delay the switched-off bulb styling
+   above must still win, or the bulb would light before the flick. */
+body.intro-pulling .shade::after {
+  animation: bulbBloom .82s .18s cubic-bezier(.25, .6, .3, 1) forwards;
+}
+
+@keyframes bulbBloom {
+  0% {
+    background: #fffdf4;
+    box-shadow: 0 0 0 0 rgba(255, 240, 190, 0);
+  }
+  22% {
+    background: #fffdf0;
+    box-shadow: 0 0 2.4rem .7rem rgba(255, 240, 190, .8);
+  }
+  100% {
+    background: #fff7cf;
+    box-shadow: 0 0 1.5rem .32rem rgba(255, 209, 102, .82);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.intro-zoom > main,
+  body.intro-zoom > .site-header,
+  body.intro-zoom > .light-intro,
+  body.intro-pulling .shade::after {
+    animation: none;
+    transform: none;
+  }
+}

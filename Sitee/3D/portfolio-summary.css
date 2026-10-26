@@ -1,0 +1,94 @@
+.portfolio-summary {
+  position: fixed;
+  z-index: 64;
+  top: max(20px, env(safe-area-inset-top));
+  left: max(20px, env(safe-area-inset-left));
+  width: min(28rem, calc(100vw - 124px));
+  border: 1px solid var(--line, #fff3);
+  border-radius: 16px;
+  background: #11111af2;
+  color: var(--text, #fff8ee);
+  font: 500 .875rem/1.6 ui-sans-serif, system-ui, sans-serif;
+}
+
+.portfolio-summary summary {
+  min-height: 48px;
+  padding: .75rem 1rem;
+  cursor: pointer;
+  font-weight: 750;
+}
+
+/* Keep the readable profile above the scene's dark cinematic intro. */
+body.intro-mode .portfolio-summary { z-index: 95; }
+
+.portfolio-summary summary span {
+  display: block;
+  margin-top: .125rem;
+  font-size: .75rem;
+  font-weight: 500;
+  color: #e1d9cc;
+}
+
+.portfolio-summary[open] {
+  width: min(36rem, calc(100vw - 124px));
+}
+
+.portfolio-summary-content {
+  max-height: calc(100vh - 9rem);
+  max-height: calc(100dvh - 9rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 1rem 1rem;
+  overflow-wrap: anywhere;
+}
+
+.portfolio-summary-content h1 {
+  margin: .5rem 0 1rem;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  line-height: 1.2;
+}
+
+.portfolio-summary-content h2 {
+  margin: 1.5rem 0 .5rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.portfolio-summary-content p { margin: .75rem 0; }
+.portfolio-summary-content ul { margin: .75rem 0; padding-left: 1.25rem; }
+.portfolio-summary-content li + li { margin-top: .75rem; }
+.portfolio-summary-content a { color: #ffd166; text-decoration: underline; text-underline-offset: .2em; }
+.portfolio-summary :focus-visible { outline: 3px solid #ffd166; outline-offset: 3px; }
+
+.loader-card .loader-title {
+  margin: 0 0 16px;
+  color: #efe9dd;
+  font-size: clamp(20px, 4vw, 26px);
+  font-weight: 800;
+  line-height: .95;
+}
+
+.portfolio-noscript {
+  position: fixed;
+  z-index: 95;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  padding: 1rem;
+  border-radius: 16px;
+  background: #11111af2;
+  color: #fff8ee;
+}
+
+@media (max-width: 760px) {
+  .portfolio-summary {
+    top: max(10px, env(safe-area-inset-top));
+    left: max(10px, env(safe-area-inset-left));
+    width: min(24rem, calc(100vw - 102px));
+  }
+
+  .portfolio-summary[open] { width: calc(100vw - 20px); }
+  .portfolio-summary summary { padding: .75rem; }
+  .portfolio-summary summary span { display: none; }
+  .portfolio-summary-content { padding-inline: .75rem; }
+}

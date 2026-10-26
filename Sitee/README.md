@@ -5,6 +5,14 @@ This is the Vercel-ready ePortfolio with the playable poker platform embedded.
 ## What is included
 
 - Portfolio homepage at `/`.
+- Original project-card design in a click-to-slide carousel: Knockround, poker,
+  NoSite Leads, SkillHanger, then SecureDoc. Whole cards only (3 across on
+  desktop, 2 on tablets, 1 on phones), with arrows and one dot per position.
+- SkillHanger case study at `/project/skillhanger/`, using screenshots from the
+  native macOS app's isolated preview mode and links to its source and releases.
+- Carousel controls support clicks, touch swipes, arrow keys, Home, and End.
+  Reduced motion uses immediate navigation; without JavaScript, projects remain
+  available in a grid.
 - Poker platform at `/poker/index.html`.
 - Portfolio Projects -> Poker -> Play poker opens the poker platform.
 - Poker page has `← Back to Portfolio`, returning to `../index.html#projects`.
@@ -231,3 +239,55 @@ After deploying, `/api/health` should show `"storage":"redis"` when Upstash/Verc
 ## Low Redis usage presence settings
 
 The poker client sends a lightweight presence heartbeat every 30 minutes while seated. Closed-tab seats are cleared after about 90 minutes by default. Active gameplay still polls room state so players can see actions without manual refresh.
+
+## Search visibility
+
+The homepage, `/3D/`, and the four project case studies present Joseph
+Doyle-Samadi (Joseph Samadi) as a London-based software engineer. Titles,
+descriptions, visible skills, project authorship, and links to the hiring contact
+section support that purpose. The homepage uses `ProfilePage` and `Person`
+structured data; case studies describe the individual projects and their creator.
+
+`/client` targets small business web design and freelance website development in
+London and across the UK. It is indexable, linked from the homepage, included in
+`sitemap.xml`, and has `Service` markup tied to the same person. No ratings,
+qualifications, client results, or street addresses have been invented.
+
+The 3D page includes a native HTML **Profile & projects** panel with readable
+skills, experience, project links and hiring contacts, including without
+JavaScript. Its controls do not trigger the scene's driving shortcuts. Lowercase
+`/3d` and its nested paths permanently redirect to the existing `/3D/` paths.
+Vercel's redirect sources are case-sensitive, so `/3D/` is not redirected to itself.
+
+`404.html` is a noindexed not-found page that links back to the main pages.
+
+`693c97edb043c402f390be04d7398aad.txt` is the IndexNow key. It lets Bing
+(and the services that use Bing's index) pick up new or changed URLs quickly.
+
+Vercel returns `X-Robots-Tag: noindex, follow` for generated files under `/output/`,
+the archived July SEO audit, and the SecureDoc source-reference mirror. Public
+case studies and their assets remain crawlable.
+
+After deploying these changes:
+
+1. Submit `https://josephsamadi.uk/sitemap.xml` in Google Search Console and Bing
+   Webmaster Tools.
+2. Use Search Console's URL Inspection to request indexing for `/`, `/client`,
+   `/3D/`, and the four case studies. Confirm that `/client` no longer reports a
+   `noindex` exclusion and that `/project/skillhanger/` returns 200.
+3. Check `/3d` redirects to `/3D/` and the final page returns 200.
+4. Tell IndexNow (Bing, Yandex and others) about the changed URLs:
+
+   ```sh
+   curl -s -o /dev/null -w "%{http_code}\n" -H "Content-Type: application/json; charset=utf-8" \
+     https://api.indexnow.org/indexnow -d "{\"host\":\"josephsamadi.uk\",\"key\":\"693c97edb043c402f390be04d7398aad\",\"keyLocation\":\"https://josephsamadi.uk/693c97edb043c402f390be04d7398aad.txt\",\"urlList\":[$(grep -o '<loc>[^<]*' sitemap.xml | sed 's/<loc>/"/;s/$/"/' | paste -sd, -)]}"
+   ```
+
+   Run it from this folder. `200` or `202` means the submission was accepted.
+5. Track impressions and clicks for Joseph's name, software engineering skills,
+   and small business web design queries separately. Review inquiries and
+   recruiter contacts alongside search traffic.
+
+Useful references: [Google's title and content guidance](https://developers.google.com/search/docs/fundamentals/seo-starter-guide),
+[ProfilePage markup](https://developers.google.com/search/docs/appearance/structured-data/profile-page),
+and [Vercel route configuration](https://vercel.com/docs/project-configuration/vercel-json).

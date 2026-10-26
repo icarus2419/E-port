@@ -2,11 +2,13 @@ import { header, nav, menuToggle, themeToggle, root, prefersReduced, THEME_STORA
 import { setStoredTheme } from './theme.js';
 
 const headerIsSolid = header?.classList.contains('solid');
+const desktopMenuQuery = window.matchMedia('(min-width: 761px)');
 const updateHeader = () => header?.classList.toggle('scrolled', Boolean(headerIsSolid || window.scrollY > 18));
 
 const closeMenu = () => {
   nav?.classList.remove('open');
-  nav?.setAttribute('aria-hidden', 'true');
+  nav?.setAttribute('aria-hidden', String(!desktopMenuQuery.matches));
+  if (nav) nav.inert = !desktopMenuQuery.matches;
   menuToggle?.classList.remove('open');
   menuToggle?.setAttribute('aria-expanded', 'false');
   menuToggle?.setAttribute('aria-label', 'Open navigation');
@@ -72,6 +74,7 @@ export function initHeader() {
   menuToggle?.addEventListener('click', () => {
     const isOpen = nav?.classList.toggle('open');
     nav?.setAttribute('aria-hidden', String(!isOpen));
+    if (nav) nav.inert = !isOpen;
     menuToggle.classList.toggle('open', Boolean(isOpen));
     menuToggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
     menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
@@ -80,8 +83,7 @@ export function initHeader() {
 
   window.addEventListener('pageshow', closeMenu);
 
-  const desktopMenuQuery = window.matchMedia('(min-width: 761px)');
-  const closeMenuOnDesktop = (event) => { if (event.matches) closeMenu(); };
+  const closeMenuOnDesktop = () => closeMenu();
   if (desktopMenuQuery.matches) closeMenu();
   if (desktopMenuQuery.addEventListener) {
     desktopMenuQuery.addEventListener('change', closeMenuOnDesktop);
