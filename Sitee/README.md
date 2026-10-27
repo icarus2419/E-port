@@ -6,8 +6,8 @@ This is the Vercel-ready ePortfolio with the playable poker platform embedded.
 
 - Portfolio homepage at `/`.
 - Original project-card design in a click-to-slide carousel: Knockround, poker,
-  NoSite Leads, SkillHanger, then SecureDoc. Whole cards only (3 across on
-  desktop, 2 on tablets, 1 on phones), with arrows and one dot per position.
+  NoSite Leads, then SkillHanger. Whole cards only (3 across on desktop, 2 on
+  tablets, 1 on phones), with arrows and one dot per position.
 - SkillHanger case study at `/project/skillhanger/`, using screenshots from the
   native macOS app's isolated preview mode and links to its source and releases.
 - Carousel controls support clicks, touch swipes, arrow keys, Home, and End.
@@ -259,21 +259,28 @@ JavaScript. Its controls do not trigger the scene's driving shortcuts. Lowercase
 `/3d` and its nested paths permanently redirect to the existing `/3D/` paths.
 Vercel's redirect sources are case-sensitive, so `/3D/` is not redirected to itself.
 
+The 3D Projects area has three statues: Knockround (its app icon, a yellow tile
+with the purple K traced from the real logo), the poker platform and NoSite Leads.
+The scene runs from the built bundle `3D/assets/index-*.js`, which is edited in
+place because the original Vite source is out of date. After editing it, rename
+the file to a new hash and update `3D/index.html`, so browsers don't keep a cached copy.
+
 `404.html` is a noindexed not-found page that links back to the main pages.
 
 `693c97edb043c402f390be04d7398aad.txt` is the IndexNow key. It lets Bing
 (and the services that use Bing's index) pick up new or changed URLs quickly.
 
-Vercel returns `X-Robots-Tag: noindex, follow` for generated files under `/output/`,
-the archived July SEO audit, and the SecureDoc source-reference mirror. Public
-case studies and their assets remain crawlable.
+Vercel returns `X-Robots-Tag: noindex, follow` for generated files under `/output/`
+and the archived July SEO audit. Public case studies and their assets remain
+crawlable. Old SecureDoc URLs (`/project/securedoc-combined/` and
+`/project/Secure-Document-Approval/`) permanently redirect to `/`.
 
 After deploying these changes:
 
 1. Submit `https://josephsamadi.uk/sitemap.xml` in Google Search Console and Bing
    Webmaster Tools.
 2. Use Search Console's URL Inspection to request indexing for `/`, `/client`,
-   `/3D/`, and the five case studies. Confirm that `/client` no longer reports a
+   `/3D/`, and the four case studies. Confirm that `/client` no longer reports a
    `noindex` exclusion and that `/project/skillhanger/` returns 200.
 3. Check `/3d` redirects to `/3D/` and the final page returns 200.
 4. Tell IndexNow (Bing, Yandex and others) about the changed URLs:

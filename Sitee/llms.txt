@@ -40,9 +40,6 @@ JavaScript/TypeScript, React, FastAPI, PostgreSQL, and WebSockets.
   Full-stack SaaS that uses the official Google Places API to find businesses
   with no website listed, with private map-based results, CSV export, Stripe
   payments, and recoverable scan jobs on Cloudflare Workers.
-- [SecureDoc Document Approval](https://josephsamadi.uk/project/securedoc-combined/):
-  Role-based document approval workflow with SHA-256 evidence, approval
-  receipts, and audit trails. Node.js/Express.
 
 ## Experience
 

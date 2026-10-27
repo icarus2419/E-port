@@ -28,7 +28,7 @@ export function initProjectCarousel() {
   const maxIndex = () => Math.max(0, slides.length - visibleCount());
   const position = (slide) => Math.min(slide.offsetLeft - slides[0].offsetLeft, track.scrollWidth - track.clientWidth);
 
-  // One dot per scroll position: 3 across 5 cards gives 3 dots, 1 across gives 5.
+  // One dot per scroll position: 3 across 4 cards gives 2 dots, 1 across gives 4.
   function buildDots() {
     if (dots.length === maxIndex() + 1) return;
     dotList.replaceChildren();

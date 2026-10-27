@@ -79,15 +79,6 @@
           "value": "noindex, follow"
         }
       ]
-    },
-    {
-      "source": "/project/securedoc-combined/source-reference/(.*)",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, follow"
-        }
-      ]
     }
   ],
   "redirects": [
@@ -107,23 +98,13 @@
       "permanent": true
     },
     {
-      "source": "/project/Secure-Document-Approval/",
-      "destination": "/project/securedoc-combined/",
-      "permanent": true
-    },
-    {
-      "source": "/project/Secure-Document-Approval/demo/",
-      "destination": "/project/securedoc-combined/demo/",
-      "permanent": true
-    },
-    {
-      "source": "/project/Secure-Document-Approval/demo/app/",
-      "destination": "/project/securedoc-combined/demo/app/",
+      "source": "/project/securedoc-combined/:path*",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/project/Secure-Document-Approval/:path*",
-      "destination": "/project/securedoc-combined/:path*",
+      "destination": "/",
       "permanent": true
     }
   ],

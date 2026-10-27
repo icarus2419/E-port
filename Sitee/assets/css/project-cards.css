@@ -219,54 +219,6 @@ body.intro-active:not(.light-has-switched) .hero-illustration .lamp {
   background: var(--sun);
   box-shadow: 0 0 0 .85rem rgba(255, 214, 102, .12), 0 8px 20px rgba(0,0,0,.18);
 }
-.securedoc-art .art-panel {
-  position: absolute;
-  display: block;
-  border: 3px solid #fff8ee;
-  background: #fff8ee;
-  color: var(--ink);
-  box-shadow: 6px 8px 0 rgba(0,0,0,.18);
-}
-.securedoc-art .art-panel {
-  width: 4.55rem;
-  height: 6.3rem;
-  border-radius: .62rem;
-  transition: transform .35s cubic-bezier(.34,1.56,.64,1);
-}
-.securedoc-art .art-panel.one { left: 50%; top: 2.15rem; transform: translateX(-145%) rotate(-12deg); }
-.securedoc-art .art-panel.two { left: 50%; top: 1.8rem; transform: translateX(-50%) rotate(2deg); z-index: 2; }
-.securedoc-art .art-panel.three { left: 50%; top: 2.25rem; transform: translateX(45%) rotate(13deg); }
-.securedoc-art .art-panel::before {
-  content: "";
-  position: absolute;
-  left: .7rem;
-  right: .7rem;
-  top: .95rem;
-  height: .52rem;
-  border-radius: 999px;
-  background: #9b2c2c;
-  box-shadow:
-    0 1.05rem 0 rgba(155,44,44,.38),
-    0 2.1rem 0 rgba(155,44,44,.2),
-    0 3.15rem 0 rgba(155,44,44,.16);
-}
-.securedoc-art .art-panel.two::after {
-  content: "✓";
-  position: absolute;
-  right: -.7rem;
-  bottom: .72rem;
-  display: grid;
-  place-items: center;
-  width: 2.65rem;
-  height: 2.65rem;
-  border-radius: 50%;
-  border: 3px solid #fff8ee;
-  background: #9b2c2c;
-  color: #fef3c7;
-  font-size: 1.55rem;
-  font-weight: 1000;
-  box-shadow: 4px 4px 0 rgba(0,0,0,.16);
-}
 .project-card-soon {
   color: var(--ink);
 }
@@ -340,9 +292,6 @@ body.intro-active:not(.light-has-switched) .hero-illustration .lamp {
   .project-detail-wrap,
   .project-detail-grid { grid-template-columns: 1fr; }
   .detail-art { min-height: 13rem; }
-  .securedoc-art .art-panel { width: 3.75rem; height: 5.25rem; }
-  .securedoc-art .art-panel.one { transform: translateX(-142%) rotate(-12deg); }
-  .securedoc-art .art-panel.three { transform: translateX(42%) rotate(13deg); }
 }
 
 /* --- Project card alignment patch --- */
