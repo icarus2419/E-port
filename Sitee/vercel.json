@@ -98,12 +98,12 @@
       "permanent": true
     },
     {
-      "source": "/project/securedoc-combined/:path*",
+      "source": "/project/securedoc-combined(.*)",
       "destination": "/",
       "permanent": true
     },
     {
-      "source": "/project/Secure-Document-Approval/:path*",
+      "source": "/project/Secure-Document-Approval(.*)",
       "destination": "/",
       "permanent": true
     }
