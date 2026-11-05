@@ -749,13 +749,14 @@ footer a:hover{color:var(--ink)}
   const q=new URLSearchParams(location.search);
   const clean=v=>(v||'').replace(/[\u0000-\u001F\u007F<>]/g,'').replace(/\s+/g,' ').trim().slice(0,40);
   const name=clean(q.get('for')||q.get('name'));
-  const alias={gym:'gym',gyms:'gym',fitness:'gym',pt:'gym',groomer:'groomer',groomers:'groomer',grooming:'groomer',dog:'groomer',dogs:'groomer',detailer:'detailer',detailing:'detailer',valet:'detailer',valeting:'detailer',car:'detailer',club:'club',martial:'club',karate:'club',boxing:'club',bjj:'club',judo:'club',taekwondo:'club'};
+  const alias={gym:'gym',gyms:'gym',fitness:'gym',pt:'gym',groomer:'groomer',groomers:'groomer',grooming:'groomer',dog:'groomer',dogs:'groomer',detailer:'detailer',detailing:'detailer',valet:'detailer',valeting:'detailer',car:'detailer',club:'club',martial:'club',karate:'club',boxing:'club',bjj:'club',judo:'club',taekwondo:'club',electric:'electric',electrician:'electric',electricians:'electric',electrical:'electric',sparky:'electric'};
   const T={
     default:{k:'Book in today',t:'Your business, looking its best.',r:[['Most popular','from £40'],['Quick service','from £20'],['Add-on','£10']],c:['#7c416f','#4c386f','#ffd166']},
     gym:{k:'Join today',t:'Train harder. Feel better.',r:[['Day pass','£6'],['Monthly','£25'],['PT session','£30']],c:['#2b2b33','#4a3a2a','#ffb547']},
     groomer:{k:'Book a groom',t:'Happy dogs, fresh grooms.',r:[['Full groom','from £45'],['Bath & tidy','from £30'],['Nail trim','£10']],c:['#3f8f80','#2a5f61','#ffd166']},
     detailer:{k:'Book a valet',t:'Spotless cars, at your door.',r:[['Mini valet','£35'],['Full valet','£90'],['Ceramic coat','from £300']],c:['#1f2a3a','#35506e','#7cc4ff']},
-    club:{k:'Try a class',t:'Martial arts for all ages.',r:[['Kids class','£6'],['Adults','£8'],['Private lesson','£30']],c:['#8f2d2d','#4a1f24','#ffd166']}
+    club:{k:'Try a class',t:'Martial arts for all ages.',r:[['Kids class','£6'],['Adults','£8'],['Private lesson','£30']],c:['#8f2d2d','#4a1f24','#ffd166']},
+    electric:{k:'Get a quote',t:'Safe, tidy electrical work.',r:[['EICR','from £150'],['Consumer unit','from £450'],['EV charger','from £800']],c:['#1d3557','#16283f','#ffd166']}
   };
   const t=T[alias[clean(q.get('type')).toLowerCase()]]||T.default;
   const set=(k,v)=>$$('[data-m="'+k+'"]').forEach(e=>e.textContent=v);
