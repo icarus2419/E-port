@@ -368,6 +368,8 @@ footer a:hover{color:var(--ink)}
   .card{transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
   .card:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 rgba(0,0,0,.3)}
   .work-row{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin:3.2rem 0 0;padding:0;overflow:visible}
+  .work-row--4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  @media (min-width:1100px){.work-row--4{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}}
   .work{padding:14px 14px 20px;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
   .work:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 rgba(0,0,0,.3)}
   .work:hover .work-phone{transform:translateY(-8px)}
@@ -591,50 +593,20 @@ footer a:hover{color:var(--ink)}
 <section class="sec" id="work" aria-labelledby="work-h">
   <div class="wrap">
     <p class="eyebrow rv">Recent work</p>
-    <h2 class="rv" id="work-h">Sites I've built.</h2>
-    <p class="sub rv">Nine real local businesses, each live now on its own web address. Tap one to have a look.</p>
-    <div class="work-row rv">
-      <article class="work" style="--a:rgba(37,99,235,.6)">
-        <div class="work-stage"><div class="work-phone"><img src="/assets/clients/gem-mobile.webp" alt="The Gem Electric home page on a phone" width="540" height="1169" loading="lazy" decoding="async"></div></div>
-        <h3><a href="https://www.gemelectric.co.uk/" target="_blank" rel="noopener noreferrer">Gem Electric</a></h3>
-        <p>Electrician, London</p>
-        <span class="work-url" aria-hidden="true">gemelectric.co.uk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-      </article>
-      <article class="work" style="--a:rgba(30,90,200,.55)">
-        <div class="work-stage"><div class="work-phone"><img src="/assets/clients/loyds-mobile.webp" alt="The Loyd's Electrical home page on a phone" width="540" height="1169" loading="lazy" decoding="async"></div></div>
-        <h3><a href="https://www.loydselectrical.co.uk/" target="_blank" rel="noopener noreferrer">Loyd's Electrical</a></h3>
-        <p>Electrician, Thatcham</p>
-        <span class="work-url" aria-hidden="true">loydselectrical.co.uk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-      </article>
-      <article class="work" style="--a:rgba(249,115,22,.6)">
-        <div class="work-stage"><div class="work-phone"><img src="/assets/clients/cambridge-mobile.webp" alt="The Cambridge Groundworks home page on a phone" width="540" height="1169" loading="lazy" decoding="async"></div></div>
-        <h3><a href="https://www.cambridgegroundworks.co.uk/" target="_blank" rel="noopener noreferrer">Cambridge Groundworks</a></h3>
-        <p>Patios, fencing and groundworks, Cambridge</p>
-        <span class="work-url" aria-hidden="true">cambridgegroundworks.co.uk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-      </article>
-      <article class="work" style="--a:rgba(132,204,22,.55)">
-        <div class="work-stage"><div class="work-phone"><img src="/assets/clients/nwoc-mobile.webp" alt="The North West Oven Cleaning home page on a phone" width="540" height="1169" loading="lazy" decoding="async"></div></div>
-        <h3><a href="https://northwestovencleaning.co.uk/" target="_blank" rel="noopener noreferrer">North West Oven Cleaning</a></h3>
-        <p>Oven cleaning, Blackpool and Lytham</p>
-        <span class="work-url" aria-hidden="true">northwestovencleaning.co.uk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+    <h2 class="rv" id="work-h">A few sites I've built.</h2>
+    <p class="sub rv">Real local businesses, live now on their own web address. Tap one to have a look.</p>
+    <div class="work-row work-row--4 rv">
+      <article class="work" style="--a:rgba(46,168,82,.6)">
+        <div class="work-stage"><div class="work-phone"><img src="/assets/clients/limitless-mobile.webp" alt="The Limitless Lab home page on a phone" width="540" height="1169" loading="lazy" decoding="async"></div></div>
+        <h3><a href="https://limitlesslab.uk/" target="_blank" rel="noopener noreferrer">Limitless Lab</a></h3>
+        <p>Kids' football coaching, Wandsworth</p>
+        <span class="work-url" aria-hidden="true">limitlesslab.uk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
       </article>
       <article class="work" style="--a:rgba(3,35,89,.6)">
         <div class="work-stage"><div class="work-phone"><img src="/assets/clients/dwp-mobile.webp" alt="The DWP Driving School home page on a phone" width="540" height="1169" loading="lazy" decoding="async"></div></div>
         <h3><a href="https://dwpdrivingschool.co.uk/" target="_blank" rel="noopener noreferrer">DWP Driving School</a></h3>
         <p>Driving lessons, Portsmouth</p>
         <span class="work-url" aria-hidden="true">dwpdrivingschool.co.uk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-      </article>
-      <article class="work" style="--a:rgba(201,150,60,.55)">
-        <div class="work-stage"><div class="work-phone"><img src="/assets/clients/rstn-mobile.webp" alt="The RSTN Garden home page on a phone" width="540" height="1169" loading="lazy" decoding="async"></div></div>
-        <h3><a href="https://rstngarden.co.uk/" target="_blank" rel="noopener noreferrer">RSTN Garden</a></h3>
-        <p>Gardeners, north London</p>
-        <span class="work-url" aria-hidden="true">rstngarden.co.uk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-      </article>
-      <article class="work" style="--a:rgba(46,168,82,.6)">
-        <div class="work-stage"><div class="work-phone"><img src="/assets/clients/limitless-mobile.webp" alt="The Limitless Lab home page on a phone" width="540" height="1169" loading="lazy" decoding="async"></div></div>
-        <h3><a href="https://limitlesslab.uk/" target="_blank" rel="noopener noreferrer">Limitless Lab</a></h3>
-        <p>Kids' football coaching, Wandsworth</p>
-        <span class="work-url" aria-hidden="true">limitlesslab.uk<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
       </article>
       <article class="work" style="--a:rgba(201,164,92,.55)">
         <div class="work-stage"><div class="work-phone"><img src="/assets/clients/smiths-mobile.webp" alt="The Smiths Dog &amp; Cat Grooming home page on a phone" width="540" height="1169" loading="lazy" decoding="async"></div></div>

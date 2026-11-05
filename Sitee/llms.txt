@@ -44,14 +44,9 @@ JavaScript/TypeScript, React, FastAPI, PostgreSQL, and WebSockets.
 ## Experience
 
 - Freelance client website builds (Sep 2025–present). Live examples:
-  [Gem Electric](https://www.gemelectric.co.uk/) (electrician, London),
-  [Loyd's Electrical](https://www.loydselectrical.co.uk/) (electrician,
-  Thatcham), [Cambridge Groundworks](https://www.cambridgegroundworks.co.uk/)
-  (Cambridge), [North West Oven Cleaning](https://northwestovencleaning.co.uk/)
-  (Blackpool), [DWP Driving School](https://dwpdrivingschool.co.uk/)
-  (Portsmouth), [RSTN Garden](https://rstngarden.co.uk/) (London),
   [Limitless Lab](https://limitlesslab.uk/) (kids' football coaching,
-  Wandsworth), [Smiths Dog & Cat Grooming](https://smithsgrooming.co.uk/)
+  Wandsworth), [DWP Driving School](https://dwpdrivingschool.co.uk/)
+  (Portsmouth), [Smiths Dog & Cat Grooming](https://smithsgrooming.co.uk/)
   (Brentwood) and [Diamond Detailing](https://www.diamonddetailingni.com/)
   (ceramic coatings, Belfast).
 - Software Engineer at Heaven Estate Agent (Dec 2024–Sep 2025): frontend
